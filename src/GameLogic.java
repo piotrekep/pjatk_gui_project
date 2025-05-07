@@ -1,6 +1,5 @@
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +8,7 @@ import java.awt.event.*;
 public class GameLogic implements  Runnable{
     private GameBoard board;
     private CellType[][] labirynt;
-    private CellType[][] levelState;
     private List<Point> npcSpawnPoints = new ArrayList<>();
-    private volatile boolean up, down, left, right;
     private volatile boolean running;
     private final Map<String, Agent> agentList = new HashMap<>();
 
@@ -20,9 +17,6 @@ public class GameLogic implements  Runnable{
     public GameLogic(GameBoard board){
         this.board=board;
         this.labirynt=this.board.getBoard();
-        int rows = labirynt.length;
-        int cols = labirynt[0].length;      
-        this.levelState = new CellType[rows][cols];
 
         for(int i = 0; i<labirynt.length;i++)
             for(int j = 0; j<labirynt[0].length;j++){
@@ -64,7 +58,6 @@ public class GameLogic implements  Runnable{
     {
         if(labirynt[x][y]==CellType.EMPTY){
             Player player = new Player(x,y, name,labirynt);
-            //levelState[x][y]=CellType.PLAYER;
             return player;
         }
         else return null;
