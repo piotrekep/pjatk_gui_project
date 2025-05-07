@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.awt.event.*;
 
-public class GameLogic implements KeyListener, Runnable{
+public class GameLogic implements  Runnable{
     private GameBoard board;
     private CellType[][] labirynt;
     private CellType[][] levelState;
@@ -14,6 +14,8 @@ public class GameLogic implements KeyListener, Runnable{
     private volatile boolean up, down, left, right;
     private volatile boolean running;
     private final Map<String, Agent> agentList = new HashMap<>();
+
+    private KeyHandler keyhandler = new KeyHandler();
 
     public GameLogic(GameBoard board){
         this.board=board;
@@ -81,11 +83,11 @@ public class GameLogic implements KeyListener, Runnable{
             lastTime = now;
 
             
-            if (up || down || left || right) {
-                if (up)    agentList.get("player").setDirection(1);
-                if (down)  agentList.get("player").setDirection(3);
-                if (left)  agentList.get("player").setDirection(4);
-                if (right) agentList.get("player").setDirection(2);
+            if (keyhandler.up() || keyhandler.down() || keyhandler.left() || keyhandler.right()) {
+                if (keyhandler.up())    agentList.get("player").setDirection(1);
+                if (keyhandler.down())  agentList.get("player").setDirection(3);
+                if (keyhandler.left())  agentList.get("player").setDirection(4);
+                if (keyhandler.right()) agentList.get("player").setDirection(2);
             } else {
                 
             }
@@ -105,48 +107,14 @@ public class GameLogic implements KeyListener, Runnable{
         }
     }
 
-
+    public KeyListener getKeyListener() {
+        return keyhandler.getKeyListener();
+    }
 
     public void stop() {
         running = false;
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:    up  = true; break;
-            case KeyEvent.VK_S:  down  = true; break;
-            case KeyEvent.VK_A:  left  = true; break;
-            case KeyEvent.VK_D: right  = true; break;
-            case KeyEvent.VK_UP:    up  = true; break;
-            case KeyEvent.VK_DOWN:  down  = true; break;
-            case KeyEvent.VK_LEFT:  left  = true; break;
-            case KeyEvent.VK_RIGHT: right  = true; break;
-        }
-    }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:    up  = false; break;
-            case KeyEvent.VK_S:  down  = false; break;
-            case KeyEvent.VK_A:  left  = false; break;
-            case KeyEvent.VK_D: right = false; break;
-            case KeyEvent.VK_UP:    up  = false; break;
-            case KeyEvent.VK_DOWN:  down  = false; break;
-            case KeyEvent.VK_LEFT:  left  = false; break;
-            case KeyEvent.VK_RIGHT: right = false; break;
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        System.out.println(agentList.get("player").position.x + " " + agentList.get("player").position.x );
-        //throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
-    }
-
-    public KeyListener getKeyListener() {
-        return this;
-    }
 
 }
