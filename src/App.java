@@ -5,10 +5,19 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 
+import controller.GameController;
+import controller.KeyHandler;
+import model.GameBoard;
+import model.GameLogic;
+import controller.ExitKeyHandler;
+import visual.BaseWindow;
+import visual.LevelRenderer;
+import visual.VisuController;
+import visual.myFrame;
 
 public class App {
     private static JFrame menu, graFrame,scoresFrame,difSelectoFrame; 
-    private static GameBoard level;
+    //private static GameBoard level;
     //private static GameLogic gameLogic;
     private static GameController controller;
 
