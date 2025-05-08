@@ -1,6 +1,8 @@
-package model;
+package visual;
 
 import javax.swing.table.AbstractTableModel;
+
+import model.CellType;
 
 public class GameBoard extends AbstractTableModel {
     CellType[][] table;
@@ -32,7 +34,6 @@ public class GameBoard extends AbstractTableModel {
             newTable[i] = board[i].clone();
         }
         this.table = newTable;
-       
         fireTableDataChanged();
     }
 

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import visual.GameBoard;
+
 
 public class GameLogic {
     private GameBoard board;
