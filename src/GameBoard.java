@@ -34,14 +34,6 @@ public class GameBoard extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public void setBoard_old(CellType[][] board) {
-        for (int i = 0; i < board.length; i++)
-            for (int j = 0; j < board[0].length; j++)
-                if (board[i][j] != CellType.WALL) {
-                    this.table[i][j] = board[i][j];
-                    fireTableDataChanged();
-                }
-    }
 
     @Override
     public int getRowCount() {

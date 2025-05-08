@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.text.NumberFormatter;
 
 import java.awt.*;
@@ -123,11 +122,12 @@ public class App {
                      sizeX = 0;
                 }    
             if((sizeY>9 && sizeY <101) ||  (sizeX>9 && sizeX <101)) {
-                initMap(sizeY,sizeX);
+                
                 difSelectoFrame.setVisible(false);
                 graFrame.setVisible(true);
                 
-                controller = new GameController(new KeyHandler(),new GameLogic(level),new VisuController());
+                controller = new GameController(new KeyHandler(),new GameLogic(sizeX,sizeY),new VisuController());
+                initMap(controller.gamelogic.getBoard());
 
                 //gameLogic = new GameLogic(level);
                 graFrame.addKeyListener(controller.getKeyListener());
@@ -144,9 +144,8 @@ public class App {
     
     }
 
-    private static void initMap(int Y, int X)
+    private static void initMap(GameBoard level)
     {
-        level = new GameBoard(Y, X);
         JTable table = new JTable(level);
         
         JScrollPane sp = new JScrollPane(
@@ -160,13 +159,7 @@ public class App {
         LevelRenderer renderer = new LevelRenderer();
         for (int i = 0; i < table.getColumnCount(); i++) {
              table.getColumnModel().getColumn(i).setCellRenderer(renderer);
-        }
-
-        Labirynth labirynt = new Labirynth(X, Y, 34254);
-        labirynt.generate();
-        level.setBoard(labirynt.labirynt);
-
-        
+        }      
         enableFullTableScaling(table,sp);
         graFrame.add(sp, BorderLayout.CENTER);
         graFrame.pack();                          

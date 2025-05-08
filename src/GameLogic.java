@@ -9,13 +9,18 @@ public class GameLogic {
     private GameBoard board;
     private CellType[][] labirynt;
     private List<Point> npcSpawnPoints = new ArrayList<>();
-    private volatile boolean running;
     private final Map<String, Agent> agentList = new HashMap<>();
 
     //private KeyHandler keyhandler = new KeyHandler();
 
-    public GameLogic(GameBoard board){
-        this.board=board;
+    public GameLogic(int x, int y){
+
+        this.board=new GameBoard(y, x);
+        Labirynth lab = new Labirynth(x, y);
+        lab.generate();
+        this.board.setBoard(lab.labirynt);
+
+
         this.labirynt=this.board.getBoard();
 
         for(int i = 0; i<labirynt.length;i++)
@@ -27,7 +32,6 @@ public class GameLogic {
             Player agent = SpawnPlayer(3,3,"player");
             if(agent != null)
                 agentList.put(agent.name, agent);
-            running = true;
             
     }
 
@@ -77,6 +81,9 @@ public class GameLogic {
         else return null;
     }
 
- 
+    public GameBoard getBoard(){
+        return this.board;
+    }
+        
 
 }

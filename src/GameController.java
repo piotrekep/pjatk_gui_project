@@ -3,7 +3,7 @@ import java.awt.event.KeyListener;
 public class GameController implements  Runnable {
     private volatile boolean running;
     private KeyHandler keyhandler;
-    private GameLogic gamelogic;
+    public GameLogic gamelogic;
     private VisuController visucontroller;
 
 
@@ -11,8 +11,6 @@ public class GameController implements  Runnable {
         this.keyhandler=keyhandler;
         this.gamelogic=gamelogic;
         this.visucontroller=visucontroller;
-
-      
 
     }
 

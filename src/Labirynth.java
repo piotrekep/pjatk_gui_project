@@ -7,13 +7,13 @@ import java.util.Random;
 public class Labirynth {
     public final CellType[][] labirynt;
     private final boolean[][] visited;
-    private final Random rng = new Random();
+   
     public final Point origin = new Point(3,3);
 
-    Labirynth(int X, int Y, long seed) {
+    Labirynth(int X, int Y) {
         this.labirynt = new CellType[X][Y];
         visited = new boolean[X][Y];
-        rng.setSeed(seed);
+        
 
         for (int i = 0; i < labirynt.length; i++)
             for (int j = 0; j < labirynt[i].length; j++)
