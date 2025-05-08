@@ -10,7 +10,8 @@ import java.text.NumberFormat;
 public class App {
     private static JFrame menu, graFrame,scoresFrame,difSelectoFrame; 
     private static GameBoard level;
-    private static GameLogic gameLogic;
+    //private static GameLogic gameLogic;
+    private static GameController controller;
 
     public static void main(String[] args) {
             ExitKeyHandler.setupExitKeys();
@@ -126,12 +127,14 @@ public class App {
                 difSelectoFrame.setVisible(false);
                 graFrame.setVisible(true);
                 
-                gameLogic = new GameLogic(level);
-                graFrame.addKeyListener(gameLogic.getKeyListener());
+                controller = new GameController(new KeyHandler(),new GameLogic(level),new VisuController());
+
+                //gameLogic = new GameLogic(level);
+                graFrame.addKeyListener(controller.getKeyListener());
                 graFrame.setFocusable(true);
                 graFrame.requestFocusInWindow();
 
-                Thread gameThread = new Thread(gameLogic, "GameLoopThread");
+                Thread gameThread = new Thread(controller, "GameLoopThread");
                 gameThread.start();  ;
             } 
             else 

@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.awt.event.*;
 
-public class GameLogic implements  Runnable{
+public class GameLogic {
     private GameBoard board;
     private CellType[][] labirynt;
     private List<Point> npcSpawnPoints = new ArrayList<>();
     private volatile boolean running;
     private final Map<String, Agent> agentList = new HashMap<>();
 
-    private KeyHandler keyhandler = new KeyHandler();
+    //private KeyHandler keyhandler = new KeyHandler();
 
     public GameLogic(GameBoard board){
         this.board=board;
@@ -32,7 +32,21 @@ public class GameLogic implements  Runnable{
     }
 
 
-    private void updateTask() {
+    public void updateGameState(boolean up, boolean down, boolean left, boolean right){
+
+        if (up || down || left || right) {
+            if (up)    agentList.get("player").setDirection(1);
+            if (down)  agentList.get("player").setDirection(3);
+            if (left)  agentList.get("player").setDirection(4);
+            if (right) agentList.get("player").setDirection(2);
+        } else {
+            
+        }
+        agentList.get("player").move();
+    }
+
+
+    public void updateTask() { //wywalić do vsuala?
    
        CellType[][] frameBuffer = new CellType[labirynt.length][];
        for (int i = 0; i < labirynt.length; i++) {
@@ -63,51 +77,6 @@ public class GameLogic implements  Runnable{
         else return null;
     }
 
-    @Override
-    public void run() {
-        final int TARGET_FPS = 1;
-        final long   OPTIMAL_TIME = 1_000_000_000 / TARGET_FPS; // in nanoseconds
-
-        long lastTime = System.nanoTime();
-
-        while (running) {
-            long now = System.nanoTime();
-            long updateLength = now - lastTime;
-            lastTime = now;
-
-            
-            if (keyhandler.up() || keyhandler.down() || keyhandler.left() || keyhandler.right()) {
-                if (keyhandler.up())    agentList.get("player").setDirection(1);
-                if (keyhandler.down())  agentList.get("player").setDirection(3);
-                if (keyhandler.left())  agentList.get("player").setDirection(4);
-                if (keyhandler.right()) agentList.get("player").setDirection(2);
-            } else {
-                
-            }
-            agentList.get("player").move();
-           
-
-            updateTask();
-            long sleepTime = (OPTIMAL_TIME - (System.nanoTime() - now)) / 1_000_000;
-            //if (sleepTime > 0) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    
-                    if (!running) break;
-                }
-            //}
-        }
-    }
-
-    public KeyListener getKeyListener() {
-        return keyhandler.getKeyListener();
-    }
-
-    public void stop() {
-        running = false;
-    }
-
-
+ 
 
 }
