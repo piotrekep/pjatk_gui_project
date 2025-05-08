@@ -12,6 +12,8 @@ public class GameController implements  Runnable {
         this.gamelogic=gamelogic;
         this.visucontroller=visucontroller;
 
+      
+
     }
 
     @Override
