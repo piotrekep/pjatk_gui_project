@@ -7,6 +7,9 @@ abstract public class Agent {
     public boolean spawned = false;
     public String name;
     protected CellType[][] level;
+    private long lastTime;
+    private int direction=0;
+    private int newDirection=0;
 
     Agent(int x, int y, String name, CellType[][] level) {
         this.position.x = x;
@@ -15,10 +18,67 @@ abstract public class Agent {
         this.level = level;
     }
 
-    public void move() {
+    public void move(double speed){
+
+        long now = System.nanoTime();
+        double elapsedSeconds = (now - lastTime)/1_000_000_000.0;
+
+        changeDirection();
+        if(speed!=0)
+        if(elapsedSeconds > 1/speed){
+            lastTime = now;
+            switch (direction) {
+                case 1 -> moveUp();
+                case 2 -> moveRight();
+                case 3 -> moveDown();
+                case 4 -> moveLeft();
+                default ->{}
+         }
+        }
     }
 
-    public void setDirection(int direction) {
+    public void move(){
+
+        changeDirection();
+            switch (direction) {
+                case 1 -> moveUp();
+                case 2 -> moveRight();
+                case 3 -> moveDown();
+                case 4 -> moveLeft();
+                default ->{}
+         }
+    }
+
+     public void setDirection(int direction){
+        switch (direction) {
+            case 1 -> this.newDirection = 1;
+            case 2 -> this.newDirection = 2;
+            case 3 -> this.newDirection = 3;
+            case 4 -> this.newDirection = 4;
+            default ->{}
+        }
+    }
+
+    private void changeDirection(){
+        switch (newDirection) {
+            case 1 -> {
+                if(moveUpPossible())
+                    direction=newDirection;
+            }
+            case 2 ->{
+                if(moveRightPossible())
+                    direction=newDirection;
+            }
+            case 3 -> {
+                if(moveDownPossible())
+                    direction=newDirection;
+            }
+            case 4 -> {
+                if(moveLeftPossible())
+                    direction=newDirection;
+            }
+            default ->{}
+        }
     }
 
     public void moveUp() {
