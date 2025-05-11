@@ -3,6 +3,7 @@ package visual;
 import java.awt.Color;
 
 public enum CellTypeVisu {
+    
 
     EMPTY (Color.WHITE ),   
     WALL  (Color.DARK_GRAY),
@@ -10,7 +11,8 @@ public enum CellTypeVisu {
     NPC1  (Color.GREEN ), 
     NPC2   (Color.ORANGE ), 
     GHOSTHOUSE   (Color.GRAY), 
-    GHOSTFLOOR   (Color.LIGHT_GRAY); 
+    GHOSTFLOOR   (Color.PINK),
+    POINT (Color.LIGHT_GRAY);
 
     private final Color color;   
 

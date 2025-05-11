@@ -12,6 +12,8 @@ import visual.ScoreView;
 import visual.CellTypeVisu;
 
 
+
+
 public class GameController implements  Runnable,
                                         MenuView.MenuListener,
                                         ScoreView.ScoreListener,
@@ -27,7 +29,8 @@ public class GameController implements  Runnable,
     private DifficultyView difficulty;
     private GameView game;
 
-
+    private final int TARGET_FPS = 25;
+    private final long OPTIMAL_TIME;
 
     public GameController(KeyHandler keyhandler,
                             MenuView menu,
@@ -39,6 +42,8 @@ public class GameController implements  Runnable,
         this.score=score;
         this.difficulty=difficulty;
         this.game=game;
+
+        this.OPTIMAL_TIME = 1_000_000_000L /  this.TARGET_FPS ;
 
         this.menu.setListener(this);
         this.score.setListener(this);
@@ -53,30 +58,43 @@ public class GameController implements  Runnable,
 
     @Override
     public void run() {
-        //final int TARGET_FPS = 1;
-        //final long   OPTIMAL_TIME = 1_000_000_000 / TARGET_FPS; // in nanoseconds
-        running=true;
-        //long lastTime = System.nanoTime();
+        running = true;
+        long lastTime = System.nanoTime();
 
         while (running) {
-            //ong now = System.nanoTime();
-            //long updateLength = now - lastTime;
-            //lastTime = now;
+            long now = System.nanoTime();
+            long elapsedNanos = now - lastTime;
+            lastTime = now;
+            double delta = (double) elapsedNanos / OPTIMAL_TIME;
+
+
             
-            gamelogic.updatePlayer(keyhandler.up(),keyhandler.down(),keyhandler.left(),keyhandler.right());   
-            
-            this.game.updateLevel(stateToVisu(gamelogic.getGameState()));
-            //long sleepTime = (OPTIMAL_TIME - (System.nanoTime() - now)) / 1_000_000;
-            //if (sleepTime > 0) {
+            gamelogic.updatePlayer(
+                keyhandler.up(),
+                keyhandler.down(),
+                keyhandler.left(),
+                keyhandler.right(),
+                5
+            );
+            this.game.updateLevel(
+                stateToVisu(gamelogic.getGameState())
+            );
+           
+            long frameTime = System.nanoTime() - now;
+            long sleepTimeMs = (OPTIMAL_TIME - frameTime) / 1_000_000L;
+
+            if (sleepTimeMs > 0) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(sleepTimeMs);
                 } catch (InterruptedException e) {
-                    
-                    if (!running) break;
+                   
+                    Thread.currentThread().interrupt();
                 }
-            //}
+            }
         }
     }
+
+
 
     private CellTypeVisu[][] stateToVisu(CellType[][] board){
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
@@ -90,6 +108,7 @@ public class GameController implements  Runnable,
                     case CellType.NPC2 -> temp[i][j]=CellTypeVisu.NPC2;
                     case CellType.GHOSTHOUSE -> temp[i][j]=CellTypeVisu.GHOSTHOUSE;
                     case CellType.GHOSTFLOOR -> temp[i][j]=CellTypeVisu.GHOSTFLOOR;
+                    case CellType.POINT -> temp[i][j]=CellTypeVisu.POINT;
                     default -> temp[i][j] = CellTypeVisu.EMPTY;
                     }
             }

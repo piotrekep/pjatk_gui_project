@@ -9,6 +9,7 @@ public enum CellType {
     NPC2 ,
     GHOSTHOUSE,
     GHOSTFLOOR,
+    POINT,
 
 
 }
