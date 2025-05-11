@@ -6,28 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import visual.GameBoard;
+
 
 
 public class GameLogic {
-    private GameBoard board;
+   
     private CellType[][] labirynt;
     private List<Point> npcSpawnPoints = new ArrayList<>();
     private final Map<String, Agent> agentList = new HashMap<>();
 
-    //private KeyHandler keyhandler = new KeyHandler();
 
-    public GameLogic(GameBoard gameBoard){
-        int x=gameBoard.sizeX;
-        int y=gameBoard.sizeY;
+    public GameLogic(int x, int y){
 
-        this.board=gameBoard;
         Labirynth lab = new Labirynth(x, y);
         lab.generate();
-        this.board.setBoard(lab.labirynt);
-
-
-        this.labirynt=this.board.getBoard();
+  
+        this.labirynt=lab.labirynt;
 
         for(int i = 0; i<labirynt.length;i++)
             for(int j = 0; j<labirynt[0].length;j++){
@@ -42,7 +36,7 @@ public class GameLogic {
     }
 
 
-    public void updateGameState(boolean up, boolean down, boolean left, boolean right){
+    public void updatePlayer(boolean up, boolean down, boolean left, boolean right){
 
         if (up || down || left || right) {
             if (up)    agentList.get("player").setDirection(1);
@@ -56,24 +50,24 @@ public class GameLogic {
     }
 
 
-    public void updateTask() { //wywalić do vsuala?
+    public CellType[][] updateTask() { 
    
-       CellType[][] frameBuffer = new CellType[labirynt.length][];
+       CellType[][] gameState = new CellType[labirynt.length][];
        for (int i = 0; i < labirynt.length; i++) {
-           frameBuffer[i] = labirynt[i].clone();      
+        gameState[i] = labirynt[i].clone();      
        }
      
        
         for (Agent agent : agentList.values()) {
             switch (agent) {
-                case Player p -> frameBuffer[p.position.x][p.position.y] = CellType.PLAYER;
-                case Npc n -> frameBuffer[n.position.x][n.position.y] = CellType.NPC1;
+                case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
+                case Npc n -> gameState[n.position.x][n.position.y] = CellType.NPC1;
                 default -> {}
             }
         }
         
-       
-        this.board.setBoard(frameBuffer);
+       return gameState;
+    
         
     }
 
@@ -86,10 +80,6 @@ public class GameLogic {
         }
         else return null;
     }
-
-    public GameBoard getBoard(){
-        return this.board;
-    }
-        
+  
 
 }

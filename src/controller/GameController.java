@@ -62,9 +62,9 @@ public class GameController implements  Runnable,
             //long updateLength = now - lastTime;
             //lastTime = now;
             
-            gamelogic.updateGameState(keyhandler.up(),keyhandler.down(),keyhandler.left(),keyhandler.right());   
-            gamelogic.updateTask();
-           
+            gamelogic.updatePlayer(keyhandler.up(),keyhandler.down(),keyhandler.left(),keyhandler.right());   
+            
+            this.game.updateLevel(gamelogic.updateTask());
             //long sleepTime = (OPTIMAL_TIME - (System.nanoTime() - now)) / 1_000_000;
             //if (sleepTime > 0) {
                 try {
@@ -118,7 +118,8 @@ public class GameController implements  Runnable,
     @Override
     public void onStartGame(int x, int y) {
         game.createLevel(x, y);
-        gamelogic = new GameLogic(game.getBoard());
+
+        gamelogic = new GameLogic(x,y);
 
         game.setVisible(true);
         difficulty.setVisible(false);

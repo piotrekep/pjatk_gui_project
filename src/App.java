@@ -1,22 +1,17 @@
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.text.NumberFormat;
 
 import controller.GameController;
 import controller.KeyHandler;
-import visual.GameBoard;
+
 import visual.GameView;
-import model.GameLogic;
+
 import controller.ExitKeyHandler;
-import visual.BaseWindow;
+
 import visual.DifficultyView;
-import visual.LevelRenderer;
+
 import visual.MenuView;
 import visual.ScoreView;
-import visual.myFrame;
+
 
 public class App {
     

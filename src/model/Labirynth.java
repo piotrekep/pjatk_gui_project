@@ -20,10 +20,10 @@ public class Labirynth {
         for (int i = 0; i < labirynt.length; i++)
             for (int j = 0; j < labirynt[i].length; j++)
                 labirynt[i][j] = CellType.WALL;
-        markVisited();
+        makeFrame();
     }
 
-    private void markVisited() {
+    private void makeFrame() {
         for (int i = 0; i < visited.length; i++)
             for (int j = 0; j < visited[i].length; j++) {
                 if (i == 0 || i == (visited.length - 1) || j == 0 || j == (visited[0].length - 1))
