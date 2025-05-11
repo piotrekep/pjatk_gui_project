@@ -11,11 +11,13 @@ public class GameLogic {
     private CellType[][] labirynt;
     private List<Point> npcSpawnPoints = new ArrayList<>();
     private final Map<String, Agent> agentList = new HashMap<>();
+    private int maxPoints;
 
     public GameLogic(int x, int y) {
 
         Labirynth lab = new Labirynth(x, y);
         lab.generate();
+        maxPoints=0;
 
         this.labirynt = lab.labirynt;
         fillWithPoints(this.labirynt);
@@ -83,8 +85,19 @@ public class GameLogic {
     private void fillWithPoints(CellType[][] level) {
         for (int i = 0; i < level.length; i++)
             for (int j = 0; j < level[0].length; j++)
-                if (level[i][j] == CellType.EMPTY)
+                if (level[i][j] == CellType.EMPTY){
                     level[i][j] = CellType.POINT;
+                    maxPoints++;
+                }
+    }
+
+    public int getPlayerScore(String name){
+        Player player = (Player)agentList.get(name);
+        if(player !=null){
+            return player.getPoints();
+        }
+        else
+            return 0;
     }
 
 }

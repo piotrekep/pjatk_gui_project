@@ -76,6 +76,8 @@ public class GameController implements  Runnable,
                 keyhandler.right(),
                 5
             );
+            game.setScore(gamelogic.getPlayerScore("player"));
+            
             this.game.updateLevel(
                 stateToVisu(gamelogic.getGameState())
             );

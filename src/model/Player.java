@@ -53,7 +53,6 @@ public class Player extends Agent {
         if(level[position.x][position.y]==CellType.POINT){
             points++;
             level[position.x][position.y]=CellType.EMPTY;
-            System.out.println(points);
         }
     }
 
@@ -79,6 +78,10 @@ public class Player extends Agent {
         }
     }
     
+    public int getPoints(){
+        return points;
+    }
+
     @Override
     public void setDirection(int direction){
         switch (direction) {
