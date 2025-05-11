@@ -17,9 +17,11 @@ public class GameLogic {
 
     //private KeyHandler keyhandler = new KeyHandler();
 
-    public GameLogic(int x, int y){
+    public GameLogic(GameBoard gameBoard){
+        int x=gameBoard.sizeX;
+        int y=gameBoard.sizeY;
 
-        this.board=new GameBoard(y, x);
+        this.board=gameBoard;
         Labirynth lab = new Labirynth(x, y);
         lab.generate();
         this.board.setBoard(lab.labirynt);
