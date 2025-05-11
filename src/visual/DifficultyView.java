@@ -1,10 +1,6 @@
 package visual;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
@@ -12,9 +8,6 @@ import java.text.NumberFormat;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
-import controller.GameController;
-import controller.KeyHandler;
-import model.GameLogic;
 
 public class DifficultyView extends JFrame{
     public interface DifficultyListener { void onCloseDificultyWindow(); void onStartGame(int x, int y);}

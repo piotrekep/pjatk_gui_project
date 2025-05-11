@@ -5,8 +5,6 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import model.CellType;
-
 public class GameView extends JFrame{
     public interface GameListener { void onCloseGameWindow();}
     private GameListener listener;
@@ -40,7 +38,7 @@ public class GameView extends JFrame{
         return level;
     }
     
-    public void updateLevel(CellType[][] board){
+    public void updateLevel(CellTypeVisu[][] board){
         level.setBoard(board);
     }
 

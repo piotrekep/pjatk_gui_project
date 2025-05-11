@@ -2,33 +2,33 @@ package visual;
 
 import javax.swing.table.AbstractTableModel;
 
-import model.CellType;
+
 
 public class GameBoard extends AbstractTableModel {
-    CellType[][] table;
+    CellTypeVisu[][] table;
     public final int sizeY, sizeX;
 
     public GameBoard(int Y, int X) {
         this.sizeY = Y;
         this.sizeX = X;
-        this.table = new CellType[this.sizeX][this.sizeY];
+        this.table = new CellTypeVisu[this.sizeX][this.sizeY];
         for (int i = 0; i < table.length; i++)
             for (int j = 0; j < table[i].length; j++)
-                table[i][j] = CellType.WALL;
+                table[i][j] = CellTypeVisu.WALL;
 
     }
 
-    public void setCell(int row, int col, CellType newType) {
+    public void setCell(int row, int col, CellTypeVisu newType) {
         table[row][col] = newType;
         fireTableCellUpdated(row, col);
     }
 
-    public CellType[][] getBoard() {
+    public CellTypeVisu[][] getBoard() {
         return table;
     }
 
-    public void setBoard(CellType[][] board) {
-        CellType[][] newTable = new CellType[board.length][];
+    public void setBoard(CellTypeVisu[][] board) {
+        CellTypeVisu[][] newTable = new CellTypeVisu[board.length][];
        
         for (int i = 0; i < board.length; i++) {
             newTable[i] = board[i].clone();

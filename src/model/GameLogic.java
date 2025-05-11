@@ -50,7 +50,7 @@ public class GameLogic {
     }
 
 
-    public CellType[][] updateTask() { 
+    public CellType[][] getGameState() { 
    
        CellType[][] gameState = new CellType[labirynt.length][];
        for (int i = 0; i < labirynt.length; i++) {

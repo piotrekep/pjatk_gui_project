@@ -1,5 +1,6 @@
 package controller;
 
+import model.CellType;
 import model.GameLogic;
 
 import java.awt.event.KeyListener;
@@ -8,7 +9,7 @@ import visual.DifficultyView;
 import visual.GameView;
 import visual.MenuView;
 import visual.ScoreView;
-
+import visual.CellTypeVisu;
 
 
 public class GameController implements  Runnable,
@@ -64,7 +65,7 @@ public class GameController implements  Runnable,
             
             gamelogic.updatePlayer(keyhandler.up(),keyhandler.down(),keyhandler.left(),keyhandler.right());   
             
-            this.game.updateLevel(gamelogic.updateTask());
+            this.game.updateLevel(stateToVisu(gamelogic.getGameState()));
             //long sleepTime = (OPTIMAL_TIME - (System.nanoTime() - now)) / 1_000_000;
             //if (sleepTime > 0) {
                 try {
@@ -76,6 +77,27 @@ public class GameController implements  Runnable,
             //}
         }
     }
+
+    private CellTypeVisu[][] stateToVisu(CellType[][] board){
+        CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
+        for(int i=0; i<temp.length;i++)
+            for(int j=0; j<temp[0].length;j++){
+                switch (board[i][j]) {
+                    case CellType.EMPTY -> temp[i][j]=CellTypeVisu.EMPTY;
+                    case CellType.WALL -> temp[i][j]=CellTypeVisu.WALL;
+                    case CellType.PLAYER -> temp[i][j]=CellTypeVisu.PLAYER;
+                    case CellType.NPC1 -> temp[i][j]=CellTypeVisu.NPC1;
+                    case CellType.NPC2 -> temp[i][j]=CellTypeVisu.NPC2;
+                    case CellType.GHOSTHOUSE -> temp[i][j]=CellTypeVisu.GHOSTHOUSE;
+                    case CellType.GHOSTFLOOR -> temp[i][j]=CellTypeVisu.GHOSTFLOOR;
+                    default -> temp[i][j] = CellTypeVisu.EMPTY;
+                    }
+            }
+        return temp;
+        
+    }
+
+
 
 
     public void stop() {

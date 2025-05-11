@@ -6,8 +6,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import model.CellType;;
-
 public class LevelRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(
@@ -17,8 +15,8 @@ public class LevelRenderer extends DefaultTableCellRenderer {
         super.getTableCellRendererComponent(table, value, sel, foc, row, col);
         setHorizontalAlignment(CENTER);   
 
-        if (value instanceof CellType) {
-            CellType type = (CellType) value;
+        if (value instanceof CellTypeVisu) {
+            CellTypeVisu type = (CellTypeVisu) value;
             
             setBackground(type.getColor());
            
