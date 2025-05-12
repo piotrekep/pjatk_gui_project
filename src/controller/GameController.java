@@ -6,6 +6,8 @@ import model.GameLogic.GameLogicListener;
 
 import java.awt.event.KeyListener;
 
+import javax.swing.JOptionPane;
+
 import visual.DifficultyView;
 import visual.GameView;
 import visual.MenuView;
@@ -22,6 +24,10 @@ public class GameController implements  Runnable,
                                         GameView.GameListener,
                                         GameLogicListener {
 
+
+    private Thread gameLoopThread;                                        
+    private volatile boolean paused  = false;
+    private final Object  pauseLock = new Object();
     private volatile boolean running;
     private KeyHandler keyhandler;
     public GameLogic gamelogic;
@@ -31,7 +37,7 @@ public class GameController implements  Runnable,
     private DifficultyView difficulty;
     private GameView game;
 
-    private final int TARGET_FPS = 25;
+    private final int TARGET_FPS = 30;
     private final long OPTIMAL_TIME;
 
     public GameController(KeyHandler keyhandler,
@@ -64,13 +70,22 @@ public class GameController implements  Runnable,
         long lastTime = System.nanoTime();
 
         while (running) {
+            
+            synchronized (pauseLock) {
+                while (paused) {
+                    try {
+                        pauseLock.wait();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return; 
+                    }
+                }
+            }
             long now = System.nanoTime();
             long elapsedNanos = now - lastTime;
             lastTime = now;
-            double delta = (double) elapsedNanos / OPTIMAL_TIME;
+            //double delta = (double) elapsedNanos / OPTIMAL_TIME;
 
-
-            
             gamelogic.updatePlayer(
                 keyhandler.up(),
                 keyhandler.down(),
@@ -125,7 +140,23 @@ public class GameController implements  Runnable,
 
     public void stop() {
         running = false;
+        // obudź, żeby nie wisiał w pauzie
+        resume();
     }
+
+    /** Wejdź w stan pauzy (wątek idzie do wait()) */
+    public void pause() {
+        paused = true;
+    }
+
+    /** Wznów pracę wątku, jeśli wcześniej było pauzowane */
+    public void resume() {
+        synchronized (pauseLock) {
+            paused = false;
+            pauseLock.notifyAll();
+        }
+    }
+
 
     public KeyListener getKeyListener() {
         return keyhandler.getKeyListener();
@@ -166,25 +197,37 @@ public class GameController implements  Runnable,
 
         gamelogic = new GameLogic(x,y);
         this.gamelogic.setListener(this);
-        
+
         game.setVisible(true);
         difficulty.setVisible(false);
 
         running = true;
-        new Thread(this, "GameLoopThread").start();
+        gameLoopThread = new Thread(this, "GameLoopThread");
+        gameLoopThread.start();
 
     }
 
     @Override
     public void onCloseGameWindow() {
         stop(); 
+        gameLoopThread.interrupt();
+        try {
+            gameLoopThread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         game.setVisible(false);
         menu.setVisible(true);
     }
 
     @Override
     public void onVictory() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onVictory'");
+        pause();
+        JOptionPane.showMessageDialog(game, "Level: " + gamelogic.level, "Victory!", JOptionPane.INFORMATION_MESSAGE);
+        gamelogic.generateLevel();
+        keyhandler.clear();
+        resume();
+
     }
 }

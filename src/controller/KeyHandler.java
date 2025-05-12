@@ -21,6 +21,13 @@ public class KeyHandler implements KeyListener {
         set(e, false);
     }
 
+    public void clear(){
+        up=false;
+        down=false;
+        left=false;
+        right=false;
+    }
+
     private void set(KeyEvent e, boolean val) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W, KeyEvent.VK_UP -> up = val;

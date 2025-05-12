@@ -17,6 +17,9 @@ abstract public class Agent {
         this.name = name;
         this.level = level;
     }
+    public void updateLevel(CellType[][] level){
+        this.level=level;
+    }
 
     public void move(double speed){
 
@@ -57,6 +60,11 @@ abstract public class Agent {
             case 4 -> this.newDirection = 4;
             default ->{}
         }
+    }
+
+    public void setPosition(int x, int y){
+        this.position.x=x;
+        this.position.y=y;
     }
 
     private void changeDirection(){

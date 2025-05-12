@@ -6,26 +6,59 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import visual.GameView.GameListener;
-
 public class GameLogic {
 
     private CellType[][] labirynt;
     private List<Point> npcSpawnPoints = new ArrayList<>();
     private final Map<String, Agent> agentList = new HashMap<>();
     private int maxPoints;
-
+    private int x, y;
+    public int level=0;
 
     public interface GameLogicListener {
         void onVictory();
     }
+
     private GameLogicListener listener;
 
     public GameLogic(int x, int y) {
+        this.x = x;
+        this.y = y;
+        maxPoints=0;
+        generateLevel();
 
+        // fillWithPoints(this.labirynt);
+        this.labirynt[3][3] = CellType.EMPTY;
+        Player agent = SpawnPlayer(3, 3, "player");
+        if (agent != null)
+            agentList.put(agent.name, agent);
+
+        /*
+         * Labirynth lab = new Labirynth(x, y);
+         * lab.generate();
+         * maxPoints=0;
+         * 
+         * this.labirynt = lab.labirynt;
+         * fillWithPoints(this.labirynt);
+         * 
+         * for (int i = 0; i < labirynt.length; i++)
+         * for (int j = 0; j < labirynt[0].length; j++) {
+         * if (labirynt[i][j] == CellType.GHOSTFLOOR) {
+         * npcSpawnPoints.add(new Point(i, j));
+         * }
+         * }
+         * //fillWithPoints(this.labirynt);
+         * this.labirynt[3][3]=CellType.EMPTY;
+         * Player agent = SpawnPlayer(3, 3, "player");
+         * if (agent != null)
+         * agentList.put(agent.name, agent);
+         */
+
+    }
+
+    public void generateLevel() {
         Labirynth lab = new Labirynth(x, y);
         lab.generate();
-        maxPoints=0;
 
         this.labirynt = lab.labirynt;
         fillWithPoints(this.labirynt);
@@ -36,13 +69,16 @@ public class GameLogic {
                     npcSpawnPoints.add(new Point(i, j));
                 }
             }
-        //fillWithPoints(this.labirynt);
-        this.labirynt[3][3]=CellType.EMPTY; 
-        Player agent = SpawnPlayer(3, 3, "player");
-        if (agent != null)
-            agentList.put(agent.name, agent);
-
-    }
+            Player player = (Player) agentList.get("player");
+            if(player != null){
+                this.labirynt[3][3] = CellType.EMPTY;
+                player.updateLevel(this.labirynt);
+                player.setPosition(3, 3);
+                player.stopPlayer();
+                maxPoints--;
+            }
+            level++;
+        }
 
     public void updatePlayer(boolean up, boolean down, boolean left, boolean right, double speed) {
 
@@ -59,9 +95,9 @@ public class GameLogic {
         } else {
 
         }
-            player.move(speed);
-        if (listener != null && player.getPoints()>=maxPoints)
-                    listener.onVictory();
+        player.move(speed);
+        if (listener != null && player.getPoints() >= maxPoints)
+            listener.onVictory();
     }
 
     public CellType[][] getGameState() {
@@ -96,23 +132,21 @@ public class GameLogic {
     private void fillWithPoints(CellType[][] level) {
         for (int i = 0; i < level.length; i++)
             for (int j = 0; j < level[0].length; j++)
-                if (level[i][j] == CellType.EMPTY){
+                if (level[i][j] == CellType.EMPTY) {
                     level[i][j] = CellType.POINT;
                     maxPoints++;
                 }
-        
     }
 
-    public int getPlayerScore(String name){
-        Player player = (Player)agentList.get(name);
-        if(player !=null){
+    public int getPlayerScore(String name) {
+        Player player = (Player) agentList.get(name);
+        if (player != null) {
             return player.getPoints();
-        }
-        else
+        } else
             return 0;
     }
 
-    public int getLevelPoints(){
+    public int getLevelPoints() {
         return maxPoints;
     }
 
