@@ -1,11 +1,14 @@
 package model;
 
+import model.GameLogic.GameLogicListener;
+
 public class Player extends Agent {
 
     private int direction=0;
     private int newDirection=0;
     private long lastTime;
     private int points=0;
+
 
     public Player(int x, int y, String name, CellType[][] level) {
         super(x, y, name, level);
@@ -54,6 +57,7 @@ public class Player extends Agent {
             points++;
             level[position.x][position.y]=CellType.EMPTY;
         }
+        
     }
 
     private void changeDirection(){
@@ -128,4 +132,5 @@ public class Player extends Agent {
 
             position.y++;
 }
+
 }

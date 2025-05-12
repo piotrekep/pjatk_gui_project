@@ -2,6 +2,7 @@ package controller;
 
 import model.CellType;
 import model.GameLogic;
+import model.GameLogic.GameLogicListener;
 
 import java.awt.event.KeyListener;
 
@@ -18,7 +19,8 @@ public class GameController implements  Runnable,
                                         MenuView.MenuListener,
                                         ScoreView.ScoreListener,
                                         DifficultyView.DifficultyListener,
-                                        GameView.GameListener {
+                                        GameView.GameListener,
+                                        GameLogicListener {
 
     private volatile boolean running;
     private KeyHandler keyhandler;
@@ -77,7 +79,7 @@ public class GameController implements  Runnable,
                 5
             );
             game.setScore(gamelogic.getPlayerScore("player"));
-            
+
             this.game.updateLevel(
                 stateToVisu(gamelogic.getGameState())
             );
@@ -163,7 +165,8 @@ public class GameController implements  Runnable,
         game.createLevel(x, y);
 
         gamelogic = new GameLogic(x,y);
-
+        this.gamelogic.setListener(this);
+        
         game.setVisible(true);
         difficulty.setVisible(false);
 
@@ -177,5 +180,11 @@ public class GameController implements  Runnable,
         stop(); 
         game.setVisible(false);
         menu.setVisible(true);
+    }
+
+    @Override
+    public void onVictory() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onVictory'");
     }
 }

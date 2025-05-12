@@ -6,12 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import visual.GameView.GameListener;
+
 public class GameLogic {
 
     private CellType[][] labirynt;
     private List<Point> npcSpawnPoints = new ArrayList<>();
     private final Map<String, Agent> agentList = new HashMap<>();
     private int maxPoints;
+
+
+    public interface GameLogicListener {
+        void onVictory();
+    }
+    private GameLogicListener listener;
 
     public GameLogic(int x, int y) {
 
@@ -38,20 +46,22 @@ public class GameLogic {
 
     public void updatePlayer(boolean up, boolean down, boolean left, boolean right, double speed) {
 
+        Player player = (Player) agentList.get("player");
         if (up || down || left || right) {
             if (up)
-                agentList.get("player").setDirection(1);
+                player.setDirection(1);
             if (down)
-                agentList.get("player").setDirection(3);
+                player.setDirection(3);
             if (left)
-                agentList.get("player").setDirection(4);
+                player.setDirection(4);
             if (right)
-                agentList.get("player").setDirection(2);
+                player.setDirection(2);
         } else {
 
         }
-        Player player = (Player) agentList.get("player");
-        player.move(speed);
+            player.move(speed);
+        if (listener != null && player.getPoints()>=maxPoints)
+                    listener.onVictory();
     }
 
     public CellType[][] getGameState() {
@@ -77,6 +87,7 @@ public class GameLogic {
     private Player SpawnPlayer(int x, int y, String name) {
         if (labirynt[x][y] == CellType.EMPTY) {
             Player player = new Player(x, y, name, labirynt);
+            maxPoints--;
             return player;
         } else
             return null;
@@ -89,6 +100,7 @@ public class GameLogic {
                     level[i][j] = CellType.POINT;
                     maxPoints++;
                 }
+        
     }
 
     public int getPlayerScore(String name){
@@ -98,6 +110,14 @@ public class GameLogic {
         }
         else
             return 0;
+    }
+
+    public int getLevelPoints(){
+        return maxPoints;
+    }
+
+    public void setListener(GameLogicListener l) {
+        this.listener = l;
     }
 
 }
