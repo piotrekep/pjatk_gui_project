@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameLogic {
 
@@ -33,26 +34,9 @@ public class GameLogic {
         if (agent != null)
             agentList.put(agent.name, agent);
 
-        /*
-         * Labirynth lab = new Labirynth(x, y);
-         * lab.generate();
-         * maxPoints=0;
-         * 
-         * this.labirynt = lab.labirynt;
-         * fillWithPoints(this.labirynt);
-         * 
-         * for (int i = 0; i < labirynt.length; i++)
-         * for (int j = 0; j < labirynt[0].length; j++) {
-         * if (labirynt[i][j] == CellType.GHOSTFLOOR) {
-         * npcSpawnPoints.add(new Point(i, j));
-         * }
-         * }
-         * //fillWithPoints(this.labirynt);
-         * this.labirynt[3][3]=CellType.EMPTY;
-         * Player agent = SpawnPlayer(3, 3, "player");
-         * if (agent != null)
-         * agentList.put(agent.name, agent);
-         */
+        Npc npc = SpawnNpc("enemy");
+            if(npc != null)
+                agentList.put(npc.name, npc);
 
     }
 
@@ -77,6 +61,12 @@ public class GameLogic {
                 player.stopPlayer();
                 maxPoints--;
             }
+
+            Npc npc = (Npc) agentList.get("enemy");
+            if(npc != null){
+                npc.updateLevel(this.labirynt);
+                reSpawnNpc(npc);
+            }
             level++;
         }
 
@@ -98,6 +88,12 @@ public class GameLogic {
         player.move(speed);
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
+    }
+
+    public void updateNpc(double speed, String name){
+        Npc npc = (Npc) agentList.get(name);
+       if(npc!=null)
+        npc.moveRandom(speed);
     }
 
     public CellType[][] getGameState() {
@@ -128,6 +124,29 @@ public class GameLogic {
         } else
             return null;
     }
+
+
+    private Npc SpawnNpc(String name){
+        Random rand = new Random();
+        Point spawn= npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
+        if(labirynt[spawn.x][spawn.y] != CellType.GHOSTFLOOR)
+            return null;
+
+        Npc npc = new Npc(spawn.x,spawn.y,name,labirynt);
+        return npc;
+    }
+
+
+    private Npc reSpawnNpc(Npc npc){
+        Random rand = new Random();
+        Point spawn= npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
+        if(labirynt[spawn.x][spawn.y] != CellType.GHOSTFLOOR)
+            return null;
+
+        npc.setPosition(spawn.x, spawn.y);
+        return npc;
+    }
+
 
     private void fillWithPoints(CellType[][] level) {
         for (int i = 0; i < level.length; i++)

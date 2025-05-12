@@ -95,6 +95,8 @@ public class GameController implements  Runnable,
             );
             game.setScore(gamelogic.getPlayerScore("player"));
 
+            gamelogic.updateNpc(10, "enemy");
+
             this.game.updateLevel(
                 stateToVisu(gamelogic.getGameState())
             );

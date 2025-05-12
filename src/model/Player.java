@@ -4,8 +4,7 @@ import model.GameLogic.GameLogicListener;
 
 public class Player extends Agent {
 
-    private int direction = 0;
-    private int newDirection = 0;
+
     private long lastTime;
     private int points = 0;
 
@@ -65,8 +64,8 @@ public class Player extends Agent {
         newDirection=0;
         direction=0;
     }
-
-    private void changeDirection() {
+/*
+    protected void changeDirection() {
         switch (newDirection) {
             case 1 -> {
                 if (moveUpPossible())
@@ -88,7 +87,7 @@ public class Player extends Agent {
             }
         }
     }
-
+ */
     public int getPoints() {
         return points;
     }
@@ -100,8 +99,7 @@ public class Player extends Agent {
             case 2 -> this.newDirection = 2;
             case 3 -> this.newDirection = 3;
             case 4 -> this.newDirection = 4;
-            default -> {
-            }
+            default -> {this.newDirection = 0;}
         }
     }
 

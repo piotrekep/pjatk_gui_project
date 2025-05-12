@@ -8,8 +8,8 @@ abstract public class Agent {
     public String name;
     protected CellType[][] level;
     private long lastTime;
-    private int direction=0;
-    private int newDirection=0;
+    protected int direction=0;
+    protected int newDirection=0;
 
     Agent(int x, int y, String name, CellType[][] level) {
         this.position.x = x;
@@ -58,7 +58,7 @@ abstract public class Agent {
             case 2 -> this.newDirection = 2;
             case 3 -> this.newDirection = 3;
             case 4 -> this.newDirection = 4;
-            default ->{}
+            default ->{this.newDirection = 0;}
         }
     }
 
@@ -67,7 +67,7 @@ abstract public class Agent {
         this.position.y=y;
     }
 
-    private void changeDirection(){
+    protected void changeDirection(){
         switch (newDirection) {
             case 1 -> {
                 if(moveUpPossible())
@@ -143,5 +143,15 @@ abstract public class Agent {
             return true;
         else
             return false;
+    }
+
+    public boolean moveInDirPossible(int direction){
+        switch (direction) {
+            case 1: return moveUpPossible();
+            case 2: return moveRightPossible();
+            case 3: return moveDownPossible();
+            case 4: return moveLeftPossible();
+            default: return false;
+        }
     }
 }
