@@ -176,10 +176,10 @@ public class GameLogic {
     }
 
     private void step(int x, int y, int d) {
-        // 1) poza mapą lub ściana – wracamy
+     
         if (x < 0 || x >= this.x || y < 0 || y >= this.y) return;
         if (labirynt[x][y] == CellType.WALL || labirynt[x][y] == CellType.GHOSTHOUSE) {
-            if (distanceField[x][y] == 0)          // 0 = niezainicjowane
+            if (distanceField[x][y] == 0)         
                 distanceField[x][y] = -1;
             return;
         }
@@ -188,12 +188,10 @@ public class GameLogic {
             return;
         }
     
-        // 2) znaleźliśmy już krótszą drogę ⇒ nie schodzimy głębiej
         if (d >= distanceField[x][y]) return;
     
-        distanceField[x][y] = d;      // zapisz lepszy wynik
+        distanceField[x][y] = d;      
     
-        // 3) rekurencja w cztery strony (głębiej o 1)
         step(x + 1, y, d + 1);
         step(x - 1, y, d + 1);
         step(x, y + 1, d + 1);

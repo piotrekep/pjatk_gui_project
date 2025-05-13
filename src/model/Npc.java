@@ -28,56 +28,49 @@ public class Npc extends Agent {
 
 
 
-    public void moveAstar(double speed, int[][] distField) {
-
-        int x = position.x;                 // wiersz   (rosnący w dół)
-        int y = position.y;                 // kolumna (rosnący w prawo)
+    public void moveAstar(double speed, int[][] distField) { 
     
-        int rows = distField.length;        // liczba wierszy
-        int cols = distField[0].length;     // liczba kolumn
+        int bestDir  = 0;                  
+        int bestDist = Integer.MAX_VALUE;   
     
-        int bestDir  = 0;                   // 0 = brak legalnego ruchu
-        int bestDist = Integer.MAX_VALUE;   // szukamy MIN
-    
-        /* ----------- 1) góra (x-1,y) ---------------- */
-        if (x > 0) {
-            int v = distField[x - 1][y];
-            if (v >= 0 && v < bestDist) {   // legalne pole i lepszy dystans
+        
+        if (position.x > 0) {
+            int v = distField[position.x - 1][position.y];
+            if (v >= 0 && v < bestDist) {   
                 bestDist = v;
-                bestDir  = 1;               // ↑
+                bestDir  = 1;              
             }
         }
-        /* ----------- 2) prawo (x,y+1) -------------- */
-        if (y + 1 < cols) {
-            int v = distField[x][y + 1];
+      
+        if (position.y + 1 < distField[0].length) {
+            int v = distField[position.x][position.y + 1];
             if (v >= 0 && v < bestDist) {
                 bestDist = v;
-                bestDir  = 2;               // →
+                bestDir  = 2;               
             }
         }
-        /* ----------- 3) dół (x+1,y) ---------------- */
-        if (x + 1 < rows) {
-            int v = distField[x + 1][y];
+       
+        if (position.x + 1 < distField.length) {
+            int v = distField[position.x + 1][position.y];
             if (v >= 0 && v < bestDist) {
                 bestDist = v;
-                bestDir  = 3;               // ↓
+                bestDir  = 3;             
             }
         }
-        /* ----------- 4) lewo (x,y-1) --------------- */
+   
         if (y > 0) {
-            int v = distField[x][y - 1];
+            int v = distField[position.x][position.y - 1];
             if (v >= 0 && v < bestDist) {
                 bestDist = v;
-                bestDir  = 4;               // ←
+                bestDir  = 4;            
             }
         }
     
-        /* ————  przekazujemy decyzję Twojej logice sterowania ———— */
         if (bestDir != 0) {
-            setDirection(bestDir);          // ustawia newDirection
+            setDirection(bestDir);        
         }
-        changeDirection();                  // sprawdza ściany i podmienia direction
-        move(speed);                        // faktyczne przesunięcie sprite’a
+        changeDirection();                
+        move(speed);                        
     }
 
 
