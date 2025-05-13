@@ -20,8 +20,8 @@ public class LevelRenderer extends DefaultTableCellRenderer {
             
             setBackground(type.getColor());
            
-            //setText(String.valueOf(type.val));
-            setText("");
+            setText(String.valueOf(type.val));
+            //setText("");
         } else {
             
             setBackground(Color.WHITE);

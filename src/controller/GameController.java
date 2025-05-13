@@ -206,6 +206,7 @@ public class GameController implements Runnable,
         resume();                 // żeby Player&Render wyszedł z pauzy
         npcThread.interrupt();
         // czekamy na oba wątki
+        frameBarrier.reset();
         try {
             npcThread.join();
             gameLoopThread.join();
@@ -281,12 +282,12 @@ public class GameController implements Runnable,
     @Override
     public void onCloseGameWindow() {
         stop();
-        gameLoopThread.interrupt();
+     /*   gameLoopThread.interrupt();
         try {
             gameLoopThread.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-        }
+        }*/
 
         game.setVisible(false);
         menu.setVisible(true);
