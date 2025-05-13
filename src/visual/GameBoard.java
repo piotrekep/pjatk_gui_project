@@ -14,7 +14,7 @@ public class GameBoard extends AbstractTableModel {
         this.table = new CellTypeVisu[this.sizeX][this.sizeY];
         for (int i = 0; i < table.length; i++)
             for (int j = 0; j < table[i].length; j++)
-                table[i][j] = CellTypeVisu.WALL;
+                table[i][j] = new CellTypeVisu(CellTypeVisu.Type.WALL);//CellTypeVisu.WALL;
 
     }
 

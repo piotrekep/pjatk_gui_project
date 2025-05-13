@@ -14,20 +14,16 @@ import visual.MenuView;
 import visual.ScoreView;
 import visual.CellTypeVisu;
 
+public class GameController implements Runnable,
+        MenuView.MenuListener,
+        ScoreView.ScoreListener,
+        DifficultyView.DifficultyListener,
+        GameView.GameListener,
+        GameLogicListener {
 
-
-
-public class GameController implements  Runnable,
-                                        MenuView.MenuListener,
-                                        ScoreView.ScoreListener,
-                                        DifficultyView.DifficultyListener,
-                                        GameView.GameListener,
-                                        GameLogicListener {
-
-
-    private Thread gameLoopThread;                                        
-    private volatile boolean paused  = false;
-    private final Object  pauseLock = new Object();
+    private Thread gameLoopThread;
+    private volatile boolean paused = false;
+    private final Object pauseLock = new Object();
     private volatile boolean running;
     private KeyHandler keyhandler;
     public GameLogic gamelogic;
@@ -41,17 +37,17 @@ public class GameController implements  Runnable,
     private final long OPTIMAL_TIME;
 
     public GameController(KeyHandler keyhandler,
-                            MenuView menu,
-                            ScoreView score,
-                            DifficultyView difficulty,
-                            GameView game ){
-        this.keyhandler=keyhandler;
-        this.menu=menu;
-        this.score=score;
-        this.difficulty=difficulty;
-        this.game=game;
+            MenuView menu,
+            ScoreView score,
+            DifficultyView difficulty,
+            GameView game) {
+        this.keyhandler = keyhandler;
+        this.menu = menu;
+        this.score = score;
+        this.difficulty = difficulty;
+        this.game = game;
 
-        this.OPTIMAL_TIME = 1_000_000_000L /  this.TARGET_FPS ;
+        this.OPTIMAL_TIME = 1_000_000_000L / this.TARGET_FPS;
 
         this.menu.setListener(this);
         this.score.setListener(this);
@@ -59,7 +55,6 @@ public class GameController implements  Runnable,
 
         this.game.setListener(this);
         this.game.setKeyListener(keyhandler);
-
 
         this.menu.setVisible(true);
     }
@@ -70,37 +65,35 @@ public class GameController implements  Runnable,
         long lastTime = System.nanoTime();
 
         while (running) {
-            
+
             synchronized (pauseLock) {
                 while (paused) {
                     try {
                         pauseLock.wait();
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
-                        return; 
+                        return;
                     }
                 }
             }
             long now = System.nanoTime();
             long elapsedNanos = now - lastTime;
             lastTime = now;
-            //double delta = (double) elapsedNanos / OPTIMAL_TIME;
+            // double delta = (double) elapsedNanos / OPTIMAL_TIME;
 
             gamelogic.updatePlayer(
-                keyhandler.up(),
-                keyhandler.down(),
-                keyhandler.left(),
-                keyhandler.right(),
-                5
-            );
+                    keyhandler.up(),
+                    keyhandler.down(),
+                    keyhandler.left(),
+                    keyhandler.right(),
+                    5);
             game.setScore(gamelogic.getPlayerScore("player"));
 
-            gamelogic.updateNpc(10, "enemy");
+            gamelogic.updateNpc(3, "enemy");
 
             this.game.updateLevel(
-                stateToVisu(gamelogic.getGameState())
-            );
-           
+                    stateToVisu(gamelogic.getGameState()));
+
             long frameTime = System.nanoTime() - now;
             long sleepTimeMs = (OPTIMAL_TIME - frameTime) / 1_000_000L;
 
@@ -108,37 +101,34 @@ public class GameController implements  Runnable,
                 try {
                     Thread.sleep(sleepTimeMs);
                 } catch (InterruptedException e) {
-                   
+
                     Thread.currentThread().interrupt();
                 }
             }
         }
     }
 
-
-
-    private CellTypeVisu[][] stateToVisu(CellType[][] board){
+    private CellTypeVisu[][] stateToVisu(CellType[][] board) {
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
-        for(int i=0; i<temp.length;i++)
-            for(int j=0; j<temp[0].length;j++){
+        for (int i = 0; i < temp.length; i++)
+            for (int j = 0; j < temp[0].length; j++) {
                 switch (board[i][j]) {
-                    case CellType.EMPTY -> temp[i][j]=CellTypeVisu.EMPTY;
-                    case CellType.WALL -> temp[i][j]=CellTypeVisu.WALL;
-                    case CellType.PLAYER -> temp[i][j]=CellTypeVisu.PLAYER;
-                    case CellType.NPC1 -> temp[i][j]=CellTypeVisu.NPC1;
-                    case CellType.NPC2 -> temp[i][j]=CellTypeVisu.NPC2;
-                    case CellType.GHOSTHOUSE -> temp[i][j]=CellTypeVisu.GHOSTHOUSE;
-                    case CellType.GHOSTFLOOR -> temp[i][j]=CellTypeVisu.GHOSTFLOOR;
-                    case CellType.POINT -> temp[i][j]=CellTypeVisu.POINT;
-                    default -> temp[i][j] = CellTypeVisu.EMPTY;
-                    }
+                    case CellType.EMPTY -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.EMPTY);
+                    case CellType.WALL -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.WALL);
+                    case CellType.PLAYER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.PLAYER);
+                    case CellType.NPC1 -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC1);
+                    case CellType.NPC2 -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC2);
+                    case CellType.GHOSTHOUSE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTHOUSE);
+                    case CellType.GHOSTFLOOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTFLOOR);
+                    case CellType.POINT -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POINT);
+                    default -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.EMPTY);
+                }
+                
+                temp[i][j].val=gamelogic.getDistanceField()[i][j];
             }
         return temp;
-        
+
     }
-
-
-
 
     public void stop() {
         running = false;
@@ -158,7 +148,6 @@ public class GameController implements  Runnable,
             pauseLock.notifyAll();
         }
     }
-
 
     public KeyListener getKeyListener() {
         return keyhandler.getKeyListener();
@@ -197,7 +186,7 @@ public class GameController implements  Runnable,
     public void onStartGame(int x, int y) {
         game.createLevel(x, y);
 
-        gamelogic = new GameLogic(x,y);
+        gamelogic = new GameLogic(x, y);
         this.gamelogic.setListener(this);
 
         game.setVisible(true);
@@ -211,7 +200,7 @@ public class GameController implements  Runnable,
 
     @Override
     public void onCloseGameWindow() {
-        stop(); 
+        stop();
         gameLoopThread.interrupt();
         try {
             gameLoopThread.join();
