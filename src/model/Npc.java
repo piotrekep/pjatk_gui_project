@@ -58,7 +58,7 @@ public class Npc extends Agent {
             }
         }
    
-        if (y > 0) {
+        if (position.y > 0) {
             int v = distField[position.x][position.y - 1];
             if (v >= 0 && v < bestDist) {
                 bestDist = v;

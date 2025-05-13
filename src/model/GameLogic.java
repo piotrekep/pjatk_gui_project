@@ -30,7 +30,7 @@ public class GameLogic {
         this.y = y;
         maxPoints = 0;
         generateLevel();
-
+        //calcDistanceField(3, 3);
         // fillWithPoints(this.labirynt);
         this.labirynt[3][3] = CellType.EMPTY;
         Player agent = SpawnPlayer(3, 3, "player");
@@ -64,6 +64,7 @@ public class GameLogic {
             player.stopPlayer();
             maxPoints--;
         }
+        calcDistanceField();
 
         Npc npc = (Npc) agentList.get("enemy");
         if (npc != null) {
@@ -89,7 +90,7 @@ public class GameLogic {
 
         }
         player.move(speed);
-        calcDistanceField(player.position.x, player.position.y);
+        calcDistanceField();
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
     }
@@ -98,6 +99,7 @@ public class GameLogic {
         Npc npc = (Npc) agentList.get(name);
         if (npc != null)
             //npc.moveRandom(speed);
+            if(distanceField!=null)
             npc.moveAstar(speed,distanceField);
     }
 
@@ -183,11 +185,9 @@ public class GameLogic {
                 distanceField[x][y] = -1;
             return;
         }
-        if (labirynt[x][y] == CellType.GHOSTFLOOR){
-            distanceField[x][y]=255+d;
-            return;
-        }
-    
+        if (labirynt[x][y] == CellType.GHOSTFLOOR)
+            d=d+255;
+      
         if (d >= distanceField[x][y]) return;
     
         distanceField[x][y] = d;      
@@ -198,10 +198,13 @@ public class GameLogic {
         step(x, y - 1, d + 1);
     }
 
-void calcDistanceField(int ox, int oy) {
+    public void calcDistanceFieldRec() {
+    Player player = (Player) agentList.get("player");
+    if (player == null) return;
+
     distanceField = new int[x][y];
     for (int[] row : distanceField) Arrays.fill(row, Integer.MAX_VALUE);
-    step(ox, oy, 0);
+    step(player.position.x, player.position.y, 0);
 
     for (int x = 0; x < this.x; x++) {
         for (int y = 0; y < this.y; y++) {
@@ -211,8 +214,71 @@ void calcDistanceField(int ox, int oy) {
     }
 }
 
+public void calcDistanceField() {
+    Player player = (Player) agentList.get("player");
+    if (player == null) return;
+
+    final int UNSEEN = Integer.MAX_VALUE;          // znacznik "nie odwiedzone"
+    /* ------------- INIT tablicy (bez nowej alokacji) ------------- */
+    if (distanceField == null || distanceField.length != x || distanceField[0].length != y)
+        distanceField = new int[x][y];
+
+    for (int i = 0; i < x; i++) Arrays.fill(distanceField[i], UNSEEN);
+
+    /* ------------- Kolejka BFS – dwa płaskie bufory -------------- */
+    final int max = x * y;
+    int[] qx = new int[max];        // współrzędne X
+    int[] qy = new int[max];        // współrzędne Y
+    int head = 0, tail = 0;
+
+    int sx = player.position.x;
+    int sy = player.position.y;
+    distanceField[sx][sy] = 0;
+    qx[tail] = sx;
+    qy[tail] = sy;
+    tail++;
+
+    final int[] dx = { 1, -1, 0, 0 };
+    final int[] dy = { 0, 0, 1, -1 };
+
+    /* --------------------------- BFS ----------------------------- */
+    while (head < tail) {
+        int cx = qx[head];
+        int cy = qy[head];
+        head++;
+
+        int nextDist = distanceField[cx][cy] + 1;
+
+        for (int dir = 0; dir < 4; dir++) {
+            int nx = cx + dx[dir];
+            int ny = cy + dy[dir];
+
+            if (nx < 0 || nx >= x || ny < 0 || ny >= y) continue;
+            if (labirynt[nx][ny] == CellType.WALL || labirynt[nx][ny] == CellType.GHOSTHOUSE) continue;
+            if (distanceField[nx][ny] <= nextDist) continue;   // już mamy krótszą
+
+            distanceField[nx][ny] = nextDist;   // zapisz nowy dystans
+            qx[tail] = nx;                      // push do kolejki
+            qy[tail] = ny;
+            tail++;
+        }
+    }
+
+    /* ---------- Nieosiągalne pola → -1 (jak w oryginale) --------- */
+    for (int i = 0; i < x; i++) {
+        for (int j = 0; j < y; j++) {
+            if (distanceField[i][j] == UNSEEN)
+                distanceField[i][j] = -1;
+        }
+    }
+}
+
 
     public int[][] getDistanceField() {
         return distanceField;
+    }
+
+    public Player getPlayer(String name){
+        return (Player)agentList.get(name);
     }
 }

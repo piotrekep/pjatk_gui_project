@@ -1,12 +1,14 @@
 package model;
 
-import model.GameLogic.GameLogicListener;
+
 
 public class Player extends Agent {
 
 
     private long lastTime;
     private int points = 0;
+
+
 
     public Player(int x, int y, String name, CellType[][] level) {
         super(x, y, name, level);

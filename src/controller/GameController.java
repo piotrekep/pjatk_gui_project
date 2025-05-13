@@ -5,8 +5,12 @@ import model.GameLogic;
 import model.GameLogic.GameLogicListener;
 
 import java.awt.event.KeyListener;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import visual.DifficultyView;
 import visual.GameView;
@@ -19,7 +23,7 @@ public class GameController implements Runnable,
         ScoreView.ScoreListener,
         DifficultyView.DifficultyListener,
         GameView.GameListener,
-        GameLogicListener {
+        GameLogicListener{
 
     private Thread gameLoopThread;
     private volatile boolean paused = false;
@@ -28,6 +32,9 @@ public class GameController implements Runnable,
     private KeyHandler keyhandler;
     public GameLogic gamelogic;
 
+    private final CyclicBarrier frameBarrier = new CyclicBarrier(2);
+    private Thread npcThread; 
+
     private MenuView menu;
     private ScoreView score;
     private DifficultyView difficulty;
@@ -35,6 +42,9 @@ public class GameController implements Runnable,
 
     private final int TARGET_FPS = 30;
     private final long OPTIMAL_TIME;
+
+    
+
 
     public GameController(KeyHandler keyhandler,
             MenuView menu,
@@ -79,7 +89,9 @@ public class GameController implements Runnable,
             long now = System.nanoTime();
             long elapsedNanos = now - lastTime;
             lastTime = now;
-            // double delta = (double) elapsedNanos / OPTIMAL_TIME;
+            double delta = (double) elapsedNanos / OPTIMAL_TIME;
+            
+
 
             gamelogic.updatePlayer(
                     keyhandler.up(),
@@ -87,12 +99,35 @@ public class GameController implements Runnable,
                     keyhandler.left(),
                     keyhandler.right(),
                     5);
+
+                 
+                  /* 2. czekaj na start NPC */
+        try {
+            frameBarrier.await();
+        } catch (InterruptedException | BrokenBarrierException ex) {
+            Thread.currentThread().interrupt();
+            return;                    // wychodzimy z pętli run()
+        }
+
+        /* 3. czekaj, aż NPC skończą */
+        try {
+            frameBarrier.await();
+        } catch (InterruptedException | BrokenBarrierException ex) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+
+
             game.setScore(gamelogic.getPlayerScore("player"));
 
             gamelogic.updateNpc(3, "enemy");
 
-            this.game.updateLevel(
-                    stateToVisu(gamelogic.getGameState()));
+           // this.game.updateLevel(
+            //        stateToVisu(gamelogic.getGameState()));
+            
+            CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
+            SwingUtilities.invokeLater(() ->
+                    game.updateLevel(frame));         
 
             long frameTime = System.nanoTime() - now;
             long sleepTimeMs = (OPTIMAL_TIME - frameTime) / 1_000_000L;
@@ -107,6 +142,36 @@ public class GameController implements Runnable,
             }
         }
     }
+
+
+    private Runnable npcLoop() {
+    return () -> {
+        long last = System.nanoTime();
+        try {
+            while (running) {
+
+                /* czekamy aż wątek A policzy gracza */
+                frameBarrier.await();
+                
+
+                /* ruch wszystkich NPC */
+                gamelogic.updateNpc(3, "enemy");
+
+
+                /* sygnał: „NPC gotowe” – wątek A może renderować */
+                frameBarrier.await();
+
+                /* małe wyrównanie do ~TARGET_FPS */
+                long dt = System.nanoTime() - last;
+                long sleep = OPTIMAL_TIME - dt;
+                if (sleep > 0) TimeUnit.NANOSECONDS.sleep(sleep);
+                last = System.nanoTime();
+            }
+        } catch (InterruptedException | BrokenBarrierException ex) {
+            Thread.currentThread().interrupt();
+        }
+    };
+}
 
     private CellTypeVisu[][] stateToVisu(CellType[][] board) {
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
@@ -130,10 +195,23 @@ public class GameController implements Runnable,
 
     }
 
-    public void stop() {
+    public void stop_old() {
         running = false;
         // obudź, żeby nie wisiał w pauzie
         resume();
+    }
+
+    public void stop() {
+        running = false;
+        resume();                 // żeby Player&Render wyszedł z pauzy
+        npcThread.interrupt();
+        // czekamy na oba wątki
+        try {
+            npcThread.join();
+            gameLoopThread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /** Wejdź w stan pauzy (wątek idzie do wait()) */
@@ -193,9 +271,11 @@ public class GameController implements Runnable,
         difficulty.setVisible(false);
 
         running = true;
-        gameLoopThread = new Thread(this, "GameLoopThread");
+        gameLoopThread = new Thread(this, "GameLoopThread");        
+        npcThread      = new Thread(npcLoop(), "NPC-Thread");
+        
         gameLoopThread.start();
-
+        npcThread.start();
     }
 
     @Override
