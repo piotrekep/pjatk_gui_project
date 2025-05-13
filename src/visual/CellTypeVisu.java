@@ -4,14 +4,18 @@ package visual;
 import java.awt.Color;
 
 
+
 public class CellTypeVisu {
 
     public enum Type {
         EMPTY(Color.WHITE),
         WALL(Color.DARK_GRAY),
         PLAYER(Color.BLUE),
-        NPC1(Color.GREEN),
-        NPC2(Color.ORANGE),
+        NPC_CHASER(Color.GREEN),
+        NPC_AGGRO(Color.YELLOW),
+        NPC_KEYBOARDWARRIOR(Color.MAGENTA),
+        NPC_HEADLESSCHICKEN(Color.CYAN),
+        NPC_COWARD(Color.ORANGE),
         GHOSTHOUSE(Color.GRAY),
         GHOSTFLOOR(Color.PINK),
         POINT(Color.LIGHT_GRAY);

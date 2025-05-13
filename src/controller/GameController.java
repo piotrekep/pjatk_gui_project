@@ -91,8 +91,6 @@ public class GameController implements Runnable,
             lastTime = now;
             double delta = (double) elapsedNanos / OPTIMAL_TIME;
             
-
-
             gamelogic.updatePlayer(
                     keyhandler.up(),
                     keyhandler.down(),
@@ -100,16 +98,13 @@ public class GameController implements Runnable,
                     keyhandler.right(),
                     5);
 
-                 
-                  /* 2. czekaj na start NPC */
         try {
             frameBarrier.await();
         } catch (InterruptedException | BrokenBarrierException ex) {
             Thread.currentThread().interrupt();
-            return;                    // wychodzimy z pętli run()
+            return;                    
         }
 
-        /* 3. czekaj, aż NPC skończą */
         try {
             frameBarrier.await();
         } catch (InterruptedException | BrokenBarrierException ex) {
@@ -120,11 +115,8 @@ public class GameController implements Runnable,
 
             game.setScore(gamelogic.getPlayerScore("player"));
 
-            gamelogic.updateNpc(3, "enemy");
+           // gamelogic.updateNpc(3, "enemy");
 
-           // this.game.updateLevel(
-            //        stateToVisu(gamelogic.getGameState()));
-            
             CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
             SwingUtilities.invokeLater(() ->
                     game.updateLevel(frame));         
@@ -155,7 +147,7 @@ public class GameController implements Runnable,
                 
 
                 /* ruch wszystkich NPC */
-                gamelogic.updateNpc(3, "enemy");
+                gamelogic.updateNpc(3, "enemy",keyhandler.test());
 
 
                 /* sygnał: „NPC gotowe” – wątek A może renderować */
@@ -181,8 +173,11 @@ public class GameController implements Runnable,
                     case CellType.EMPTY -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.EMPTY);
                     case CellType.WALL -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.WALL);
                     case CellType.PLAYER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.PLAYER);
-                    case CellType.NPC1 -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC1);
-                    case CellType.NPC2 -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC2);
+                    case CellType.NPC_CHASER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_CHASER);
+                    case CellType.NPC_AGGRO -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_AGGRO);
+                    case CellType.NPC_KEYBOARDWARRIOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
+                    case CellType.NPC_HEADLESSCHICKEN -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
+                    case CellType.NPC_COWARD -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_COWARD);
                     case CellType.GHOSTHOUSE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTHOUSE);
                     case CellType.GHOSTFLOOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTFLOOR);
                     case CellType.POINT -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POINT);

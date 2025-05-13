@@ -112,9 +112,7 @@ public class GameView extends JFrame {
 
                 table.setRowHeight(cellH);
                 for (int c = 0; c < cols; c++) {
-                    table.getColumnModel()
-                            .getColumn(c)
-                            .setPreferredWidth(cellW);
+                    table.getColumnModel().getColumn(c).setPreferredWidth(cellW);
                 }
                 table.revalidate();
             }

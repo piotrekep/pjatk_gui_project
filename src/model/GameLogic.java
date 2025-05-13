@@ -95,12 +95,17 @@ public class GameLogic {
             listener.onVictory();
     }
 
-    public void updateNpc(double speed, String name) {
+    public void updateNpc(double speed, String name,boolean powerup) {
         Npc npc = (Npc) agentList.get(name);
         if (npc != null)
             //npc.moveRandom(speed);
             if(distanceField!=null)
-            npc.moveAstar(speed,distanceField);
+            //npc.moveAstar(speed,distanceField);
+            if(powerup)
+                npc.movePersonality(speed,10,distanceField,Personality.COWARD);
+            else
+                npc.movePersonality(speed,10,distanceField,Personality.CHASER);
+
     }
 
     public CellType[][] getGameState() {
@@ -113,7 +118,7 @@ public class GameLogic {
         for (Agent agent : agentList.values()) {
             switch (agent) {
                 case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
-                case Npc n -> gameState[n.position.x][n.position.y] = CellType.NPC1;
+                case Npc n -> gameState[n.position.x][n.position.y] = CellType.NPC_CHASER;
                 default -> {
                 }
             }
@@ -218,17 +223,16 @@ public void calcDistanceField() {
     Player player = (Player) agentList.get("player");
     if (player == null) return;
 
-    final int UNSEEN = Integer.MAX_VALUE;          // znacznik "nie odwiedzone"
-    /* ------------- INIT tablicy (bez nowej alokacji) ------------- */
+      
     if (distanceField == null || distanceField.length != x || distanceField[0].length != y)
         distanceField = new int[x][y];
 
-    for (int i = 0; i < x; i++) Arrays.fill(distanceField[i], UNSEEN);
+    for (int i = 0; i < x; i++) Arrays.fill(distanceField[i], Integer.MAX_VALUE);
 
-    /* ------------- Kolejka BFS – dwa płaskie bufory -------------- */
+
     final int max = x * y;
-    int[] qx = new int[max];        // współrzędne X
-    int[] qy = new int[max];        // współrzędne Y
+    int[] qx = new int[max];        
+    int[] qy = new int[max];        
     int head = 0, tail = 0;
 
     int sx = player.position.x;
@@ -241,7 +245,6 @@ public void calcDistanceField() {
     final int[] dx = { 1, -1, 0, 0 };
     final int[] dy = { 0, 0, 1, -1 };
 
-    /* --------------------------- BFS ----------------------------- */
     while (head < tail) {
         int cx = qx[head];
         int cy = qy[head];
@@ -255,19 +258,18 @@ public void calcDistanceField() {
 
             if (nx < 0 || nx >= x || ny < 0 || ny >= y) continue;
             if (labirynt[nx][ny] == CellType.WALL || labirynt[nx][ny] == CellType.GHOSTHOUSE) continue;
-            if (distanceField[nx][ny] <= nextDist) continue;   // już mamy krótszą
+            if (distanceField[nx][ny] <= nextDist) continue;   
 
-            distanceField[nx][ny] = nextDist;   // zapisz nowy dystans
-            qx[tail] = nx;                      // push do kolejki
+            distanceField[nx][ny] = nextDist;  
+            qx[tail] = nx;                      
             qy[tail] = ny;
             tail++;
         }
     }
 
-    /* ---------- Nieosiągalne pola → -1 (jak w oryginale) --------- */
     for (int i = 0; i < x; i++) {
         for (int j = 0; j < y; j++) {
-            if (distanceField[i][j] == UNSEEN)
+            if (distanceField[i][j] == Integer.MAX_VALUE)
                 distanceField[i][j] = -1;
         }
     }

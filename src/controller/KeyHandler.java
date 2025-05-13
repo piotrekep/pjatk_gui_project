@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    private volatile boolean up, down, left, right;
+    private volatile boolean up, down, left, right, test;
 
     public KeyHandler() {
 
@@ -26,6 +26,7 @@ public class KeyHandler implements KeyListener {
         down=false;
         left=false;
         right=false;
+        test=false;
     }
 
     private void set(KeyEvent e, boolean val) {
@@ -34,6 +35,7 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_S, KeyEvent.VK_DOWN -> down = val;
             case KeyEvent.VK_A, KeyEvent.VK_LEFT -> left = val;
             case KeyEvent.VK_D, KeyEvent.VK_RIGHT -> right = val;
+            case KeyEvent.VK_Z -> test = val;
         }
     }
 
@@ -60,5 +62,9 @@ public class KeyHandler implements KeyListener {
 
     public boolean right() {
         return right;
+    }
+    
+    public boolean test() {
+        return test;
     }
 }

@@ -78,13 +78,11 @@ public class Labirynth {
         };
 
         for (int[] off : offsets) {
-            int nx = X + off[0];
-            int ny = Y + off[1];
 
-            if (nx >= 0 && nx < visited.length
-                    && ny >= 0 && ny < visited[nx].length) {
-                if (!visited[nx][ny]) {
-                    punkty.add(new Point(nx, ny));
+            if ((X + off[0]) >= 0 && (X + off[0]) < visited.length
+                    && (Y + off[1]) >= 0 && (Y + off[1]) < visited[(X + off[0])].length) {
+                if (!visited[(X + off[0])][(Y + off[1])]) {
+                    punkty.add(new Point((X + off[0]), (Y + off[1])));
                 }
             }
         }
