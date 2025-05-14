@@ -2,9 +2,20 @@ package model;
 
 import java.util.Random;
 
+import model.GameLogic.GameLogicListener;
+import visual.CellTypeVisu;
+
 public class Npc extends Agent {
+    public interface NpcListener {
+        void onCollision();
+    }
+
+    private NpcListener listener;
+
+
     Random rnd;
     int rndDir;
+    private Personality personality = Personality.AGGRO;
 
     public Npc(int x, int y, String name, CellType[][] level) {
         super(x, y, name, level);
@@ -12,110 +23,68 @@ public class Npc extends Agent {
         rndDir = rnd.nextInt(1, 4);
     }
 
-    public void moveRandom(double speed){
-      
-        //setDirection(rndDir);
+    public void moveRandom(double speed) {
 
-        if(!moveInDirPossible(direction)){
+        // setDirection(rndDir);
+
+        if (!moveInDirPossible(direction)) {
             rndDir = (int) Math.round(rnd.nextDouble(1, 4));
             setDirection(rndDir);
             changeDirection();
         }
- 
+
         move(speed);
     }
 
+    public void moveAstar(double speed, int[][] distField) {
 
+        int bestDir = 0;
+        int bestDist = Integer.MAX_VALUE;
 
-
-    public void moveAstar(double speed, int[][] distField) { 
-    
-        int bestDir  = 0;                  
-        int bestDist = Integer.MAX_VALUE;   
-    
-        
         if (position.x > 0) {
             int v = distField[position.x - 1][position.y];
-            if (v >= 0 && v < bestDist) {   
-                bestDist = v;
-                bestDir  = 1;              
-            }
+            if (v >= 0)
+                if (v < bestDist) {
+                    bestDist = v;
+                    bestDir = 1;
+                }
+                else if( v == bestDist && Math.random()>0.5)
+                    bestDir = 1;
         }
-      
+
         if (position.y + 1 < distField[0].length) {
             int v = distField[position.x][position.y + 1];
-            if (v >= 0 && v < bestDist) {
-                bestDist = v;
-                bestDir  = 2;               
-            }
+            if (v >= 0)
+                if (v < bestDist) {
+                    bestDist = v;
+                    bestDir = 2;
+                }
+                else if( v == bestDist && Math.random()>0.5)
+                    bestDir = 2;
         }
-       
+
         if (position.x + 1 < distField.length) {
             int v = distField[position.x + 1][position.y];
-            if (v >= 0 && v < bestDist) {
-                bestDist = v;
-                bestDir  = 3;             
-            }
+            if (v >= 0)
+                if (v < bestDist) {
+                    bestDist = v;
+                    bestDir = 3;
+                }
+                else if( v == bestDist && Math.random()>0.5)
+                    bestDir = 3;
         }
-   
+
         if (position.y > 0) {
             int v = distField[position.x][position.y - 1];
-            if (v >= 0 && v < bestDist) {
-                bestDist = v;
-                bestDir  = 4;            
-            }
+            if (v >= 0)
+                if (v < bestDist) {
+                    bestDist = v;
+                    bestDir = 4;
+                }
+                else if( v == bestDist && Math.random()>0.5)
+                    bestDir = 4;
         }
-    
-        if (bestDir != 0) {
-            setDirection(bestDir);        
-        }
-        changeDirection();                
-        move(speed);                        
-    }
 
-
-    public void moveAstarInv(double speed, int[][] distField)  {
-
-        int bestDir  = 0;          // 0 = no valid move found yet
-        int bestDist = -1;         // start lower than any legal cell value (-1 = unreachable)
-    
-        // LEFT  (x-1, y)
-        if (position.x > 0) {
-            int v = distField[position.x - 1][position.y];
-            if (v >= 0 && v > bestDist) {      // prefer the *largest* reachable value
-                bestDist = v;
-                bestDir  = 1;
-            }
-        }
-    
-        // DOWN  (x, y+1)      — Y grows downward in most 2-D arrays
-        if (position.y + 1 < distField[0].length) {
-            int v = distField[position.x][position.y + 1];
-            if (v >= 0 && v > bestDist) {
-                bestDist = v;
-                bestDir  = 2;
-            }
-        }
-    
-        // RIGHT (x+1, y)
-        if (position.x + 1 < distField.length) {
-            int v = distField[position.x + 1][position.y];
-            if (v >= 0 && v > bestDist) {
-                bestDist = v;
-                bestDir  = 3;
-            }
-        }
-    
-        // UP    (x, y-1)
-        if (position.y > 0) {
-            int v = distField[position.x][position.y - 1];
-            if (v >= 0 && v > bestDist) {
-                bestDist = v;
-                bestDir  = 4;
-            }
-        }
-    
-        // Commit to the best direction found (if any), then move.
         if (bestDir != 0) {
             setDirection(bestDir);
         }
@@ -123,9 +92,74 @@ public class Npc extends Agent {
         move(speed);
     }
 
-    void movePersonality(double speed, int thresh,int[][] distField, Personality p){
-        
-        switch (p) {
+    public void moveAstarInv(double speed, int[][] distField) {
+
+        int bestDir  = 0;
+        int bestDist = -1;  // start below any reachable cell
+    
+        // LEFT (x-1, y) → dir=1
+        if (position.x > 0) {
+            int v = distField[position.x - 1][position.y];
+            if (v >= 0) {
+                if (v > bestDist) {
+                    bestDist = v;
+                    bestDir  = 1;
+                } else if (v == bestDist && Math.random() > 0.5) {
+                    bestDir  = 1;
+                }
+            }
+        }
+    
+        // DOWN (x, y+1) → dir=2
+        if (position.y + 1 < distField[0].length) {
+            int v = distField[position.x][position.y + 1];
+            if (v >= 0) {
+                if (v > bestDist) {
+                    bestDist = v;
+                    bestDir  = 2;
+                } else if (v == bestDist && Math.random() > 0.5) {
+                    bestDir  = 2;
+                }
+            }
+        }
+    
+        // RIGHT (x+1, y) → dir=3
+        if (position.x + 1 < distField.length) {
+            int v = distField[position.x + 1][position.y];
+            if (v >= 0) {
+                if (v > bestDist) {
+                    bestDist = v;
+                    bestDir  = 3;
+                } else if (v == bestDist && Math.random() > 0.5) {
+                    bestDir  = 3;
+                }
+            }
+        }
+    
+        // UP (x, y-1) → dir=4
+        if (position.y > 0) {
+            int v = distField[position.x][position.y - 1];
+            if (v >= 0) {
+                if (v > bestDist) {
+                    bestDist = v;
+                    bestDir  = 4;
+                } else if (v == bestDist && Math.random() > 0.5) {
+                    bestDir  = 4;
+                }
+            }
+        }
+    
+        if (bestDir != 0) {
+            setDirection(bestDir);
+        }
+        changeDirection();
+        move(speed);
+    }
+
+
+    void movePersonality(double speed, int thresh, int[][] distField) {
+
+        switch (personality) {
             case Personality.CHASER -> moveChaser(speed, distField);
             case Personality.HEADLESSCHICKEN -> moveChicken(speed);
             case Personality.KEYBOARDWARRIOR -> moveKeyboardWarrior(speed, thresh, distField);
@@ -135,37 +169,74 @@ public class Npc extends Agent {
             }
         }
 
+        if(distField[position.x][position.y] == 0 )
+            if (listener != null)
+              listener.onCollision();
+
     }
 
-    void moveChaser(double speed, int[][] distField){
+    public void setListener(NpcListener l) {
+        this.listener = l;
+    }
+
+    void moveChaser(double speed, int[][] distField) {
         moveAstar(speed, distField);
 
     }
 
-    void moveCoward(double speed, int[][] distField){
+    void moveCoward(double speed, int[][] distField) {
         moveAstarInv(speed, distField);
 
     }
 
-    void moveChicken(double speed){
+    void moveChicken(double speed) {
         moveRandom(speed);
     }
 
-    void moveAggro(double speed, int thresh,int[][] distField){
-        if(distField[position.x][position.y] < thresh)
-            moveAstar(speed, distField); 
+    void moveAggro(double speed, int thresh, int[][] distField) {
+        if (distField[position.x][position.y] < thresh)
+            moveAstar(speed, distField);
         else
             moveRandom(speed);
     }
 
-    void moveKeyboardWarrior(double speed, int thresh,int[][] distField){
-        if(distField[position.x][position.y] > thresh)
-            moveAstar(speed, distField); 
+    void moveKeyboardWarrior(double speed, int thresh, int[][] distField) {
+        if (distField[position.x][position.y] > thresh)
+            moveAstar(speed, distField);
         else
             moveRandom(speed);
     }
+
+    public void setPersonality(Personality p) {
+        this.personality = p;
+    }
+
+    public Personality getPersonality() {
+        return this.personality;
+    }
+
+    public CellType getCellType() {
+        switch (personality) {
+            case Personality.CHASER: {
+                return CellType.NPC_CHASER;
+            }
+            case Personality.AGGRO: {
+                return CellType.NPC_AGGRO;
+            }
+            case Personality.KEYBOARDWARRIOR: {
+                return CellType.NPC_KEYBOARDWARRIOR;
+            }
+            case Personality.HEADLESSCHICKEN: {
+                return CellType.NPC_HEADLESSCHICKEN;
+            }
+            case Personality.COWARD: {
+                return CellType.NPC_COWARD;
+            }
+            default: {
+                return CellType.NPC_CHASER;
+            }
+        }
+    }
+
+
 }
-
-
-
-

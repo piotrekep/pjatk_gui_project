@@ -23,7 +23,7 @@ public class GameController implements Runnable,
         ScoreView.ScoreListener,
         DifficultyView.DifficultyListener,
         GameView.GameListener,
-        GameLogicListener{
+        GameLogicListener {
 
     private Thread gameLoopThread;
     private volatile boolean paused = false;
@@ -33,7 +33,7 @@ public class GameController implements Runnable,
     public GameLogic gamelogic;
 
     private final CyclicBarrier frameBarrier = new CyclicBarrier(2);
-    private Thread npcThread; 
+    private Thread npcThread;
 
     private MenuView menu;
     private ScoreView score;
@@ -42,9 +42,6 @@ public class GameController implements Runnable,
 
     private final int TARGET_FPS = 30;
     private final long OPTIMAL_TIME;
-
-    
-
 
     public GameController(KeyHandler keyhandler,
             MenuView menu,
@@ -90,7 +87,7 @@ public class GameController implements Runnable,
             long elapsedNanos = now - lastTime;
             lastTime = now;
             double delta = (double) elapsedNanos / OPTIMAL_TIME;
-            
+
             gamelogic.updatePlayer(
                     keyhandler.up(),
                     keyhandler.down(),
@@ -98,28 +95,24 @@ public class GameController implements Runnable,
                     keyhandler.right(),
                     5);
 
-        try {
-            frameBarrier.await();
-        } catch (InterruptedException | BrokenBarrierException ex) {
-            Thread.currentThread().interrupt();
-            return;                    
-        }
+            try {
+                frameBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException ex) {
+                Thread.currentThread().interrupt();
+                return;
+            }
 
-        try {
-            frameBarrier.await();
-        } catch (InterruptedException | BrokenBarrierException ex) {
-            Thread.currentThread().interrupt();
-            return;
-        }
-
+            try {
+                frameBarrier.await();
+            } catch (InterruptedException | BrokenBarrierException ex) {
+                Thread.currentThread().interrupt();
+                return;
+            }
 
             game.setScore(gamelogic.getPlayerScore("player"));
 
-           // gamelogic.updateNpc(3, "enemy");
-
             CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
-            SwingUtilities.invokeLater(() ->
-                    game.updateLevel(frame));         
+            SwingUtilities.invokeLater(() -> game.updateLevel(frame));
 
             long frameTime = System.nanoTime() - now;
             long sleepTimeMs = (OPTIMAL_TIME - frameTime) / 1_000_000L;
@@ -135,35 +128,33 @@ public class GameController implements Runnable,
         }
     }
 
-
     private Runnable npcLoop() {
-    return () -> {
-        long last = System.nanoTime();
-        try {
-            while (running) {
+        return () -> {
+            long last = System.nanoTime();
+            try {
+                while (running) {
 
-                /* czekamy aż wątek A policzy gracza */
-                frameBarrier.await();
-                
+                    /* czekamy aż wątek A policzy gracza */
+                    frameBarrier.await();
 
-                /* ruch wszystkich NPC */
-                gamelogic.updateNpc(3, "enemy",keyhandler.test());
+                    /* ruch wszystkich NPC */
+                    gamelogic.updateNpc(3, "enemy", keyhandler.test());
 
+                    /* sygnał: „NPC gotowe” – wątek A może renderować */
+                    frameBarrier.await();
 
-                /* sygnał: „NPC gotowe” – wątek A może renderować */
-                frameBarrier.await();
-
-                /* małe wyrównanie do ~TARGET_FPS */
-                long dt = System.nanoTime() - last;
-                long sleep = OPTIMAL_TIME - dt;
-                if (sleep > 0) TimeUnit.NANOSECONDS.sleep(sleep);
-                last = System.nanoTime();
+                    /* małe wyrównanie do ~TARGET_FPS */
+                    long dt = System.nanoTime() - last;
+                    long sleep = OPTIMAL_TIME - dt;
+                    if (sleep > 0)
+                        TimeUnit.NANOSECONDS.sleep(sleep);
+                    last = System.nanoTime();
+                }
+            } catch (InterruptedException | BrokenBarrierException ex) {
+                Thread.currentThread().interrupt();
             }
-        } catch (InterruptedException | BrokenBarrierException ex) {
-            Thread.currentThread().interrupt();
-        }
-    };
-}
+        };
+    }
 
     private CellTypeVisu[][] stateToVisu(CellType[][] board) {
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
@@ -175,16 +166,18 @@ public class GameController implements Runnable,
                     case CellType.PLAYER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.PLAYER);
                     case CellType.NPC_CHASER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_CHASER);
                     case CellType.NPC_AGGRO -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_AGGRO);
-                    case CellType.NPC_KEYBOARDWARRIOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
-                    case CellType.NPC_HEADLESSCHICKEN -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
+                    case CellType.NPC_KEYBOARDWARRIOR ->
+                        temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
+                    case CellType.NPC_HEADLESSCHICKEN ->
+                        temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
                     case CellType.NPC_COWARD -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_COWARD);
                     case CellType.GHOSTHOUSE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTHOUSE);
                     case CellType.GHOSTFLOOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTFLOOR);
                     case CellType.POINT -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POINT);
                     default -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.EMPTY);
                 }
-                
-                temp[i][j].val=gamelogic.getDistanceField()[i][j];
+
+                temp[i][j].val = gamelogic.getDistanceField()[i][j];
             }
         return temp;
 
@@ -198,7 +191,7 @@ public class GameController implements Runnable,
 
     public void stop() {
         running = false;
-        resume();                 // żeby Player&Render wyszedł z pauzy
+        resume(); // żeby Player&Render wyszedł z pauzy
         npcThread.interrupt();
         // czekamy na oba wątki
         frameBarrier.reset();
@@ -267,9 +260,9 @@ public class GameController implements Runnable,
         difficulty.setVisible(false);
 
         running = true;
-        gameLoopThread = new Thread(this, "GameLoopThread");        
-        npcThread      = new Thread(npcLoop(), "NPC-Thread");
-        
+        gameLoopThread = new Thread(this, "GameLoopThread");
+        npcThread = new Thread(npcLoop(), "NPC-Thread");
+
         gameLoopThread.start();
         npcThread.start();
     }
@@ -277,13 +270,6 @@ public class GameController implements Runnable,
     @Override
     public void onCloseGameWindow() {
         stop();
-     /*   gameLoopThread.interrupt();
-        try {
-            gameLoopThread.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }*/
-
         game.setVisible(false);
         menu.setVisible(true);
     }
@@ -296,5 +282,19 @@ public class GameController implements Runnable,
         keyhandler.clear();
         resume();
 
+    }
+
+    @Override
+    public void onDeath(int lives) {
+        pause();
+        JOptionPane.showMessageDialog(
+                game, // parent component
+                "You Died", // message
+                "You Died", // dialog title
+                JOptionPane.INFORMATION_MESSAGE // icon type
+        );
+        gamelogic.generateLevel();
+        keyhandler.clear();
+        resume();
     }
 }

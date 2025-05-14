@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class GameLogic {
+import model.Npc.NpcListener;
+
+
+public class GameLogic implements NpcListener{
 
     private CellType[][] labirynt;
     private int[][] distanceField;
@@ -21,6 +24,7 @@ public class GameLogic {
 
     public interface GameLogicListener {
         void onVictory();
+        void onDeath(int lives);
     }
 
     private GameLogicListener listener;
@@ -93,6 +97,9 @@ public class GameLogic {
         calcDistanceField();
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
+
+        //if (listener != null && player.collisionCheck())
+        //    listener.onDeath(player.getLives());
     }
 
     public void updateNpc(double speed, String name,boolean powerup) {
@@ -102,9 +109,11 @@ public class GameLogic {
             if(distanceField!=null)
             //npc.moveAstar(speed,distanceField);
             if(powerup)
-                npc.movePersonality(speed,10,distanceField,Personality.COWARD);
+                npc.setPersonality(Personality.COWARD);
             else
-                npc.movePersonality(speed,10,distanceField,Personality.CHASER);
+                npc.setPersonality(Personality.CHASER);
+            
+            npc.movePersonality(speed,10,distanceField);
 
     }
 
@@ -118,7 +127,7 @@ public class GameLogic {
         for (Agent agent : agentList.values()) {
             switch (agent) {
                 case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
-                case Npc n -> gameState[n.position.x][n.position.y] = CellType.NPC_CHASER;
+                case Npc n -> gameState[n.position.x][n.position.y] = n.getCellType();
                 default -> {
                 }
             }
@@ -144,6 +153,7 @@ public class GameLogic {
             return null;
 
         Npc npc = new Npc(spawn.x, spawn.y, name, labirynt);
+        npc.setListener(this);
         return npc;
     }
 
@@ -283,4 +293,12 @@ public void calcDistanceField() {
     public Player getPlayer(String name){
         return (Player)agentList.get(name);
     }
+
+    @Override
+    public void onCollision() {
+        if(listener!=null)
+            listener.onDeath(level);
+    }
+
+
 }

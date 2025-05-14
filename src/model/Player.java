@@ -1,12 +1,10 @@
 package model;
 
 
-
 public class Player extends Agent {
-
-
     private long lastTime;
     private int points = 0;
+    private int lives = 0;
 
 
 
@@ -66,33 +64,19 @@ public class Player extends Agent {
         newDirection=0;
         direction=0;
     }
-/*
-    protected void changeDirection() {
-        switch (newDirection) {
-            case 1 -> {
-                if (moveUpPossible())
-                    direction = newDirection;
-            }
-            case 2 -> {
-                if (moveRightPossible())
-                    direction = newDirection;
-            }
-            case 3 -> {
-                if (moveDownPossible())
-                    direction = newDirection;
-            }
-            case 4 -> {
-                if (moveLeftPossible())
-                    direction = newDirection;
-            }
-            default -> {
-            }
-        }
-    }
- */
+
     public int getPoints() {
         return points;
     }
+
+    public void setLives(int lives){  
+      this.lives=lives;
+    }
+
+    public int getLives(){
+        return this.lives;
+    }
+
 
     @Override
     public void setDirection(int direction) {
@@ -141,4 +125,5 @@ public class Player extends Agent {
             position.y++;
     }
 
+ 
 }
