@@ -117,9 +117,10 @@ public class Labirynth {
         for (int i = 2; i < labirynt.length-2; i++)
          for (int j = 2; j < labirynt[i].length-2; j++){
             double rnd = Math.random();
-            if(((labirynt[i][j]==CellType.WALL && labirynt[i+1][j]==CellType.WALL && labirynt[i-1][j]==CellType.WALL ) ^
-                (labirynt[i][j]==CellType.WALL && labirynt[i][j+1]==CellType.WALL && labirynt[i][j-1]==CellType.WALL )) && 
-                rnd<0.3 )
+            if((labirynt[i][j]==CellType.WALL && 
+                (((labirynt[i+1][j]==CellType.WALL || labirynt[i+1][j]==CellType.GHOSTHOUSE) && (labirynt[i-1][j]==CellType.WALL || labirynt[i-1][j]==CellType.GHOSTHOUSE)) ^
+                ((labirynt[i][j+1]==CellType.WALL || labirynt[i][j+1]==CellType.GHOSTHOUSE) && (labirynt[i][j-1]==CellType.WALL || labirynt[i][j-1]==CellType.GHOSTHOUSE)))) && 
+                rnd<0.35 )
                 labirynt[i][j]=CellType.EMPTY;
          }
     }
