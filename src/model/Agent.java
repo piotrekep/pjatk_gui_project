@@ -5,20 +5,20 @@ import java.awt.Point;
 abstract public class Agent {
     public Point position = new Point(0, 0);
     public boolean spawned = false;
-    public String name;
+    public int id;
     protected CellType[][] level;
     private long lastTime;
     protected int direction=0;
     protected int newDirection=0;
     private Point spawPoint = new Point(0, 0);
 
-    Agent(int x, int y, String name, CellType[][] level) {
+    Agent(int x, int y, int id, CellType[][] level) {
         this.position.x = x;
         this.position.y = y;
         this.spawPoint.x = x;
         this.spawPoint.y = y;
 
-        this.name = name;
+        this.id = id;
         this.level = level;
     }
     public void updateLevel(CellType[][] level){

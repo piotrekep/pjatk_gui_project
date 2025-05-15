@@ -36,11 +36,11 @@ public class GameLogic implements NpcListener{
         //calcDistanceField(3, 3);
         // fillWithPoints(this.labirynt);
         this.labirynt[3][3] = CellType.EMPTY;
-        Player agent = SpawnPlayer(3, 3, "player");
+        Player agent = SpawnPlayer(3, 3, 0);
         if (agent != null)
             agentList.put(0, agent);
 
-        Npc npc = SpawnNpc("enemy");
+        Npc npc = SpawnNpc(0);
         if (npc != null)
             agentList.put(1, npc);
 
@@ -143,9 +143,9 @@ public class GameLogic implements NpcListener{
 
     }
 
-    private Player SpawnPlayer(int x, int y, String name) {
+    private Player SpawnPlayer(int x, int y, int id) {
         if (labirynt[x][y] == CellType.EMPTY) {
-            Player player = new Player(x, y, name, labirynt);
+            Player player = new Player(x, y, id, labirynt);
             player.setLives(3);
             maxPoints--;
             return player;
@@ -153,13 +153,13 @@ public class GameLogic implements NpcListener{
             return null;
     }
 
-    private Npc SpawnNpc(String name) {
+    private Npc SpawnNpc(int id) {
         Random rand = new Random();
         Point spawn = npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
         if (labirynt[spawn.x][spawn.y] != CellType.GHOSTFLOOR)
             return null;
 
-        Npc npc = new Npc(spawn.x, spawn.y, name, labirynt);
+        Npc npc = new Npc(spawn.x, spawn.y, id, labirynt);
         npc.setListener(this);
         return npc;
     }

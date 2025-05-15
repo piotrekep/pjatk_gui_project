@@ -17,8 +17,8 @@ public class Npc extends Agent {
     int rndDir;
     private Personality personality = Personality.AGGRO;
 
-    public Npc(int x, int y, String name, CellType[][] level) {
-        super(x, y, name, level);
+    public Npc(int x, int y, int id, CellType[][] level) {
+        super(x, y, id, level);
         rnd = new Random();
         rndDir = rnd.nextInt(1, 4);
     }

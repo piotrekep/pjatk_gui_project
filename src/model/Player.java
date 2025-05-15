@@ -8,8 +8,8 @@ public class Player extends Agent {
 
 
 
-    public Player(int x, int y, String name, CellType[][] level) {
-        super(x, y, name, level);
+    public Player(int x, int y, int id, CellType[][] level) {
+        super(x, y, id, level);
         lastTime = System.nanoTime();
     }
 
