@@ -42,8 +42,10 @@ public class GameLogic implements NpcListener{
         
         for(int i=1; i<= npcSpawnPoints.size(); i++){
         Npc npc = SpawnNpc(i);
-        if (npc != null)
+        if (npc != null){
+            npc.setPersonality(intToPersonality(((i-1) % 5) + 1));
             agentList.put(i, npc);
+        }
         }
     }
 
@@ -118,10 +120,10 @@ public class GameLogic implements NpcListener{
             //npc.moveRandom(speed);
             if(distanceField!=null)
             //npc.moveAstar(speed,distanceField);
-            if(powerup)
-                npc.setPersonality(Personality.COWARD);
-            else
-                npc.setPersonality(Personality.CHASER);
+            //if(powerup)
+            //    npc.setPersonality(Personality.COWARD);
+            //else
+            //    npc.setPersonality(Personality.CHASER);
             
             npc.movePersonality(speed,10,distanceField);
 
@@ -302,6 +304,16 @@ public void calcDistanceField() {
         }
     }
 }
+    Personality intToPersonality(int p){
+        switch(p){
+           case 1:  return Personality.CHASER;
+           case 2: return Personality.AGGRO;
+           case 3: return Personality.KEYBOARDWARRIOR;
+           case 4: return Personality.HEADLESSCHICKEN;
+           case 5: return Personality.COWARD;
+        }
+        return Personality.CHASER;
+    }
 
 
     public int[][] getDistanceField() {
