@@ -12,24 +12,35 @@ public class GameView extends JFrame {
 
     private GameListener listener;
     private JLabel scoreLabel;  
+    private JLabel livesLabel; 
     private GameBoard level;
+    private JPanel topPanel;
 
     public GameView() {
 
         super("Difficulty slector");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        topPanel = new JPanel(new BorderLayout());
+
 
         scoreLabel = new JLabel("Score: 0");
-        scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-        add(scoreLabel, BorderLayout.NORTH);
+        scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        scoreLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        topPanel.add(scoreLabel, BorderLayout.EAST);
+
+        livesLabel = new JLabel("Lives: 0");
+        livesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        livesLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        topPanel.add(livesLabel, BorderLayout.WEST);
+
+        add(topPanel, BorderLayout.NORTH);
 
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 if (listener != null)
                     listener.onCloseGameWindow();
-                dispose();
+               // dispose();
             }
         });
 
@@ -39,6 +50,10 @@ public class GameView extends JFrame {
 
     public void setScore(int score) {
         scoreLabel.setText("Score: " + score);
+    }
+
+    public void setLives(int lives) {
+        livesLabel.setText("Lives: " + lives);
     }
 
     public void createLevel(int x, int y) {
@@ -74,7 +89,7 @@ public class GameView extends JFrame {
         sp.setBorder(null);
 
         getContentPane().removeAll();
-        add(scoreLabel, BorderLayout.NORTH);
+        add(topPanel, BorderLayout.NORTH);
 
         LevelRenderer renderer = new LevelRenderer();
         for (int i = 0; i < table.getColumnCount(); i++) {

@@ -10,10 +10,14 @@ abstract public class Agent {
     private long lastTime;
     protected int direction=0;
     protected int newDirection=0;
+    private Point spawPoint = new Point(0, 0);
 
     Agent(int x, int y, String name, CellType[][] level) {
         this.position.x = x;
         this.position.y = y;
+        this.spawPoint.x = x;
+        this.spawPoint.y = y;
+
         this.name = name;
         this.level = level;
     }
@@ -65,6 +69,13 @@ abstract public class Agent {
     public void setPosition(int x, int y){
         this.position.x=x;
         this.position.y=y;
+    }
+
+    public void moveToSpawn(){
+        this.position.x=this.spawPoint.x;
+        this.position.y=this.spawPoint.y;
+        direction=0;
+        newDirection=0;
     }
 
     protected void changeDirection(){

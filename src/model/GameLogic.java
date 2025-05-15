@@ -3,7 +3,6 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class GameLogic implements NpcListener{
     private CellType[][] labirynt;
     private int[][] distanceField;
     private List<Point> npcSpawnPoints = new ArrayList<>();
-    private final Map<String, Agent> agentList = new HashMap<>();
+    private final Map<Integer, Agent> agentList = new HashMap<>();
     private int maxPoints;
     private int x, y;
     public int level = 0;
@@ -39,11 +38,11 @@ public class GameLogic implements NpcListener{
         this.labirynt[3][3] = CellType.EMPTY;
         Player agent = SpawnPlayer(3, 3, "player");
         if (agent != null)
-            agentList.put(agent.name, agent);
+            agentList.put(0, agent);
 
         Npc npc = SpawnNpc("enemy");
         if (npc != null)
-            agentList.put(npc.name, npc);
+            agentList.put(1, npc);
 
     }
 
@@ -60,7 +59,7 @@ public class GameLogic implements NpcListener{
                     npcSpawnPoints.add(new Point(i, j));
                 }
             }
-        Player player = (Player) agentList.get("player");
+        Player player = (Player) agentList.get(0);
         if (player != null) {
             this.labirynt[3][3] = CellType.EMPTY;
             player.updateLevel(this.labirynt);
@@ -70,7 +69,7 @@ public class GameLogic implements NpcListener{
         }
         calcDistanceField();
 
-        Npc npc = (Npc) agentList.get("enemy");
+        Npc npc = (Npc) agentList.get(1);
         if (npc != null) {
             npc.updateLevel(this.labirynt);
             reSpawnNpc(npc);
@@ -78,9 +77,16 @@ public class GameLogic implements NpcListener{
         level++;
     }
 
+    public void resetLevel(){
+        for(Agent agent : agentList.values()){
+            agent.moveToSpawn();
+        }
+
+    }
+
     public void updatePlayer(boolean up, boolean down, boolean left, boolean right, double speed) {
 
-        Player player = (Player) agentList.get("player");
+        Player player = (Player) agentList.get(0);
         if (up || down || left || right) {
             if (up)
                 player.setDirection(1);
@@ -94,7 +100,7 @@ public class GameLogic implements NpcListener{
 
         }
         player.move(speed);
-        calcDistanceField();
+        //calcDistanceField();
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
 
@@ -102,8 +108,8 @@ public class GameLogic implements NpcListener{
         //    listener.onDeath(player.getLives());
     }
 
-    public void updateNpc(double speed, String name,boolean powerup) {
-        Npc npc = (Npc) agentList.get(name);
+    public void updateNpc(double speed, int id,boolean powerup) {
+        Npc npc = (Npc) agentList.get(id);
         if (npc != null)
             //npc.moveRandom(speed);
             if(distanceField!=null)
@@ -140,6 +146,7 @@ public class GameLogic implements NpcListener{
     private Player SpawnPlayer(int x, int y, String name) {
         if (labirynt[x][y] == CellType.EMPTY) {
             Player player = new Player(x, y, name, labirynt);
+            player.setLives(3);
             maxPoints--;
             return player;
         } else
@@ -176,8 +183,8 @@ public class GameLogic implements NpcListener{
                 }
     }
 
-    public int getPlayerScore(String name) {
-        Player player = (Player) agentList.get(name);
+    public int getPlayerScore(int id) {
+        Player player = (Player) agentList.get(id);
         if (player != null) {
             return player.getPoints();
         } else
@@ -214,7 +221,7 @@ public class GameLogic implements NpcListener{
     }
 
     public void calcDistanceFieldRec() {
-    Player player = (Player) agentList.get("player");
+    Player player = (Player) agentList.get(0);
     if (player == null) return;
 
     distanceField = new int[x][y];
@@ -230,7 +237,7 @@ public class GameLogic implements NpcListener{
 }
 
 public void calcDistanceField() {
-    Player player = (Player) agentList.get("player");
+    Player player = (Player) agentList.get(0);
     if (player == null) return;
 
       
@@ -290,8 +297,8 @@ public void calcDistanceField() {
         return distanceField;
     }
 
-    public Player getPlayer(String name){
-        return (Player)agentList.get(name);
+    public Player getPlayer(int id){
+        return (Player)agentList.get(id);
     }
 
     @Override

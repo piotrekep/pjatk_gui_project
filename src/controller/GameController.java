@@ -5,6 +5,7 @@ import model.GameLogic;
 import model.GameLogic.GameLogicListener;
 
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
@@ -86,7 +87,7 @@ public class GameController implements Runnable,
             long now = System.nanoTime();
             long elapsedNanos = now - lastTime;
             lastTime = now;
-            double delta = (double) elapsedNanos / OPTIMAL_TIME;
+            //double delta = (double) elapsedNanos / OPTIMAL_TIME;
 
             gamelogic.updatePlayer(
                     keyhandler.up(),
@@ -109,7 +110,8 @@ public class GameController implements Runnable,
                 return;
             }
 
-            game.setScore(gamelogic.getPlayerScore("player"));
+            game.setScore(gamelogic.getPlayerScore(0));
+            game.setLives(gamelogic.getPlayer(0).getLives());
 
             CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
             SwingUtilities.invokeLater(() -> game.updateLevel(frame));
@@ -136,9 +138,9 @@ public class GameController implements Runnable,
 
                     /* czekamy aż wątek A policzy gracza */
                     frameBarrier.await();
-
+                    gamelogic.calcDistanceField();
                     /* ruch wszystkich NPC */
-                    gamelogic.updateNpc(3, "enemy", keyhandler.test());
+                    gamelogic.updateNpc(3, 1, keyhandler.test());
 
                     /* sygnał: „NPC gotowe” – wątek A może renderować */
                     frameBarrier.await();
@@ -193,7 +195,6 @@ public class GameController implements Runnable,
         running = false;
         resume(); // żeby Player&Render wyszedł z pauzy
         npcThread.interrupt();
-        // czekamy na oba wątki
         frameBarrier.reset();
         try {
             npcThread.join();
@@ -270,8 +271,10 @@ public class GameController implements Runnable,
     @Override
     public void onCloseGameWindow() {
         stop();
-        game.setVisible(false);
-        menu.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            game.setVisible(false);
+            menu.setVisible(true);
+          });
     }
 
     @Override
@@ -286,14 +289,24 @@ public class GameController implements Runnable,
 
     @Override
     public void onDeath(int lives) {
-        pause();
-        JOptionPane.showMessageDialog(
-                game, // parent component
-                "You Died", // message
-                "You Died", // dialog title
-                JOptionPane.INFORMATION_MESSAGE // icon type
-        );
-        gamelogic.generateLevel();
+        if (gamelogic.getPlayer(0).getLives() > 0) {
+            pause();
+            gamelogic.getPlayer(0).setLives(gamelogic.getPlayer(0).getLives()-1);
+
+            JOptionPane.showMessageDialog(
+                    game, // parent component
+                    "You Died", // message
+                    "You Died", // dialog title
+                    JOptionPane.INFORMATION_MESSAGE // icon type
+            );
+            // gamelogic.generateLevel();
+            gamelogic.resetLevel();
+        }
+        else{
+            SwingUtilities.invokeLater(() ->
+                game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
+            );
+        }
         keyhandler.clear();
         resume();
     }
