@@ -39,11 +39,12 @@ public class GameLogic implements NpcListener{
         Player agent = SpawnPlayer(3, 3, 0);
         if (agent != null)
             agentList.put(0, agent);
-
-        Npc npc = SpawnNpc(0);
+        
+        for(int i=1; i<= npcSpawnPoints.size(); i++){
+        Npc npc = SpawnNpc(i);
         if (npc != null)
-            agentList.put(1, npc);
-
+            agentList.put(i, npc);
+        }
     }
 
     public void generateLevel() {
@@ -68,11 +69,14 @@ public class GameLogic implements NpcListener{
             maxPoints--;
         }
         calcDistanceField();
-
-        Npc npc = (Npc) agentList.get(1);
+        
+        
+        for(int i=0; i< npcSpawnPoints.size(); i++){
+        Npc npc = (Npc) agentList.get(i);
         if (npc != null) {
             npc.updateLevel(this.labirynt);
             reSpawnNpc(npc);
+        }
         }
         level++;
     }
@@ -120,6 +124,13 @@ public class GameLogic implements NpcListener{
                 npc.setPersonality(Personality.CHASER);
             
             npc.movePersonality(speed,10,distanceField);
+
+    }
+
+    public void updateAllNpcs(double speed,boolean powerup){
+        for(int i=1; i<=npcSpawnPoints.size(); i++){
+            updateNpc(speed, i, powerup);
+        }
 
     }
 

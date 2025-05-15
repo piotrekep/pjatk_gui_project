@@ -140,8 +140,8 @@ public class GameController implements Runnable,
                     frameBarrier.await();
                     gamelogic.calcDistanceField();
                     /* ruch wszystkich NPC */
-                    gamelogic.updateNpc(3, 1, keyhandler.test());
-
+                    //gamelogic.updateNpc(3, 1, keyhandler.test());
+                    gamelogic.updateAllNpcs(3, keyhandler.test());
                     /* sygnał: „NPC gotowe” – wątek A może renderować */
                     frameBarrier.await();
 
