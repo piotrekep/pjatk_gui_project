@@ -87,7 +87,7 @@ public class GameController implements Runnable,
             long now = System.nanoTime();
             long elapsedNanos = now - lastTime;
             lastTime = now;
-            //double delta = (double) elapsedNanos / OPTIMAL_TIME;
+            double delta = (double) elapsedNanos / OPTIMAL_TIME;
 
             gamelogic.updatePlayer(
                     keyhandler.up(),
@@ -97,13 +97,9 @@ public class GameController implements Runnable,
                     5);
 
             try {
-                frameBarrier.await();
-            } catch (InterruptedException | BrokenBarrierException ex) {
-                Thread.currentThread().interrupt();
-                return;
-            }
+                frameBarrier.await(); //obliczenia ruchu npc mogą się wykonać dopiero po zaktualizowaniu opołożenia gracza
 
-            try {
+                
                 frameBarrier.await();
             } catch (InterruptedException | BrokenBarrierException ex) {
                 Thread.currentThread().interrupt();
@@ -132,25 +128,16 @@ public class GameController implements Runnable,
 
     private Runnable npcLoop() {
         return () -> {
-            long last = System.nanoTime();
             try {
                 while (running) {
 
-                    /* czekamy aż wątek A policzy gracza */
+                    
+                    frameBarrier.await(); //położenie gracza zaktualizowane można obliczać a-star
+            
+                    gamelogic.calcDistanceField();            
                     frameBarrier.await();
-                    gamelogic.calcDistanceField();
-                    /* ruch wszystkich NPC */
-                    //gamelogic.updateNpc(3, 1, keyhandler.test());
                     gamelogic.updateAllNpcs(3, keyhandler.test());
-                    /* sygnał: „NPC gotowe” – wątek A może renderować */
-                    frameBarrier.await();
 
-                    /* małe wyrównanie do ~TARGET_FPS */
-                    long dt = System.nanoTime() - last;
-                    long sleep = OPTIMAL_TIME - dt;
-                    if (sleep > 0)
-                        TimeUnit.NANOSECONDS.sleep(sleep);
-                    last = System.nanoTime();
                 }
             } catch (InterruptedException | BrokenBarrierException ex) {
                 Thread.currentThread().interrupt();
@@ -168,14 +155,13 @@ public class GameController implements Runnable,
                     case CellType.PLAYER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.PLAYER);
                     case CellType.NPC_CHASER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_CHASER);
                     case CellType.NPC_AGGRO -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_AGGRO);
-                    case CellType.NPC_KEYBOARDWARRIOR ->
-                        temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
-                    case CellType.NPC_HEADLESSCHICKEN ->
-                        temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
+                    case CellType.NPC_KEYBOARDWARRIOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
+                    case CellType.NPC_HEADLESSCHICKEN -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
                     case CellType.NPC_COWARD -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_COWARD);
                     case CellType.GHOSTHOUSE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTHOUSE);
                     case CellType.GHOSTFLOOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTFLOOR);
                     case CellType.POINT -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POINT);
+                    case CellType.POWERUP -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP);
                     default -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.EMPTY);
                 }
 
@@ -187,13 +173,12 @@ public class GameController implements Runnable,
 
     public void stop_old() {
         running = false;
-        // obudź, żeby nie wisiał w pauzie
         resume();
     }
 
     public void stop() {
         running = false;
-        resume(); // żeby Player&Render wyszedł z pauzy
+        resume(); 
         npcThread.interrupt();
         frameBarrier.reset();
         try {
@@ -204,12 +189,10 @@ public class GameController implements Runnable,
         }
     }
 
-    /** Wejdź w stan pauzy (wątek idzie do wait()) */
     public void pause() {
         paused = true;
     }
 
-    /** Wznów pracę wątku, jeśli wcześniej było pauzowane */
     public void resume() {
         synchronized (pauseLock) {
             paused = false;

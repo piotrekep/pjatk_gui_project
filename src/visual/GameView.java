@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 
 public class GameView extends JFrame {
     public interface GameListener {
@@ -99,7 +100,20 @@ public class GameView extends JFrame {
         add(sp, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
+        
+        tableResize(21,21,table);
 
+
+        setSize(table.getColumnCount() * table.getColumnModel().getColumn(0).getPreferredWidth(),table.getRowCount() * table.getRowHeight());
+    }
+
+    private void tableResize(int cellW, int cellH, JTable table){
+        table.setRowHeight(cellH);
+        int cols = table.getColumnCount();
+        for (int c = 0; c < cols; c++) {
+            table.getColumnModel().getColumn(c).setPreferredWidth(cellW);
+        }
+        table.revalidate();
     }
 
     private void enableFullTableScaling(JTable table, JScrollPane sp) {

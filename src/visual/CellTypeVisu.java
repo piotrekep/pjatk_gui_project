@@ -18,7 +18,8 @@ public class CellTypeVisu {
         NPC_COWARD(Color.ORANGE),
         GHOSTHOUSE(Color.GRAY),
         GHOSTFLOOR(Color.PINK),
-        POINT(Color.LIGHT_GRAY);
+        POINT(Color.LIGHT_GRAY),
+        POWERUP(Color.RED);
 
         public final Color color;
 
