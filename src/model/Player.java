@@ -4,9 +4,12 @@ package model;
 public class Player extends Agent {
     private long lastTime;
     private int points = 0;
+    private int bonusPoints = 0;
     private int lives = 0;
-
-
+    public boolean powered=false;
+    public long pearlTime=0;
+    public long speedTime=0;
+    private  PowerupType collected; 
 
     public Player(int x, int y, int id, CellType[][] level) {
         super(x, y, id, level);
@@ -71,6 +74,14 @@ public class Player extends Agent {
         return points;
     }
 
+    public int getTotalPoints() {
+        return points+bonusPoints;
+    }
+
+    public void addBonusPoints(int points){
+        this.bonusPoints+=points;
+    }
+
     public void setLives(int lives){  
       this.lives=lives;
     }
@@ -79,6 +90,13 @@ public class Player extends Agent {
         return this.lives;
     }
 
+    public PowerupType getPowerup(){
+        return collected;
+    }
+
+    public void setPowerup(PowerupType pwr){
+        this.collected=pwr;
+    }
 
     @Override
     public void setDirection(int direction) {

@@ -23,6 +23,7 @@ public class GameLogic implements AgentListener{
     private int x, y;
     public int level = 0;
     private long powerupCooldown = System.nanoTime();
+    
 
     public interface GameLogicListener {
         void onVictory();
@@ -53,6 +54,7 @@ public class GameLogic implements AgentListener{
     }
 
     public void generateLevel() {
+        resetLevel();
         Labirynth lab = new Labirynth(x, y);
         lab.generate();
 
@@ -88,15 +90,16 @@ public class GameLogic implements AgentListener{
 
     public void resetLevel(){
         for(Agent agent : agentList.values()){
-            agent.moveToSpawn();
             if(agent.id<0)
                 agentList.remove(agent.id);
+            else
+                agent.moveToSpawn();
         }
         powerupCooldown = System.nanoTime();
     }
 
     public void updatePlayer(boolean up, boolean down, boolean left, boolean right, double speed) {
-
+        double speedMul=1;
         Player player = (Player) agentList.get(0);
         if (up || down || left || right) {
             if (up)
@@ -110,8 +113,25 @@ public class GameLogic implements AgentListener{
         } else {
 
         }
-        player.move(speed);
-        //calcDistanceField();
+        
+        
+    
+            if(System.nanoTime()<player.pearlTime)
+                player.powered=true;
+            else{
+                player.powered=false;
+            }
+        
+            if(System.nanoTime()<player.speedTime)
+                speedMul=1.5;
+            else{
+                speedMul=1;
+            }
+                
+        
+        
+        player.move(speed*speedMul);
+
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
 
@@ -121,15 +141,17 @@ public class GameLogic implements AgentListener{
 
     public void updateNpc(double speed, int id,boolean powerup) {
         Npc npc = (Npc) agentList.get(id);
-        if (npc != null)
+        Player p = (Player)agentList.get(0);
+        //p.powered=powerup;
+        if (npc != null){
             if(distanceField!=null)
-            if(powerup)
+            if(p.powered)
                 npc.setPersonality(Personality.COWARD);
             else
                 npc.resetPersonality();
             
             npc.movePersonality(speed,10,distanceField);
-
+        }
     }
 
     public void updatePowerup(int id){
@@ -209,8 +231,7 @@ public class GameLogic implements AgentListener{
     }
 
     private void createPowerup(int x, int y,CellType[][] level){
-        int id;
-               
+        int id;     
         int minKey = Collections.min(agentList.keySet());
         id = minKey - 1;
         Powerup p = new Powerup(x,  y, id, level,  getRandPowerup());
@@ -243,7 +264,7 @@ public class GameLogic implements AgentListener{
     public int getPlayerScore(int id) {
         Player player = (Player) agentList.get(id);
         if (player != null) {
-            return player.getPoints();
+            return player.getTotalPoints();
         } else
             return 0;
     }
@@ -351,7 +372,7 @@ public void calcDistanceField() {
 }
     Personality intToPersonality(int p){
         switch(p){
-           case 1:  return Personality.CHASER;
+           case 1: return Personality.CHASER;
            case 2: return Personality.AGGRO;
            case 3: return Personality.KEYBOARDWARRIOR;
            case 4: return Personality.HEADLESSCHICKEN;
@@ -369,15 +390,30 @@ public void calcDistanceField() {
         return (Player)agentList.get(id);
     }
 
-    
+
 
     @Override
     public void onCollision(Agent source) {
+        Player player = (Player) agentList.get(0);
+
         if(listener!=null)
         if(source.id>0)
-            listener.onDeath(level);
+            if(!player.powered)
+                listener.onDeath(level);
+            else{
+                source.moveToSpawn();
+            }
         else{
             Powerup powerup = (Powerup)source;
+            player.setPowerup(powerup.getPowerup()); 
+            
+            switch(player.getPowerup()){
+                case PowerupType.LIFE -> player.setLives(player.getLives()+1);
+                case PowerupType.POINTS -> player.addBonusPoints(powerup.getPowerup().getExtraPoints()); 
+                case PowerupType.PEARL -> player.pearlTime=System.nanoTime() + (player.getPowerup().getDuration() * 1_000_000_000l) ;
+                case PowerupType.SPEED -> player.speedTime=System.nanoTime() + (player.getPowerup().getDuration() * 1_000_000_000l);
+                default ->{}
+            }
             agentList.remove(powerup.id);
             System.out.println(powerup.getPowerup());
 

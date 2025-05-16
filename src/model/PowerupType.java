@@ -2,9 +2,9 @@ package model;
 
 public enum PowerupType {
     LIFE (0,0),
-    PEARL (0,0),
-    POINTS(0,0),
-    SPEED (0,0);
+    PEARL (0,5),
+    POINTS(100,0),
+    SPEED (0,5);
 
     private final int   extraPoints;
     private final int   duration;
