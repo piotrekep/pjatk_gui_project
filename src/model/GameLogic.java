@@ -142,15 +142,19 @@ public class GameLogic implements AgentListener{
     public void updateNpc(double speed, int id,boolean powerup) {
         Npc npc = (Npc) agentList.get(id);
         Player p = (Player)agentList.get(0);
-        //p.powered=powerup;
+        double speedMul=1;
         if (npc != null){
             if(distanceField!=null)
-            if(p.powered)
+            if(p.powered){
                 npc.setPersonality(Personality.COWARD);
-            else
+                speedMul=0.75;
+            }
+            else{
                 npc.resetPersonality();
-            
-            npc.movePersonality(speed,10,distanceField);
+                speedMul=1;
+            }
+                       
+            npc.movePersonality(speed * speedMul,10,distanceField);
         }
     }
 

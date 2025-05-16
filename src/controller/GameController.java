@@ -266,7 +266,9 @@ public class GameController implements Runnable,
     @Override
     public void onVictory() {
         pause();
-        JOptionPane.showMessageDialog(game, "Level: " + gamelogic.level, "Victory!", JOptionPane.INFORMATION_MESSAGE);
+        SwingUtilities.invokeLater(() -> 
+            JOptionPane.showMessageDialog(game, "Level: " + gamelogic.level, "Victory!", JOptionPane.INFORMATION_MESSAGE)
+        );
         gamelogic.generateLevel();
         keyhandler.clear();
         resume();
@@ -279,13 +281,10 @@ public class GameController implements Runnable,
             pause();
             gamelogic.getPlayer(0).setLives(gamelogic.getPlayer(0).getLives()-1);
 
-            JOptionPane.showMessageDialog(
-                    game, // parent component
-                    "You Died", // message
-                    "You Died", // dialog title
-                    JOptionPane.INFORMATION_MESSAGE // icon type
+            SwingUtilities.invokeLater(() -> 
+                JOptionPane.showMessageDialog(game, "You Died","You Died", JOptionPane.INFORMATION_MESSAGE )
             );
-            // gamelogic.generateLevel();
+
             gamelogic.resetLevel();
         }
         else{
