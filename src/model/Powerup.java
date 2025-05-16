@@ -9,4 +9,14 @@ public class Powerup extends Agent {
         this.powerup=powerup;
     }
 
+    public PowerupType getPowerup() {
+        return powerup;
+    }
+
+    public void checkCollision(int[][] distField){
+        if(distField[position.x][position.y] == 0 )
+            if (listener != null)
+                listener.onCollision(this);
+    }
+
 }

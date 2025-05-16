@@ -4,11 +4,9 @@ import java.util.Random;
 
 
 public class Npc extends Agent {
-    public interface NpcListener {
-        void onCollision();
-    }
 
-    private NpcListener listener;
+
+   
 
 
     Random rnd;
@@ -172,13 +170,11 @@ public class Npc extends Agent {
 
         if(distField[position.x][position.y] == 0 )
             if (listener != null)
-              listener.onCollision();
+              listener.onCollision(this);
 
     }
 
-    public void setListener(NpcListener l) {
-        this.listener = l;
-    }
+ 
 
     void moveChaser(double speed, int[][] distField) {
         moveAstar(speed, distField);
@@ -243,5 +239,18 @@ public class Npc extends Agent {
         }
     }
 
+    @Override
+
+    public boolean move(double speed){
+        if(super.move(speed)){
+            if(listener!=null){
+                 listener.onChangePosition(this);
+                 return true;
+            }
+            return false;
+        }
+        else 
+         return false;
+    }
 
 }

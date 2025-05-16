@@ -2,5 +2,7 @@ package model;
 
 public enum PowerupType {
     LIFE,
-    PEARL
+    PEARL,
+    POINTS,
+    SPEED
 }

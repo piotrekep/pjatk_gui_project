@@ -44,6 +44,8 @@ public class GameController implements Runnable,
     private final int TARGET_FPS = 30;
     private final long OPTIMAL_TIME;
 
+    
+
     public GameController(KeyHandler keyhandler,
             MenuView menu,
             ScoreView score,
@@ -137,6 +139,7 @@ public class GameController implements Runnable,
                     gamelogic.calcDistanceField();            
                     frameBarrier.await();
                     gamelogic.updateAllNpcs(3, keyhandler.test());
+                    gamelogic.updateAllPowerups();
 
                 }
             } catch (InterruptedException | BrokenBarrierException ex) {

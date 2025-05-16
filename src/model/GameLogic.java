@@ -3,23 +3,26 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
-import model.Npc.NpcListener;
+import model.Agent.AgentListener;
 
 
-public class GameLogic implements NpcListener{
+public class GameLogic implements AgentListener{
 
     private CellType[][] labirynt;
     private int[][] distanceField;
     private List<Point> npcSpawnPoints = new ArrayList<>();
-    private final Map<Integer, Agent> agentList = new HashMap<>();
+    private final Map<Integer, Agent> agentList = new ConcurrentHashMap<>();
     private int maxPoints;
     private int x, y;
     public int level = 0;
+    private long powerupCooldown = System.nanoTime();
 
     public interface GameLogicListener {
         void onVictory();
@@ -33,8 +36,7 @@ public class GameLogic implements NpcListener{
         this.y = y;
         maxPoints = 0;
         generateLevel();
-        //calcDistanceField(3, 3);
-        // fillWithPoints(this.labirynt);
+
         this.labirynt[3][3] = CellType.EMPTY;
         Player agent = SpawnPlayer(3, 3, 0);
         if (agent != null)
@@ -44,7 +46,7 @@ public class GameLogic implements NpcListener{
         for(int i=1; i<= npcSpawnPoints.size(); i++){
         Npc npc = SpawnNpc(i,intToPersonality(((i-1) % 5) + 1));
         if (npc != null){
-            //npc.setPersonality(intToPersonality(((i-1) % 5) + 1));
+           
             agentList.put(i, npc);
         }
         }
@@ -87,8 +89,10 @@ public class GameLogic implements NpcListener{
     public void resetLevel(){
         for(Agent agent : agentList.values()){
             agent.moveToSpawn();
+            if(agent.id<0)
+                agentList.remove(agent.id);
         }
-
+        powerupCooldown = System.nanoTime();
     }
 
     public void updatePlayer(boolean up, boolean down, boolean left, boolean right, double speed) {
@@ -118,9 +122,7 @@ public class GameLogic implements NpcListener{
     public void updateNpc(double speed, int id,boolean powerup) {
         Npc npc = (Npc) agentList.get(id);
         if (npc != null)
-            //npc.moveRandom(speed);
             if(distanceField!=null)
-            //npc.moveAstar(speed,distanceField);
             if(powerup)
                 npc.setPersonality(Personality.COWARD);
             else
@@ -128,6 +130,23 @@ public class GameLogic implements NpcListener{
             
             npc.movePersonality(speed,10,distanceField);
 
+    }
+
+    public void updatePowerup(int id){
+       if(id<0){ 
+            Powerup powerup = (Powerup) agentList.get(id);
+            if (powerup != null)
+                if(distanceField!=null)
+                    powerup.checkCollision(distanceField);
+       }
+    }
+
+    public void updateAllPowerups(){
+        for (int id : agentList.keySet()) {
+            if(id<0){
+                updatePowerup(id);
+            }
+        }
     }
 
     public void updateAllNpcs(double speed,boolean powerup){
@@ -148,6 +167,7 @@ public class GameLogic implements NpcListener{
             switch (agent) {
                 case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
                 case Npc n -> gameState[n.position.x][n.position.y] = n.getCellType();
+                case Powerup pw -> gameState[pw.position.x][pw.position.y] = CellType.POWERUP;
                 default -> {
                 }
             }
@@ -186,6 +206,29 @@ public class GameLogic implements NpcListener{
 
         npc.setPosition(spawn.x, spawn.y);
         return npc;
+    }
+
+    private void createPowerup(int x, int y,CellType[][] level){
+        int id;
+               
+        int minKey = Collections.min(agentList.keySet());
+        id = minKey - 1;
+        Powerup p = new Powerup(x,  y, id, level,  getRandPowerup());
+        agentList.put(id, p);
+        p.setListener(this);
+    }
+
+    private PowerupType getRandPowerup(){
+        Random rand = new Random();
+        double rng = rand.nextDouble(1);
+        if(rng<0.1)
+            return PowerupType.LIFE;
+        else if(rng < 0.4)
+            return PowerupType.PEARL;
+        else if(rng < 0.6)
+            return PowerupType.SPEED;
+        else 
+            return PowerupType.POINTS;
     }
 
     private void fillWithPoints(CellType[][] level) {
@@ -326,10 +369,31 @@ public void calcDistanceField() {
         return (Player)agentList.get(id);
     }
 
+    
+
     @Override
-    public void onCollision() {
+    public void onCollision(Agent source) {
         if(listener!=null)
+        if(source.id>0)
             listener.onDeath(level);
+        else{
+            Powerup powerup = (Powerup)source;
+            agentList.remove(powerup.id);
+            System.out.println(powerup.getPowerup());
+
+            }
+    }
+
+    @Override
+    public void onChangePosition(Agent source) {
+        if( System.nanoTime() - powerupCooldown > 5_000_000_000l){
+            double rng=Math.random();
+        if(rng<0.25){
+            powerupCooldown = System.nanoTime();
+            createPowerup(source.position.x,source.position.y,labirynt);
+
+        }
+        }
     }
 
 

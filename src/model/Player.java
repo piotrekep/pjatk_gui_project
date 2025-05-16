@@ -14,7 +14,7 @@ public class Player extends Agent {
     }
 
     // prekość w tickach na sekunde
-    public void move(double speed) {
+    public boolean move(double speed) {
 
         long now = System.nanoTime();
         double elapsedSeconds = (now - lastTime) / 1_000_000_000.0;
@@ -34,7 +34,9 @@ public class Player extends Agent {
                 }
                 checkForPoint();
             }
+            return true;
         }
+        return false;
     
     }
 

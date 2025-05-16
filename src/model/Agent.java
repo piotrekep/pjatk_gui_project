@@ -2,7 +2,14 @@ package model;
 
 import java.awt.Point;
 
-abstract public class Agent {
+abstract public class Agent {    
+    public interface AgentListener {
+    void onCollision(Agent source);
+    void onChangePosition(Agent source);
+}
+    protected AgentListener listener;
+
+
     public Point position = new Point(0, 0);
     public boolean spawned = false;
     public int id;
@@ -25,7 +32,15 @@ abstract public class Agent {
         this.level=level;
     }
 
-    public void move(double speed){
+
+    public void setListener(AgentListener l) {
+        this.listener = l;
+    }
+
+     
+
+
+    public boolean move(double speed){
 
         long now = System.nanoTime();
         double elapsedSeconds = (now - lastTime)/1_000_000_000.0;
@@ -41,7 +56,11 @@ abstract public class Agent {
                 case 4 -> moveLeft();
                 default ->{}
          }
+         if(listener!=null)
+            listener.onChangePosition(this);
+         return true;
         }
+        return false;
     }
 
     public void move(){
