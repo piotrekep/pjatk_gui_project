@@ -40,10 +40,11 @@ public class GameLogic implements NpcListener{
         if (agent != null)
             agentList.put(0, agent);
         
+        //for(int i=1; i<= 1; i++){            
         for(int i=1; i<= npcSpawnPoints.size(); i++){
-        Npc npc = SpawnNpc(i);
+        Npc npc = SpawnNpc(i,intToPersonality(((i-1) % 5) + 1));
         if (npc != null){
-            npc.setPersonality(intToPersonality(((i-1) % 5) + 1));
+            //npc.setPersonality(intToPersonality(((i-1) % 5) + 1));
             agentList.put(i, npc);
         }
         }
@@ -73,7 +74,7 @@ public class GameLogic implements NpcListener{
         calcDistanceField();
         
         
-        for(int i=0; i< npcSpawnPoints.size(); i++){
+        for(int i=1; i<= npcSpawnPoints.size(); i++){
         Npc npc = (Npc) agentList.get(i);
         if (npc != null) {
             npc.updateLevel(this.labirynt);
@@ -120,10 +121,10 @@ public class GameLogic implements NpcListener{
             //npc.moveRandom(speed);
             if(distanceField!=null)
             //npc.moveAstar(speed,distanceField);
-            //if(powerup)
-            //    npc.setPersonality(Personality.COWARD);
-            //else
-            //    npc.setPersonality(Personality.CHASER);
+            if(powerup)
+                npc.setPersonality(Personality.COWARD);
+            else
+                npc.resetPersonality();
             
             npc.movePersonality(speed,10,distanceField);
 
@@ -166,13 +167,13 @@ public class GameLogic implements NpcListener{
             return null;
     }
 
-    private Npc SpawnNpc(int id) {
+    private Npc SpawnNpc(int id, Personality personality) {
         Random rand = new Random();
         Point spawn = npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
         if (labirynt[spawn.x][spawn.y] != CellType.GHOSTFLOOR)
             return null;
 
-        Npc npc = new Npc(spawn.x, spawn.y, id, labirynt);
+        Npc npc = new Npc(spawn.x, spawn.y, id, labirynt,personality);
         npc.setListener(this);
         return npc;
     }
@@ -289,6 +290,7 @@ public void calcDistanceField() {
             if (nx < 0 || nx >= x || ny < 0 || ny >= y) continue;
             if (labirynt[nx][ny] == CellType.WALL || labirynt[nx][ny] == CellType.GHOSTHOUSE) continue;
             if (distanceField[nx][ny] <= nextDist) continue;   
+            if (labirynt[nx][ny] == CellType.GHOSTFLOOR) nextDist=nextDist+10;
 
             distanceField[nx][ny] = nextDist;  
             qx[tail] = nx;                      

@@ -2,8 +2,6 @@ package model;
 
 import java.util.Random;
 
-import model.GameLogic.GameLogicListener;
-import visual.CellTypeVisu;
 
 public class Npc extends Agent {
     public interface NpcListener {
@@ -16,11 +14,14 @@ public class Npc extends Agent {
     Random rnd;
     int rndDir;
     private Personality personality = Personality.AGGRO;
+    private Personality orignalPersonality;
 
-    public Npc(int x, int y, int id, CellType[][] level) {
+    public Npc(int x, int y, int id, CellType[][] level, Personality p) {
         super(x, y, id, level);
         rnd = new Random();
         rndDir = rnd.nextInt(1, 4);
+        this.orignalPersonality=p;
+        this.personality=p;
     }
 
     public void moveRandom(double speed) {
@@ -213,6 +214,10 @@ public class Npc extends Agent {
 
     public Personality getPersonality() {
         return this.personality;
+    }
+
+    public void resetPersonality(){
+        this.personality=this.orignalPersonality;
     }
 
     public CellType getCellType() {
