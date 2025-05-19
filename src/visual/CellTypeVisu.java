@@ -19,6 +19,11 @@ public class CellTypeVisu {
         GHOSTHOUSE(Color.GRAY),
         GHOSTFLOOR(Color.PINK),
         POINT(Color.LIGHT_GRAY),
+        POWERUP_LIFE(Color.RED),
+        POWERUP_PEARL(Color.RED),
+        POWERUP_POINTS(Color.RED),
+        POWERUP_SPEED( Color.RED),
+        POWERUP_POOP( Color.RED),
         POWERUP(Color.RED);
 
         public final Color color;

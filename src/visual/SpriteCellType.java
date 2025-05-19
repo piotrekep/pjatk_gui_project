@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor.URL;
 
 public class SpriteCellType {
     public enum Type {
@@ -41,16 +42,19 @@ public class SpriteCellType {
     
 
         private static Image loadSprite(String path, Color placeholderColor) {
-            if (path == null) {
-                return createPlaceholder(placeholderColor);
-            }
             try {
-                return ImageIO.read(SpriteCellType.class.getResourceAsStream(path));
-            } catch (IOException | IllegalArgumentException e) {
-                System.err.println("Nie udało się załadować sprite: " + path + ", tworzenie placeholdera");
-                return createPlaceholder(placeholderColor);
+                // szukamy zasobu zaczynając od katalogu klasy (root classpath)
+                java.net.URL resource = SpriteCellType.class.getResource("/" + path);
+                if (resource != null) {
+                    return ImageIO.read(resource);
+                }
+            } catch (IOException e) {
+                System.err.println("Błąd podczas wczytywania " + path + ": " + e);
             }
+            System.err.println("Nie znaleziono zasobu na classpath: " + path);
+            return createPlaceholder(placeholderColor);
         }
+
 
         private static Image createPlaceholder(Color color) {
             int size = 32;

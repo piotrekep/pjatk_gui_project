@@ -13,7 +13,13 @@ public enum CellType {
     GHOSTHOUSE,
     GHOSTFLOOR,
     POINT,
-    POWERUP,
+    POWERUP_LIFE,
+    POWERUP_PEARL,
+    POWERUP_POINTS,
+    POWERUP_SPEED,
+    POWERUP_POOP,
+    POWERUP
+
 
 
 }

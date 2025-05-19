@@ -22,21 +22,16 @@ public class AnimatedTable extends JTable {
     private Thread animationThread;
     private volatile boolean running = false;
 
-    /**
-     * @param tm    dowolny TableModel (np. GameBoard)
-     * @param model model, z którego pobierasz kolekcję Agentów
-     */
+
     public AnimatedTable(TableModel tm, AgentModel model) {
         super(tm);
         this.model = model;
 
-        // Wyłącz rysowanie linii siatki i odstępy
         setShowGrid(false);
         setIntercellSpacing(new Dimension(0, 0));
    
         setOpaque(false);
 
-        // Wczytaj wszystkie sprite'y z enuma
         for (SpriteCellType.Type type : SpriteCellType.Type.values()) {
             spriteMap.put(type, type.getSprite());
         }
