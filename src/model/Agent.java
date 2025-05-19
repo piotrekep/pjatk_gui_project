@@ -10,20 +10,24 @@ abstract public class Agent {
     protected AgentListener listener;
 
 
-    public Point position = new Point(0, 0);
+    public Point position;
     public boolean spawned = false;
     public int id;
     protected CellType[][] level;
     private long lastTime;
     protected int direction=0;
     protected int newDirection=0;
-    private Point spawPoint = new Point(0, 0);
+    private Point spawPoint;
+    private Point target;
+    private double moveProgress = 1.0;
+    private double speed=0.0;
+
 
     Agent(int x, int y, int id, CellType[][] level) {
-        this.position.x = x;
-        this.position.y = y;
-        this.spawPoint.x = x;
-        this.spawPoint.y = y;
+        this.position = new Point(x, y);
+        this.spawPoint = new Point(x, y);
+        this.target = new Point(x, y);
+        this.lastTime = System.nanoTime();
 
         this.id = id;
         this.level = level;
@@ -41,13 +45,41 @@ abstract public class Agent {
 
 
     public boolean move(double speed){
-
+        this.speed=speed;
         long now = System.nanoTime();
-        double elapsedSeconds = (now - lastTime)/1_000_000_000.0;
+        moveProgress = (now - lastTime)/1_000_000_000.0;
 
         changeDirection();
-        if(speed!=0)
-        if(elapsedSeconds > 1/speed){
+        if(speed!=0){
+            switch (direction) {
+                case 1:{
+                    target.x = position.x-1;
+                    target.y = position.y;
+                    break;
+                } 
+                case 2:{
+                    target.y = position.y+1;
+                    target.x = position.x;
+                    break;
+                }
+                case 3:{
+                    target.x = position.x+1;
+                    target.y = position.y;
+                    break;
+                }
+                case 4:{
+                    target.y = position.y-1;
+                    target.x = position.x;
+                    break;
+                }
+                default:{break;}
+         }
+         if(level[target.x][target.y]==CellType.WALL || level[target.x][target.y]==CellType.GHOSTHOUSE  ){
+            target.x=position.x;
+            target.y=position.y;
+         }
+
+        if(moveProgress > 1.0/speed){
             lastTime = now;
             switch (direction) {
                 case 1 -> moveUp();
@@ -60,11 +92,12 @@ abstract public class Agent {
             listener.onChangePosition(this);
          return true;
         }
+    }
         return false;
     }
 
     public void move(){
-
+        
         changeDirection();
             switch (direction) {
                 case 1 -> moveUp();
@@ -88,11 +121,16 @@ abstract public class Agent {
     public void setPosition(int x, int y){
         this.position.x=x;
         this.position.y=y;
+        this.target.x=x;
+        this.target.y=y;
+           
     }
 
     public void moveToSpawn(){
         this.position.x=this.spawPoint.x;
         this.position.y=this.spawPoint.y;
+        this.target.x=this.spawPoint.x;
+        this.target.y=this.spawPoint.y;
         direction=0;
         newDirection=0;
     }
@@ -117,6 +155,26 @@ abstract public class Agent {
             }
             default ->{}
         }
+    }
+
+    public int getCol(){
+        return position.y;
+    }
+
+
+    public int getRow(){
+        return position.x;
+    }
+    public int getTargetCol(){
+        return target.y;
+    }
+
+    public int getTargetRow(){
+        return target.x;
+    }
+
+    public double getMoveProgress(){
+        return Math.min(1.0, Math.max(0.0, moveProgress/(1.0/this.speed)));
     }
 
     public void moveUp() {

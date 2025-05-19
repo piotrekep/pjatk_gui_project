@@ -19,42 +19,49 @@ public class Player extends Agent {
     // prekość w tickach na sekunde
     public boolean move(double speed) {
 
-        long now = System.nanoTime();
-        double elapsedSeconds = (now - lastTime) / 1_000_000_000.0;
-
-        changeDirection();
-        if (speed != 0) {
-            if (elapsedSeconds > 1 / speed) {
-                // System.out.println(elapsedSeconds);
-                lastTime = now;
-                switch (direction) {
-                    case 1 -> moveUp();
-                    case 2 -> moveRight();
-                    case 3 -> moveDown();
-                    case 4 -> moveLeft();
-                    default -> {
-                    }
-                }
-                checkForPoint();
-            }
+        if(super.move(speed)){
+            checkForPoint();
             return true;
         }
-        return false;
+        else
+            return false;
+        }
+        // long now = System.nanoTime();
+        // double elapsedSeconds = (now - lastTime) / 1_000_000_000.0;
+
+        // changeDirection();
+        // if (speed != 0) {
+        //     if (elapsedSeconds > 1 / speed) {
+        //         // System.out.println(elapsedSeconds);
+        //         lastTime = now;
+        //         switch (direction) {
+        //             case 1 -> moveUp();
+        //             case 2 -> moveRight();
+        //             case 3 -> moveDown();
+        //             case 4 -> moveLeft();
+        //             default -> {
+        //             }
+        //         }
+        //         checkForPoint();
+        //     }
+        //     return true;
+        // }
+        // return false;
     
-    }
+    //}
 
     @Override
     public void move() {
-
-        changeDirection();
-        switch (direction) {
-            case 1 -> moveUp();
-            case 2 -> moveRight();
-            case 3 -> moveDown();
-            case 4 -> moveLeft();
-            default -> {
-            }
-        }
+        super.move();
+        // changeDirection();
+        // switch (direction) {
+        //     case 1 -> moveUp();
+        //     case 2 -> moveRight();
+        //     case 3 -> moveDown();
+        //     case 4 -> moveLeft();
+        //     default -> {
+        //     }
+        // }
         checkForPoint();
     }
 

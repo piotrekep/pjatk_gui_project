@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
+
+import model.AgentModel;
 
 public class GameView extends JFrame {
     public interface GameListener {
@@ -16,10 +17,12 @@ public class GameView extends JFrame {
     private JLabel livesLabel; 
     private GameBoard level;
     private JPanel topPanel;
+    private AgentModel model;
+    private AnimatedTable table;
 
     public GameView() {
 
-        super("Difficulty slector");
+        super("Pacman!");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         topPanel = new JPanel(new BorderLayout());
 
@@ -47,6 +50,10 @@ public class GameView extends JFrame {
 
         setSize(800, 600);
 
+    }
+
+    public void setAgentModel(AgentModel model){
+        this.model=model;
     }
 
     public void setScore(int score) {
@@ -81,7 +88,7 @@ public class GameView extends JFrame {
     }
 
     private void initMap(GameBoard level) {
-        JTable table = new JTable(level);
+        table = new AnimatedTable(level,model);
 
         JScrollPane sp = new JScrollPane(
                 table,
@@ -114,6 +121,10 @@ public class GameView extends JFrame {
             table.getColumnModel().getColumn(c).setPreferredWidth(cellW);
         }
         table.revalidate();
+    }
+
+    public AnimatedTable getAnimatedTable() {
+        return this.table;  // gdzieś trzymasz pole table
     }
 
     private void enableFullTableScaling(JTable table, JScrollPane sp) {

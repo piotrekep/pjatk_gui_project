@@ -35,6 +35,8 @@ public class CellTypeVisu {
         return type.color;
     }
 
+ 
+
     public CellTypeVisu(Type type) {
         this.type = type;
         this.val = 0;

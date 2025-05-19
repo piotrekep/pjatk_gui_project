@@ -3,6 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import model.Agent.AgentListener;
 
 
-public class GameLogic implements AgentListener{
+public class GameLogic implements AgentListener,
+                        AgentModel{
 
     private CellType[][] labirynt;
     private int[][] distanceField;
@@ -116,14 +118,17 @@ public class GameLogic implements AgentListener{
         
         
     
-            if(System.nanoTime()<player.pearlTime)
+            if(System.nanoTime()<player.pearlTime){
                 player.powered=true;
+            }
             else{
                 player.powered=false;
             }
         
             if(System.nanoTime()<player.speedTime)
+            {
                 speedMul=1.5;
+            }
             else{
                 speedMul=1;
             }
@@ -329,7 +334,7 @@ public void calcDistanceField() {
     for (int i = 0; i < x; i++) Arrays.fill(distanceField[i], Integer.MAX_VALUE);
 
 
-    final int max = x * y;
+    final int max = (x * y)+1;
     int[] qx = new int[max];        
     int[] qy = new int[max];        
     int head = 0, tail = 0;
@@ -405,6 +410,7 @@ public void calcDistanceField() {
             if(!player.powered)
                 listener.onDeath(level);
             else{
+                player.addBonusPoints(100);
                 source.moveToSpawn();
             }
         else{
@@ -434,6 +440,11 @@ public void calcDistanceField() {
 
         }
         }
+    }
+
+    @Override
+    public Collection<Agent> getAgents() {
+        return Collections.unmodifiableCollection(agentList.values());
     }
 
 

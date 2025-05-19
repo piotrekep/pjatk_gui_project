@@ -238,12 +238,18 @@ public class GameController implements Runnable,
 
     @Override
     public void onStartGame(int x, int y) {
-        game.createLevel(x, y);
+        
 
         gamelogic = new GameLogic(x, y);
         this.gamelogic.setListener(this);
 
+        game.setAgentModel(gamelogic);
+        game.createLevel(x, y);
+
         game.setVisible(true);
+        game.getAnimatedTable().startAnimation();
+        
+        
         difficulty.setVisible(false);
 
         running = true;
@@ -257,6 +263,7 @@ public class GameController implements Runnable,
     @Override
     public void onCloseGameWindow() {
         stop();
+        game.getAnimatedTable().stopAnimation();
         SwingUtilities.invokeLater(() -> {
             game.setVisible(false);
             menu.setVisible(true);
