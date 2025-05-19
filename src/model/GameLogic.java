@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -194,15 +193,15 @@ public class GameLogic implements AgentListener,
             gameState[i] = labirynt[i].clone();
         }
 
-        for (Agent agent : agentList.values()) {
-            switch (agent) {
-                case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
-                case Npc n -> gameState[n.position.x][n.position.y] = n.getCellType();
-                case Powerup pw -> gameState[pw.position.x][pw.position.y] = CellType.POWERUP;
-                default -> {
-                }
-            }
-        }
+        // for (Agent agent : agentList.values()) {
+        //     switch (agent) {
+        //         case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
+        //         case Npc n -> gameState[n.position.x][n.position.y] = n.getCellType();
+        //         case Powerup pw -> gameState[pw.position.x][pw.position.y] = CellType.POWERUP;
+        //         default -> {
+        //         }
+        //     }
+        // }
 
         return gameState;
 

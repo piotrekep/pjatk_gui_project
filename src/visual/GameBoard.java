@@ -14,7 +14,7 @@ public class GameBoard extends AbstractTableModel {
         this.table = new CellTypeVisu[this.sizeX][this.sizeY];
         for (int i = 0; i < table.length; i++)
             for (int j = 0; j < table[i].length; j++)
-                table[i][j] = new CellTypeVisu(CellTypeVisu.Type.WALL);//CellTypeVisu.WALL;
+                table[i][j] = new CellTypeVisu(CellTypeVisu.Type.WALL);
 
     }
 
@@ -48,9 +48,13 @@ public class GameBoard extends AbstractTableModel {
         return this.table[0].length;
     }
 
-    @Override
+
+
+     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return this.table[rowIndex][columnIndex];
-    }
+    CellTypeVisu old = table[rowIndex][columnIndex];
+    visual.SpriteCellType.Type t = visual.SpriteCellType.Type.valueOf(old.type.name());
+    return new SpriteCellType(t, old.val);
+}
 
 }

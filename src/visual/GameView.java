@@ -99,7 +99,8 @@ public class GameView extends JFrame {
         getContentPane().removeAll();
         add(topPanel, BorderLayout.NORTH);
 
-        LevelRenderer renderer = new LevelRenderer();
+        SpriteLevelRenderer renderer = new SpriteLevelRenderer();
+        
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
@@ -124,7 +125,7 @@ public class GameView extends JFrame {
     }
 
     public AnimatedTable getAnimatedTable() {
-        return this.table;  // gdzieś trzymasz pole table
+        return this.table;  
     }
 
     private void enableFullTableScaling(JTable table, JScrollPane sp) {

@@ -5,12 +5,20 @@ import javax.swing.table.TableModel;
 
 import model.Agent;
 import model.AgentModel;
+import model.Personality;
+import model.Player;
+import model.Npc;
+import model.Powerup;
+import model.PowerupType;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class AnimatedTable extends JTable {
     private final AgentModel model;
+    private final Map<SpriteCellType.Type, Image> spriteMap = new EnumMap<>(SpriteCellType.Type.class);
     private Thread animationThread;
     private volatile boolean running = false;
 
@@ -21,23 +29,23 @@ public class AnimatedTable extends JTable {
     public AnimatedTable(TableModel tm, AgentModel model) {
         super(tm);
         this.model = model;
-        setOpaque(true);
-    }
 
-    
-    private Image createSprite() {
-        BufferedImage img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = img.createGraphics();
-        g2.setColor(Color.RED);
-        g2.fillOval(0, 0, 50, 50);
-        g2.dispose();
-        return img;
+        // Wyłącz rysowanie linii siatki i odstępy
+        setShowGrid(false);
+        setIntercellSpacing(new Dimension(0, 0));
+   
+        setOpaque(false);
+
+        // Wczytaj wszystkie sprite'y z enuma
+        for (SpriteCellType.Type type : SpriteCellType.Type.values()) {
+            spriteMap.put(type, type.getSprite());
+        }
     }
+    
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g.create();
         int cellW = getColumnModel().getColumn(0).getWidth();
         int cellH = getRowHeight();
@@ -48,21 +56,47 @@ public class AnimatedTable extends JTable {
             int tx = a.getTargetCol() * cellW;
             int ty = a.getTargetRow() * cellH;
 
-            double p = a.getMoveProgress();    
+            double p = a.getMoveProgress();
             int dx = sx + (int) Math.round((tx - sx) * p);
             int dy = sy + (int) Math.round((ty - sy) * p);
 
-                
-            Image img = createSprite();
+            // wybierz sprite na podstawie typu agenta
+            Image img;
+            if (a instanceof Player) {
+                img = spriteMap.get(SpriteCellType.Type.PLAYER);
+            } else if (a instanceof Npc) {
+                Personality pers = ((Npc) a).getPersonality();
+                SpriteCellType.Type key = SpriteCellType.Type.valueOf("NPC_" + pers.name());
+                img = spriteMap.get(key);
+            } else if (a instanceof Powerup) {
+                PowerupType pt = ((Powerup) a).getPowerup();
+                SpriteCellType.Type key = SpriteCellType.Type.valueOf("POWERUP_" + pt.name());
+                img = spriteMap.get(key);
+            } else {
+                img = spriteMap.get(SpriteCellType.Type.EMPTY);
+            }
+
+            if (img == null) {
+                // placeholder
+                img = createPlaceholder(Color.MAGENTA, cellW, cellH);
+            }
+
             g2.drawImage(img,
                 dx + 2, dy + 2,
                 cellW - 4, cellH - 4,
                 null);
         }
-
         g2.dispose();
     }
 
+    private Image createPlaceholder(Color color, int w, int h) {
+        BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = img.createGraphics();
+        g2.setColor(color);
+        g2.fillOval(0, 0, w, h);
+        g2.dispose();
+        return img;
+    }
 
 
     /**

@@ -5,10 +5,6 @@ import java.util.Random;
 
 public class Npc extends Agent {
 
-
-   
-
-
     Random rnd;
     int rndDir;
     private Personality personality = Personality.AGGRO;
