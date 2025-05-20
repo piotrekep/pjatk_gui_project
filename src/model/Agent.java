@@ -48,7 +48,8 @@ abstract public class Agent {
         this.speed=speed;
         long now = System.nanoTime();
         moveProgress = (now - lastTime)/1_000_000_000.0;
-
+        if(moveProgress<0.1)
+            changeDirection();
         
         if(speed!=0){
             switch (direction) {
@@ -78,7 +79,7 @@ abstract public class Agent {
             target.x=position.x;
             target.y=position.y;
          }
-
+         
         if(moveProgress > 1.0/speed){
             lastTime = now;
             switch (direction) {
@@ -88,7 +89,7 @@ abstract public class Agent {
                 case 4 -> moveLeft();
                 default ->{}
          }
-         changeDirection();
+        
          if(listener!=null)
             listener.onChangePosition(this);
          return true;
@@ -125,6 +126,9 @@ abstract public class Agent {
         this.target.x=x;
         this.target.y=y;
            
+    }
+    public int getDirection(){
+        return direction;
     }
 
     public void moveToSpawn(){

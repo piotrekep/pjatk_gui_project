@@ -6,7 +6,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class LevelRenderer extends DefaultTableCellRenderer {
+public class LevelRenderer_old extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean sel, boolean foc,

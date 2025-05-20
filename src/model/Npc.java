@@ -20,12 +20,11 @@ public class Npc extends Agent {
 
     public void moveRandom(double speed) {
 
-        // setDirection(rndDir);
+        
 
         if (!moveInDirPossible(direction)) {
             rndDir = (int) Math.round(rnd.nextDouble(1, 4));
             setDirection(rndDir);
-            changeDirection();
         }
 
         move(speed);
@@ -83,16 +82,16 @@ public class Npc extends Agent {
         if (bestDir != 0) {
             setDirection(bestDir);
         }
-        changeDirection();
+    
         move(speed);
     }
 
     public void moveAstarInv(double speed, int[][] distField) {
 
         int bestDir  = 0;
-        int bestDist = -1;  // start below any reachable cell
+        int bestDist = -1;  
     
-        // LEFT (x-1, y) → dir=1
+       
         if (position.x > 0) {
             int v = distField[position.x - 1][position.y];
             if (v >= 0) {
@@ -105,7 +104,7 @@ public class Npc extends Agent {
             }
         }
     
-        // DOWN (x, y+1) → dir=2
+       
         if (position.y + 1 < distField[0].length) {
             int v = distField[position.x][position.y + 1];
             if (v >= 0) {
@@ -118,7 +117,7 @@ public class Npc extends Agent {
             }
         }
     
-        // RIGHT (x+1, y) → dir=3
+        
         if (position.x + 1 < distField.length) {
             int v = distField[position.x + 1][position.y];
             if (v >= 0) {
@@ -131,7 +130,7 @@ public class Npc extends Agent {
             }
         }
     
-        // UP (x, y-1) → dir=4
+       
         if (position.y > 0) {
             int v = distField[position.x][position.y - 1];
             if (v >= 0) {
@@ -147,7 +146,7 @@ public class Npc extends Agent {
         if (bestDir != 0) {
             setDirection(bestDir);
         }
-        changeDirection();
+        
         move(speed);
     }
 

@@ -54,8 +54,7 @@ public class AnimatedTable extends JTable {
             double p = a.getMoveProgress();
             int dx = sx + (int) Math.round((tx - sx) * p);
             int dy = sy + (int) Math.round((ty - sy) * p);
-
-            // wybierz sprite na podstawie typu agenta
+            int dir;
             Image img;
             if (a instanceof Player) {
                 img = spriteMap.get(SpriteCellType.Type.PLAYER);
@@ -76,7 +75,13 @@ public class AnimatedTable extends JTable {
                 img = createPlaceholder(Color.MAGENTA, cellW, cellH);
             }
 
-            g2.drawImage(img,
+              
+            // g2.translate(dx + (cellW - 4)/2, dy + (cellH - 4)/2);
+            // a.getDir();
+            // g2.rotate(angle);
+            // g2.translate(dx + (cellW - 4)/2, dy + (cellH - 4)/2); 
+
+               g2.drawImage(img,
                 dx + 2, dy + 2,
                 cellW - 4, cellH - 4,
                 null);
