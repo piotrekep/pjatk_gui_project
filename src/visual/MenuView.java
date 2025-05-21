@@ -7,9 +7,38 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * @class MenuView
+ * @brief Główne menu aplikacji z trzema przyciskami: Nowa gra, Wyniki oraz Wyjście.
+ *
+ * Klasa dziedziczy po JFrame i wyświetla prosty interfejs menu.
+ * Wykorzystuje listenera do obsługi kliknięć przycisków.
+ */
+
 public class MenuView extends JFrame{
-    public interface MenuListener { void onNewGame(); void onShowScores(); void onExit(); }
+        /**
+     * Interfejs listenera menu.
+     * Implementacje powinny definiować reakcje na kliknięcie przycisków.
+     */
+    public interface MenuListener {
+        /** Wywoływane po kliknięciu "New Game". */
+        void onNewGame();
+
+        /** Wywoływane po kliknięciu "High Scores". */
+        void onShowScores();
+
+        /** Wywoływane po kliknięciu "Exit". */
+        void onExit();
+    }
+
+    /** Obiekt implementujący MenuListener, który nasłuchuje zdarzeń z menu. */
     private MenuListener listener;
+
+    /**
+     * Konstruktor MenuView.
+     *
+     * Tworzy okno menu z trzema przyciskami i ustawia odpowiednie akcje.
+     */
 
       public MenuView(){
         super("Menu");
@@ -41,6 +70,11 @@ public class MenuView extends JFrame{
 
     }
 
+       /**
+     * Ustawia listenera zdarzeń menu.
+     *
+     * @param l obiekt implementujący MenuListener
+     */
     public void setListener(MenuListener l) {
         this.listener = l;
     }

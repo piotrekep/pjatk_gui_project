@@ -1,39 +1,79 @@
 package model;
 
+/**
+ * @class Player
+ * @brief Definicja Gracza w grze
+ *
+ *        Klasa rozszerza klasę Agent o dodatkową funkcjonalność odróżniającą
+ *        byt gracza od innych.
+ */
 
 public class Player extends Agent {
-    private long lastTime;
+    /**
+     * punkty zdobyte przez gracza.
+     * Są to punkty "zjedzone" na podstawie których sprawdzamy czy poziom został
+     * ukończony
+     */
     private int points = 0;
+    /** dodatkowe punkty zdobytye przez powerupy */
     private int bonusPoints = 0;
+    /** liczba żyć */
     private int lives = 0;
-    public boolean powered=false;
-    public long pearlTime=0;
-    public long speedTime=0;
-    private  PowerupType collected; 
+    /** czy gracz jest po zjedzeniu powerupa(perły) */
+    public boolean powered = false;
+    /** czas do końca perły */
+    public long pearlTime = 0;
+    /** czas do końca przyspieszenia */
+    public long speedTime = 0;
+    /** rodzaj zebranego powerupa */
+    private PowerupType collected;
+
+    /**
+     * konstruktor gracza.
+     *
+     * @param x     współrzędna wiersza startowego
+     * @param y     współrzędna kolumny startowej
+     * @param id    unikalny identyfikator agenta
+     * @param level mapa gry
+     */
 
     public Player(int x, int y, int id, CellType[][] level) {
         super(x, y, id, level);
-        lastTime = System.nanoTime();
+
     }
 
-    // prekość w tickach na sekunde
+    /**
+     * Override ruchu. Rozbudowany o zbieranie punktów
+     *
+     * @param speed prędkość poruszania się w kratkach na sekundę
+     * @return true jeśli wykonano ruch, false w przeciwnym razie
+     */
+    @Override
     public boolean move(double speed) {
 
-        if(super.move(speed)){
+        if (super.move(speed)) {
             checkForPoint();
             return true;
-        }
-        else
+        } else
             return false;
-        }
+    }
 
-
+    /**
+     * Override ruchu. Rozbudowany o zbieranie punktów
+     *
+     * @return true jeśli wykonano ruch, false w przeciwnym razie
+     */
     @Override
     public void move() {
         super.move();
         checkForPoint();
     }
 
+    /**
+     * sprawdza czy gracz zjadł punkt.
+     * Jeżeli gracz znajduje się na polu z punktem, pole jest resetowane, a punkt
+     * dodawany
+     */
     private void checkForPoint() {
         if (level[position.x][position.y] == CellType.POINT) {
             points++;
@@ -41,49 +81,75 @@ public class Player extends Agent {
         }
 
     }
-    public void stopPlayer(){
-        newDirection=0;
-        direction=0;
+
+    /**
+     * Zatrzymuje ruch gracza
+     */
+    public void stopPlayer() {
+        newDirection = 0;
+        direction = 0;
     }
 
+    /**
+     * pobiera ilość punktów
+     */
     public int getPoints() {
         return points;
     }
 
+    /** pobiera całkowitą ilość punktów */
     public int getTotalPoints() {
-        return points+bonusPoints;
+        return points + bonusPoints;
     }
 
-    public void addBonusPoints(int points){
-        this.bonusPoints+=points;
+    /**
+     * dodaje bonusowe punkty
+     * 
+     * @param points ilość punktów do dodania
+     */
+    public void addBonusPoints(int points) {
+        this.bonusPoints += points;
     }
 
-    public void setLives(int lives){  
-      this.lives=lives;
+    /**
+     * ustawia ilość żyć
+     * 
+     * @param lives nowa ilość żyć
+     */
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
-    public int getLives(){
+    /**
+     * pobiera ilość żyć
+     * 
+     * @return ilość żyć
+     */
+    public int getLives() {
         return this.lives;
     }
 
-    public PowerupType getPowerup(){
+    /**
+     * pobiera rodzaj powerupa zebranego przez gracza
+     * 
+     * @return rodzaj powerupa
+     */
+    public PowerupType getPowerup() {
         return collected;
     }
 
-    public void setPowerup(PowerupType pwr){
-        this.collected=pwr;
+    /**
+     * ustawia powerup gracza
+     * 
+     * @param pwr powerup
+     */
+    public void setPowerup(PowerupType pwr) {
+        this.collected = pwr;
     }
 
-    @Override
-    public void setDirection(int direction) {
-        switch (direction) {
-            case 1 -> this.newDirection = 1;
-            case 2 -> this.newDirection = 2;
-            case 3 -> this.newDirection = 3;
-            case 4 -> this.newDirection = 4;
-            default -> {this.newDirection = 0;}
-        }
-    }
+    /**
+     * zmiana implementacji moveUP zabraniająca graczowi wchodzenia do domu duchów
+     */
 
     @Override
     public void moveUp() {
@@ -94,6 +160,9 @@ public class Player extends Agent {
             position.x--;
     }
 
+    /**
+     * zmiana implementacji moveDown zabraniająca graczowi wchodzenia do domu duchów
+     */
     @Override
     public void moveDown() {
         if (level[position.x + 1][position.y] != CellType.WALL &&
@@ -103,6 +172,9 @@ public class Player extends Agent {
             position.x++;
     }
 
+    /**
+     * zmiana implementacji moveLeft zabraniająca graczowi wchodzenia do domu duchów
+     */
     @Override
     public void moveLeft() {
         if (level[position.x][position.y - 1] != CellType.WALL &&
@@ -112,6 +184,10 @@ public class Player extends Agent {
             position.y--;
     }
 
+    /**
+     * zmiana implementacji moveRight zabraniająca graczowi wchodzenia do domu
+     * duchów
+     */
     @Override
     public void moveRight() {
         if (level[position.x][position.y + 1] != CellType.WALL &&
@@ -121,5 +197,4 @@ public class Player extends Agent {
             position.y++;
     }
 
- 
 }

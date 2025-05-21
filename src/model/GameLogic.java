@@ -192,7 +192,7 @@ public class GameLogic implements AgentListener,
         for (int i = 0; i < labirynt.length; i++) {
             gameState[i] = labirynt[i].clone();
         }
-
+        //zmienianie tła tabeli, stary kod przed animacją
         // for (Agent agent : agentList.values()) {
         //     switch (agent) {
         //         case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
@@ -323,19 +323,18 @@ public class GameLogic implements AgentListener,
 }
 
 public void calcDistanceField() {
+    try{
     Player player = (Player) agentList.get(0);
     if (player == null) return;
 
-      
-    if (distanceField == null || distanceField.length != x || distanceField[0].length != y)
-        distanceField = new int[x][y];
+    distanceField = new int[x][y];
 
     for (int i = 0; i < x; i++) Arrays.fill(distanceField[i], Integer.MAX_VALUE);
 
 
-    final int max = (x * y)+1;
-    int[] qx = new int[max];        
-    int[] qy = new int[max];        
+   
+    int[] qx = new int[x * y];        
+    int[] qy = new int[x * y];        
     int head = 0, tail = 0;
 
     int sx = player.position.x;
@@ -362,7 +361,6 @@ public void calcDistanceField() {
             if (nx < 0 || nx >= x || ny < 0 || ny >= y) continue;
             if (labirynt[nx][ny] == CellType.WALL || labirynt[nx][ny] == CellType.GHOSTHOUSE) continue;
             if (distanceField[nx][ny] <= nextDist) continue;   
-            if (labirynt[nx][ny] == CellType.GHOSTFLOOR) nextDist=nextDist+10;
 
             distanceField[nx][ny] = nextDist;  
             qx[tail] = nx;                      
@@ -377,6 +375,13 @@ public void calcDistanceField() {
                 distanceField[i][j] = -1;
         }
     }
+
+} catch (Exception e) {
+   
+    System.err.println("Błąd w calcDistanceField: " + e.getMessage());
+    
+     e.printStackTrace();
+}
 }
     Personality intToPersonality(int p){
         switch(p){
@@ -424,7 +429,6 @@ public void calcDistanceField() {
                 default ->{}
             }
             agentList.remove(powerup.id);
-            System.out.println(powerup.getPowerup());
 
             }
     }
