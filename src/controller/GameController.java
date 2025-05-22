@@ -291,7 +291,7 @@ public class GameController implements Runnable,
     public void onVictory() {
         pause();
         SwingUtilities.invokeLater(() -> 
-            JOptionPane.showMessageDialog(game, "Level: " + gamelogic.level, "Victory!", JOptionPane.INFORMATION_MESSAGE)
+            JOptionPane.showMessageDialog(game, "Level: " + gamelogic.level + " compleated!", "Victory!", JOptionPane.INFORMATION_MESSAGE)
         );
         gamelogic.generateLevel();
         keyhandler.clear();

@@ -201,7 +201,7 @@ public class GameLogic implements AgentListener,
     private Player SpawnPlayer(int x, int y, int id) {
         if (labirynt[x][y] == CellType.EMPTY) {
             Player player = new Player(x, y, id, labirynt);
-            player.setLives(3);
+            player.setLives(2);
             maxPoints--;
             return player;
         } else
