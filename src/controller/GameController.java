@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -288,18 +287,19 @@ public class GameController implements Runnable,
             pause();
             gamelogic.getPlayer(0).setLives(gamelogic.getPlayer(0).getLives()-1);
 
-            SwingUtilities.invokeLater(() -> 
-                JOptionPane.showMessageDialog(game, "You Died","You Died", JOptionPane.INFORMATION_MESSAGE )
-            );
+            
+            JOptionPane.showMessageDialog(game, "You Died","You Died", JOptionPane.INFORMATION_MESSAGE );
+            
 
             gamelogic.resetLevel();
+            keyhandler.clear();
+            resume();
         }
         else{
             SwingUtilities.invokeLater(() ->
                 game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
             );
         }
-        keyhandler.clear();
-        resume();
+
     }
 }

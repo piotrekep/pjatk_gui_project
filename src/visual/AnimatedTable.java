@@ -44,6 +44,7 @@ public class AnimatedTable extends JTable {
         Graphics2D g2 = (Graphics2D) g.create();
         int cellW = getColumnModel().getColumn(0).getWidth();
         int cellH = getRowHeight();
+        
 
         for (Agent a : model.getAgents()) {
             int sx = a.getCol() * cellW;
@@ -56,12 +57,16 @@ public class AnimatedTable extends JTable {
             int dy = sy + (int) Math.round((ty - sy) * p);
             int dir;
             Image img;
+            int height=cellH;
+            int yOffset=0;
             if (a instanceof Player) {
                 img = spriteMap.get(SpriteCellType.Type.PLAYER);
             } else if (a instanceof Npc) {
                 Personality pers = ((Npc) a).getPersonality();
                 SpriteCellType.Type key = SpriteCellType.Type.valueOf("NPC_" + pers.name());
                 img = spriteMap.get(key);
+                height =(int)(cellH * changeSize(a.getMoveProgress(),0.9));
+                yOffset=height-cellH;
             } else if (a instanceof Powerup) {
                 PowerupType pt = ((Powerup) a).getPowerup();
                 SpriteCellType.Type key = SpriteCellType.Type.valueOf("POWERUP_" + pt.name());
@@ -75,15 +80,15 @@ public class AnimatedTable extends JTable {
                 img = createPlaceholder(Color.MAGENTA, cellW, cellH);
             }
 
-              
             // g2.translate(dx + (cellW - 4)/2, dy + (cellH - 4)/2);
             // a.getDir();
             // g2.rotate(angle);
             // g2.translate(dx + (cellW - 4)/2, dy + (cellH - 4)/2); 
-
+            
+            
                g2.drawImage(img,
-                dx + 2, dy + 2,
-                cellW - 4, cellH - 4,
+                dx + 2, (dy + 2)-yOffset,
+                cellW - 4, height- 4,
                 null);
         }
         g2.dispose();
@@ -98,6 +103,15 @@ public class AnimatedTable extends JTable {
         return img;
     }
 
+
+    private double changeSize(double progress, double minSize){
+
+        if(progress<=0.5)
+            return (minSize + (1 - minSize) * (progress / 0.5));
+        else
+            return  (1 + (minSize - 1) * (progress / -0.5));
+        
+    }
 
     /**
      * Uruchamia wątek animacji (~60 FPS),
@@ -117,7 +131,7 @@ public class AnimatedTable extends JTable {
                 // 1) repaint na EDT
                 SwingUtilities.invokeLater(this::repaint);
 
-                // 2) pilnuj dokładnego odstępu
+                
                 
                 long elapsed = System.nanoTime() - startNs;
                 long sleepNs = frameTimeNs - elapsed;
@@ -127,7 +141,6 @@ public class AnimatedTable extends JTable {
                     try {
                       Thread.sleep(ms, ns);
                     } catch (InterruptedException ex) {
-                        // jeśli ktoś przerwie wątek, kończymy
                         break;
                     }
                 } 

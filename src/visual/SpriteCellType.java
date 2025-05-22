@@ -13,11 +13,17 @@ public class SpriteCellType {
         EMPTY(null,               Color.WHITE),
         WALL("sprites/wall.png",       Color.DARK_GRAY),
         PLAYER("sprites/player.png",     Color.BLUE),
-        NPC_CHASER("sprites/npc_chaser.png", Color.GREEN),
-        NPC_AGGRO("sprites/npc_aggro.png",  Color.YELLOW),
-        NPC_KEYBOARDWARRIOR("sprites/npc_keyboardwarrior.png", Color.MAGENTA),
-        NPC_HEADLESSCHICKEN("sprites/npc_headlesschicken.png", Color.CYAN),
-        NPC_COWARD("sprites/npc_coward.png", Color.ORANGE),
+        NPC_CHASER("sprites/czerwony_dolny_duch.png", Color.GREEN),
+        NPC_AGGRO("sprites/fioletowy_dolny_duch.png",  Color.YELLOW),
+        NPC_KEYBOARDWARRIOR("sprites/niebieski_dolny_duch.png", Color.MAGENTA),
+        NPC_HEADLESSCHICKEN("sprites/pomaranczowy_dolny_duch.png", Color.CYAN),
+        NPC_COWARD("sprites/spowolniony_dolny_duch.png", Color.ORANGE),
+       
+        // NPC_CHASER("sprites/npc_chaser.png", Color.GREEN),
+        // NPC_AGGRO("sprites/npc_aggro.png",  Color.YELLOW),
+        // NPC_KEYBOARDWARRIOR("sprites/npc_keyboardwarrior.png", Color.MAGENTA),
+        // NPC_HEADLESSCHICKEN("sprites/npc_headlesschicken.png", Color.CYAN),
+        // NPC_COWARD("sprites/npc_coward.png", Color.ORANGE),
         GHOSTHOUSE("sprites/ghosthouse.png", Color.GRAY),
         GHOSTFLOOR("sprites/ghostfloor.png", Color.PINK),
         POINT("sprites/point.png",      Color.LIGHT_GRAY),
@@ -42,7 +48,6 @@ public class SpriteCellType {
 
         private static Image loadSprite(String path, Color placeholderColor) {
             try {
-                // szukamy zasobu zaczynając od katalogu klasy (root classpath)
                 java.net.URL resource = SpriteCellType.class.getResource("/" + path);
                 if (resource != null) {
                     return ImageIO.read(resource);
@@ -56,7 +61,7 @@ public class SpriteCellType {
 
 
         private static Image createPlaceholder(Color color) {
-            int size = 32;
+            int size = 64;
             BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2 = img.createGraphics();
             g2.setColor(color);

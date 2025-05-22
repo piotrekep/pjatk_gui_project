@@ -3,7 +3,6 @@ package model;
 import java.io.*;
 import java.util.ArrayList;
 
-// 1. Klasa dziedzicząca ArrayList<T> i implementująca Serializable
 public class SerializableList<T extends Serializable>
         extends ArrayList<T> {
 
