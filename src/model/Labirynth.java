@@ -123,6 +123,8 @@ public class Labirynth {
                 rnd<0.35 )
                 labirynt[i][j]=CellType.EMPTY;
          }
+
+  
     }
     
 

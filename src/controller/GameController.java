@@ -6,6 +6,7 @@ import model.GameLogic.GameLogicListener;
 
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -15,6 +16,7 @@ import javax.swing.SwingUtilities;
 import visual.DifficultyView;
 import visual.GameView;
 import visual.MenuView;
+import visual.PlayerScore;
 import visual.ScoreView;
 import visual.CellTypeVisu;
 
@@ -39,10 +41,11 @@ public class GameController implements Runnable,
     private ScoreView score;
     private DifficultyView difficulty;
     private GameView game;
+    private SerializableList<PlayerScore> highScoreList;
 
     private final int TARGET_FPS = 30;
     private final long OPTIMAL_TIME;
-
+            
     
 
     public GameController(KeyHandler keyhandler,
@@ -61,6 +64,21 @@ public class GameController implements Runnable,
         this.menu.setListener(this);
         this.score.setListener(this);
         this.difficulty.setListener(this);
+       
+
+        try {
+            highScoreList = SerializableList.loadFromFile("highscores.list");
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        for (PlayerScore playerScore : highScoreList) {
+            score.addHighScore(playerScore.getName(),playerScore.getScore());
+        }
 
         this.game.setListener(this);
         this.game.setKeyListener(keyhandler);
@@ -283,8 +301,9 @@ public class GameController implements Runnable,
 
     @Override
     public void onDeath(int lives) {
+        pause();
         if (gamelogic.getPlayer(0).getLives() > 0) {
-            pause();
+            
             gamelogic.getPlayer(0).setLives(gamelogic.getPlayer(0).getLives()-1);
 
             
@@ -296,9 +315,24 @@ public class GameController implements Runnable,
             resume();
         }
         else{
-            SwingUtilities.invokeLater(() ->
-                game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
-            );
+            String newName = JOptionPane.showInputDialog(null,"Game Over! Score: "+gamelogic.getPlayerScore(0),"Player");
+
+            PlayerScore pscore= new PlayerScore(newName, gamelogic.getPlayerScore(0));
+            highScoreList.add(pscore);
+            score.addHighScore(pscore.getName(), pscore.getScore());
+
+            try {
+                highScoreList.saveToFile("highscores.list");
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+               SwingUtilities.invokeLater(() ->
+                    game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
+                );
+               onCloseGameWindow();
+
         }
 
     }

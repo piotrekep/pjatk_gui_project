@@ -66,7 +66,7 @@ public class AnimatedTable extends JTable {
                 SpriteCellType.Type key = SpriteCellType.Type.valueOf("NPC_" + pers.name());
                 img = spriteMap.get(key);
                 height =(int)(cellH * changeSize(a.getMoveProgress(),0.9));
-                yOffset=height-cellH;
+                yOffset=(height-cellH)/2;
             } else if (a instanceof Powerup) {
                 PowerupType pt = ((Powerup) a).getPowerup();
                 SpriteCellType.Type key = SpriteCellType.Type.valueOf("POWERUP_" + pt.name());
@@ -131,8 +131,6 @@ public class AnimatedTable extends JTable {
                 // 1) repaint na EDT
                 SwingUtilities.invokeLater(this::repaint);
 
-                
-                
                 long elapsed = System.nanoTime() - startNs;
                 long sleepNs = frameTimeNs - elapsed;
                 if (sleepNs > 0) {
