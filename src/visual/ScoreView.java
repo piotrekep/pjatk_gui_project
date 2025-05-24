@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -19,6 +22,7 @@ public class ScoreView extends JFrame{
     public interface ScoreListener { void onCloseScoreWindow();}
     private ScoreListener listener;
     private DefaultListModel<PlayerScore> model;
+    private JList<PlayerScore> lista; 
 
 
     public ScoreView() {
@@ -28,7 +32,7 @@ public class ScoreView extends JFrame{
 
         model = new DefaultListModel<>();
         
-        JList<PlayerScore> lista = new JList<>(model);
+        lista = new JList<>(model);
         lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lista.setVisibleRowCount(10); 
 
@@ -85,7 +89,15 @@ public class ScoreView extends JFrame{
     }
 
     public void addHighScore(String name, int score){
+        
         model.addElement(new PlayerScore(name, score));
+        List<PlayerScore> temp = Collections.list(model.elements());
+        Comparator<PlayerScore> cmp = Comparator.comparingInt(PlayerScore::getScore);
+        cmp = cmp.reversed();
+        temp.sort(cmp);
+        model.clear();
+        temp.forEach(model::addElement);
+
     }
 
 

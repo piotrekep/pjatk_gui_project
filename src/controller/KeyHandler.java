@@ -41,7 +41,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+        
     }
 
     public KeyListener getKeyListener() {

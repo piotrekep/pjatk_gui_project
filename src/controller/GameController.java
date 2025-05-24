@@ -128,8 +128,6 @@ public class GameController implements Runnable,
             game.setScore(gamelogic.getPlayerScore(0));
             game.setLives(gamelogic.getPlayer(0).getLives());
 
-            CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
-            SwingUtilities.invokeLater(() -> game.updateLevel(frame));
 
             long frameTime = System.nanoTime() - now;
             long sleepTimeMs = (OPTIMAL_TIME - frameTime) / 1_000_000L;
@@ -157,6 +155,8 @@ public class GameController implements Runnable,
                     frameBarrier.await();
                     gamelogic.updateAllNpcs(3, keyhandler.test());
                     gamelogic.updateAllPowerups();
+                    CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
+                    SwingUtilities.invokeLater(() -> game.updateLevel(frame));
 
                 }
             } catch (InterruptedException | BrokenBarrierException ex) {
@@ -328,12 +328,12 @@ public class GameController implements Runnable,
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
-               SwingUtilities.invokeLater(() ->
-                    game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
-                );
-                keyhandler.clear();
-               onCloseGameWindow();
+            
+                // SwingUtilities.invokeLater(() ->
+                //      game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
+                //  );
+            keyhandler.clear();
+            onCloseGameWindow();
 
         }
 

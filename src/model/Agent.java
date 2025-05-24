@@ -97,7 +97,7 @@ abstract public class Agent {
      */
 
     public boolean move(double speed) {
-        this.speed = speed;
+        this.speed = speed; 
         long now = System.nanoTime();
         moveProgress = (now - lastTime) / 1_000_000_000.0;
         if (moveProgress < 0.1)
