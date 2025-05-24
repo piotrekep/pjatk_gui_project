@@ -318,7 +318,8 @@ public class GameController implements Runnable,
             String newName = JOptionPane.showInputDialog(null,"Game Over! Score: "+gamelogic.getPlayerScore(0),"Player");
 
             PlayerScore pscore= new PlayerScore(newName, gamelogic.getPlayerScore(0));
-            highScoreList.add(pscore);
+            if(pscore!=null)
+                highScoreList.add(pscore);
             score.addHighScore(pscore.getName(), pscore.getScore());
 
             try {
@@ -331,6 +332,7 @@ public class GameController implements Runnable,
                SwingUtilities.invokeLater(() ->
                     game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
                 );
+                keyhandler.clear();
                onCloseGameWindow();
 
         }

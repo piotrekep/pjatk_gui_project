@@ -29,7 +29,6 @@ public class ScoreView extends JFrame{
         model = new DefaultListModel<>();
         
         JList<PlayerScore> lista = new JList<>(model);
-        model.addElement(new PlayerScore("czesiek", 666));
         lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lista.setVisibleRowCount(10); 
 
