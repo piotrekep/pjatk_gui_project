@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class SpriteCellType {
     public enum Type {
         EMPTY(new String[] { null }, Color.BLACK),
-        WALL(new String[] { "sprites/wall.png" }, Color.DARK_GRAY),
+        WALL(new String[] { "sprites/klocek.png" }, Color.DARK_GRAY),
 
         PLAYER(new String[] { "sprites/pacan_1.png",
                 "sprites/pacan_2.png",
@@ -60,15 +60,15 @@ public class SpriteCellType {
                 "sprites/spowolniony_duch_4.png"
         }, Color.ORANGE),
 
-        GHOSTHOUSE(new String[] { "sprites/ghosthouse.png" }, Color.GRAY),
+        GHOSTHOUSE(new String[] { "sprites/klocek.png" }, Color.GRAY),
         GHOSTFLOOR(new String[] { "sprites/ghostfloor.png" }, Color.PINK),
-        POINT(new String[] { "sprites/point.png" }, Color.LIGHT_GRAY),
+        POINT(new String[] { "sprites/kulka.png" }, Color.LIGHT_GRAY),
 
-        POWERUP_LIFE(new String[] { "sprites/powerup_life.png" }, Color.RED),
+        POWERUP_LIFE(new String[] { "sprites/POWERUP_SERCE.png" }, Color.RED),
         POWERUP_PEARL(new String[] { "sprites/powerup_pearl.png" }, Color.RED),
-        POWERUP_POINTS(new String[] { "sprites/powerup_points.png" }, Color.RED),
+        POWERUP_POINTS(new String[] { "sprites/POWERUP_+200.png" }, Color.RED),
         POWERUP_SPEED(new String[] { "sprites/powerup_speed.png" }, Color.RED),
-        POWERUP_POOP(new String[] { "sprites/powerup_poop.png" }, Color.RED),
+        POWERUP_POOP(new String[] { "sprites/POWERUP_LOD.png" }, Color.RED),
         POWERUP(new String[] { "sprites/powerup.png" }, Color.RED);
 
         private final String[] spritePaths;

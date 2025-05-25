@@ -31,7 +31,8 @@ public class AnimatedTable extends JTable {
         setShowGrid(false);
         setIntercellSpacing(new Dimension(0, 0));
    
-        setOpaque(false);
+        setOpaque(true);
+        setBackground(Color.BLACK);
 
         for (SpriteCellType.Type type : SpriteCellType.Type.values()) {
             spriteMap.put(type, type);
