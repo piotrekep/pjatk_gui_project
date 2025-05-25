@@ -28,11 +28,11 @@ public class ScoreView extends JFrame{
 
     public ScoreView() {
         super("high scores");
-        setSize(800, 600);
+        setSize(300, 400);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         JPanel highscorPanel = new BackgroundJpanel("images/pacman_staty.png");
-        highscorPanel.setBorder(BorderFactory.createEmptyBorder(230, 180, 60, 180));
+        highscorPanel.setBorder(BorderFactory.createEmptyBorder(140, 66, 60, 66));
         add(highscorPanel);
 
         model = new DefaultListModel<>();

@@ -30,16 +30,16 @@ public class DifficultyView extends JFrame {
                 dispose();
             }
         });
-        setSize(300, 300);
+        setSize(300, 400);
 
-        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(3, 2, 10, 20),"images/pacman_rozmiar.png");
-        difficultyPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 2, 10, 20),"images/pacman_rozmiar.png");
+        difficultyPanel.setBorder(BorderFactory.createEmptyBorder(180, 40, 104, 40));
         add(difficultyPanel);
 
-        JLabel labelY = new JLabel("Level size Y:");
-        difficultyPanel.add(labelY);
-        JLabel labelX = new JLabel("Level size X:");
-        difficultyPanel.add(labelX);
+        //JLabel labelY = new JLabel("Level size Y:");
+        //difficultyPanel.add(labelY);
+        //JLabel labelX = new JLabel("Level size X:");
+        //difficultyPanel.add(labelX);
 
         NumberFormat intFormat = NumberFormat.getIntegerInstance();
         NumberFormatter nf = new NumberFormatter(intFormat) {
@@ -63,7 +63,7 @@ public class DifficultyView extends JFrame {
         intFieldX.setColumns(5);
         difficultyPanel.add(intFieldX);
 
-        JButton starButton = new JButton("Start!");
+        JButton starButton = new BackgroundJbutton("","images/NEW_GAME_button.png");
         difficultyPanel.add(starButton);
 
         starButton.addActionListener(e -> {
