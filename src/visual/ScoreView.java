@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Collections;
@@ -32,15 +34,22 @@ public class ScoreView extends JFrame{
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         JPanel highscorPanel = new BackgroundJpanel("images/pacman_staty.png");
-        highscorPanel.setBorder(BorderFactory.createEmptyBorder(140, 66, 60, 66));
+        highscorPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.85), (int)(getWidth()/4.5), (int)(getHeight()/6.66), (int)(getWidth()/4.5)));
         add(highscorPanel);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {                
+                highscorPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.85), (int)(getWidth()/4.5), (int)(getHeight()/6.66), (int)(getWidth()/4.5)));
+            }
+        });
 
         model = new DefaultListModel<>();
         
         lista = new JList<>(model);
         lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lista.setVisibleRowCount(10); 
-
+        
        lista.setCellRenderer(new ListCellRenderer<PlayerScore>() {
             private final JPanel panel = new JPanel(new BorderLayout(5, 0));
             private final JLabel nameLabel = new JLabel();

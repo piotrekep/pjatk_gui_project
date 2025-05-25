@@ -1,6 +1,8 @@
 package visual;
 
 import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
@@ -33,8 +35,16 @@ public class DifficultyView extends JFrame {
         setSize(300, 400);
 
         JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 2, 10, 20),"images/pacman_rozmiar.png");
-        difficultyPanel.setBorder(BorderFactory.createEmptyBorder(180, 40, 104, 40));
+        difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/4, (int)(getWidth()/7.5)));
         add(difficultyPanel);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {                
+                difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/4, (int)(getWidth()/7.5)));
+            }
+        });
+
 
         //JLabel labelY = new JLabel("Level size Y:");
         //difficultyPanel.add(labelY);

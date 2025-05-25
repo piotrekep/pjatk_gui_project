@@ -1,6 +1,8 @@
 package visual;
 
 import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -46,9 +48,17 @@ public class MenuView extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 400);
         JPanel menuPanel =  new BackgroundJpanel(new GridLayout(3, 1, 10, 20),"images/menu_pacman.png");
-        menuPanel.setBorder(BorderFactory.createEmptyBorder(100, 66, 104, 66));
+        menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/4, (int)(getWidth()/4.5), getHeight()/4, (int)(getWidth()/4.5)));
         add(menuPanel);
 
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {                
+                 menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/4, (int)(getWidth()/4.5), getHeight()/4, (int)(getWidth()/4.5)));
+            }
+        });
+        
+        
         JButton newGameButton = new BackgroundJbutton("","images/NEW_GAME_button.png");
         JButton highScoreButton = new BackgroundJbutton("","images/HIGH_SCORES_button.png");
         JButton exitButton = new BackgroundJbutton("","images/EXIT_button.png");
@@ -69,6 +79,8 @@ public class MenuView extends JFrame{
         });
 
     }
+
+    
 
        /**
      * Ustawia listenera zdarzeń menu.
