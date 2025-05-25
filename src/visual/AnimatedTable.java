@@ -18,7 +18,8 @@ import java.util.Map;
 
 public class AnimatedTable extends JTable {
     private final AgentModel model;
-    private final Map<SpriteCellType.Type, Image> spriteMap = new EnumMap<>(SpriteCellType.Type.class);
+    //private final Map<SpriteCellType.Type, Image> spriteMap = new EnumMap<>(SpriteCellType.Type.class);
+    private final Map<SpriteCellType.Type, SpriteCellType.Type> spriteMap = new EnumMap<>(SpriteCellType.Type.class);
     private Thread animationThread;
     private volatile boolean running = false;
 
@@ -33,7 +34,7 @@ public class AnimatedTable extends JTable {
         setOpaque(false);
 
         for (SpriteCellType.Type type : SpriteCellType.Type.values()) {
-            spriteMap.put(type, type.getSprite());
+            spriteMap.put(type, type);
         }
     }
     
@@ -46,33 +47,38 @@ public class AnimatedTable extends JTable {
         int cellH = getRowHeight();
         
 
-        for (Agent a : model.getAgents()) {
-            int sx = a.getCol() * cellW;
-            int sy = a.getRow() * cellH;
-            int tx = a.getTargetCol() * cellW;
-            int ty = a.getTargetRow() * cellH;
+        for (Agent agent : model.getAgents()) {
+            int sx = agent.getCol() * cellW;
+            int sy = agent.getRow() * cellH;
+            int tx = agent.getTargetCol() * cellW;
+            int ty = agent.getTargetRow() * cellH;
 
-            double p = a.getMoveProgress();
-            int dx = sx + (int) Math.round((tx - sx) * p);
-            int dy = sy + (int) Math.round((ty - sy) * p);
-            int dir;
+            double progress = agent.getMoveProgress();
+            int dx = sx + (int) Math.round((tx - sx) * progress);
+            int dy = sy + (int) Math.round((ty - sy) * progress);
+            int direction;
             Image img;
             int height=cellH;
             int yOffset=0;
-            if (a instanceof Player) {
-                img = spriteMap.get(SpriteCellType.Type.PLAYER);
-            } else if (a instanceof Npc) {
-                Personality pers = ((Npc) a).getPersonality();
-                SpriteCellType.Type key = SpriteCellType.Type.valueOf("NPC_" + pers.name());
-                img = spriteMap.get(key);
-                height =(int)(cellH * changeSize(a.getMoveProgress(),0.9));
+            
+            SpriteCellType.Type spriteType = null;
+
+            if (agent instanceof Player) {
+                spriteType = SpriteCellType.Type.PLAYER;
+                img = spriteType.getSprite(0);
+            } else if (agent instanceof Npc) {
+                Personality personality = ((Npc) agent).getPersonality();
+                spriteType = SpriteCellType.Type.valueOf("NPC_" + personality.name());
+                img = spriteType.getSprite(agent.getDirection());
+
+                height =(int)(cellH * changeSize(agent.getMoveProgress(),0.9));
                 yOffset=(height-cellH)/2;
-            } else if (a instanceof Powerup) {
-                PowerupType pt = ((Powerup) a).getPowerup();
-                SpriteCellType.Type key = SpriteCellType.Type.valueOf("POWERUP_" + pt.name());
-                img = spriteMap.get(key);
+            } else if (agent instanceof Powerup) {
+                PowerupType powerType = ((Powerup) agent).getPowerup();
+                spriteType = SpriteCellType.Type.valueOf("POWERUP_" + powerType.name());
+                img = spriteType.getSprite(0);
             } else {
-                img = spriteMap.get(SpriteCellType.Type.EMPTY);
+                img = SpriteCellType.Type.EMPTY.getSprite(0);
             }
 
             if (img == null) {

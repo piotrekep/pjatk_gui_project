@@ -20,7 +20,7 @@ class SpriteLevelRenderer extends DefaultTableCellRenderer {
 
         if (value instanceof SpriteCellType) {
             SpriteCellType cell = (SpriteCellType) value;
-            Image img = cell.type.getSprite();
+            Image img = cell.type.getSprite(0);
             setIcon(new ImageIcon(img));
         } else {
             setBackground(Color.WHITE);

@@ -148,8 +148,8 @@ public class GameController implements Runnable,
             try {
                 while (running) {
 
-                    
-                    frameBarrier.await(); //położenie gracza zaktualizowane można obliczać a-star
+                    //położenie gracza zaktualizowane można obliczać a-star
+                    frameBarrier.await(); 
             
                     gamelogic.calcDistanceField();            
                     frameBarrier.await();

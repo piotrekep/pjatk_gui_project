@@ -10,36 +10,85 @@ import javax.imageio.ImageIO;
 
 public class SpriteCellType {
     public enum Type {
-        EMPTY(null,               Color.WHITE),
-        WALL("sprites/wall.png",       Color.DARK_GRAY),
-        PLAYER("sprites/player.png",     Color.BLUE),
-        NPC_CHASER("sprites/czerwony_duch_1.png", Color.GREEN),
-        NPC_AGGRO("sprites/fioletowy_duch_1.png",  Color.YELLOW),
-        NPC_KEYBOARDWARRIOR("sprites/niebieski_duch_1.png", Color.MAGENTA),
-        NPC_HEADLESSCHICKEN("sprites/pomaranczowy_duch_1.png", Color.CYAN),
-        NPC_COWARD("sprites/zielony_duch_1.png", Color.ORANGE),
-        NPC_POWERUP("sprites/spowolniony_duch_1.png", Color.ORANGE),
-        GHOSTHOUSE("sprites/ghosthouse.png", Color.GRAY),
-        GHOSTFLOOR("sprites/ghostfloor.png", Color.PINK),
-        POINT("sprites/point.png",      Color.LIGHT_GRAY),
-        POWERUP_LIFE("sprites/powerup_life.png",    Color.RED),
-        POWERUP_PEARL("sprites/powerup_pearl.png",    Color.RED),
-        POWERUP_POINTS("sprites/powerup_points.png",    Color.RED),
-        POWERUP_SPEED("sprites/powerup_speed.png",    Color.RED),
-        POWERUP_POOP("sprites/powerup_poop.png",    Color.RED),
-        POWERUP("sprites/powerup.png",    Color.RED);
+        EMPTY(new String[]{null}, Color.WHITE),
+        WALL(new String[]{"sprites/wall.png"}, Color.DARK_GRAY),
+        PLAYER(new String[]{"sprites/player.png"}, Color.BLUE),
+        
+        // NPC z wieloma klatkami animacji
+        NPC_CHASER(new String[]{
+            "sprites/czerwony_duch_1.png",
+            "sprites/czerwony_duch_2.png",
+            "sprites/czerwony_duch_3.png",
+            "sprites/czerwony_duch_4.png"
+        }, Color.GREEN),
+        
+        NPC_AGGRO(new String[]{
+            "sprites/fioletowy_duch_1.png",
+            "sprites/fioletowy_duch_2.png",
+            "sprites/fioletowy_duch_3.png",
+            "sprites/fioletowy_duch_4.png"
+        }, Color.YELLOW),
+        
+        NPC_KEYBOARDWARRIOR(new String[]{
+            "sprites/niebieski_duch_1.png",
+            "sprites/niebieski_duch_2.png",
+            "sprites/niebieski_duch_3.png",
+            "sprites/niebieski_duch_4.png"
+        }, Color.MAGENTA),
+        
+        NPC_HEADLESSCHICKEN(new String[]{
+            "sprites/pomaranczowy_duch_1.png",
+            "sprites/pomaranczowy_duch_2.png",
+            "sprites/pomaranczowy_duch_3.png",
+            "sprites/pomaranczowy_duch_4.png"
+        }, Color.CYAN),
+        
+        NPC_COWARD(new String[]{
+            "sprites/zielony_duch_1.png",
+            "sprites/zielony_duch_2.png",
+            "sprites/zielony_duch_3.png",
+            "sprites/zielony_duch_4.png"
+        }, Color.ORANGE),
+        
+        NPC_POWERUP(new String[]{
+            "sprites/spowolniony_duch_1.png",
+            "sprites/spowolniony_duch_2.png",
+            "sprites/spowolniony_duch_3.png",
+            "sprites/spowolniony_duch_4.png"
+        }, Color.ORANGE),
+        
+        GHOSTHOUSE(new String[]{"sprites/ghosthouse.png"}, Color.GRAY),
+        GHOSTFLOOR(new String[]{"sprites/ghostfloor.png"}, Color.PINK),
+        POINT(new String[]{"sprites/point.png"}, Color.LIGHT_GRAY),
+        
+        POWERUP_LIFE(new String[]{"sprites/powerup_life.png"}, Color.RED),
+        POWERUP_PEARL(new String[]{"sprites/powerup_pearl.png"}, Color.RED),
+        POWERUP_POINTS(new String[]{"sprites/powerup_points.png"}, Color.RED),
+        POWERUP_SPEED(new String[]{"sprites/powerup_speed.png"}, Color.RED),
+        POWERUP_POOP(new String[]{"sprites/powerup_poop.png"}, Color.RED),
+        POWERUP(new String[]{"sprites/powerup.png"}, Color.RED);
 
-  
-        private final String path;
+        private final String[] spritePaths;
         private final Color placeholderColor;
-        private Image sprite;
+        private Image[] sprites;
     
-        Type(String path, Color placeholderColor) {
-            this.path = path;
+        Type(String[] paths, Color placeholderColor) {
+            this.spritePaths = paths;
             this.placeholderColor = placeholderColor;
-            this.sprite = loadSprite(path, placeholderColor);
+            this.sprites = loadSprites(paths, placeholderColor);
         }
     
+        private static Image[] loadSprites(String[] paths, Color placeholderColor) {
+            Image[] images = new Image[paths.length];
+            for (int i = 0; i < paths.length; i++) {
+                if (paths[i] == null) {
+                    images[i] = createPlaceholder(placeholderColor);
+                } else {
+                    images[i] = loadSprite(paths[i], placeholderColor);
+                }
+            }
+            return images;
+        }
 
         private static Image loadSprite(String path, Color placeholderColor) {
             try {
@@ -67,8 +116,11 @@ public class SpriteCellType {
             return img;
         }
 
-        public Image getSprite() {
-            return sprite;
+        public Image getSprite(int idx) {
+            if (idx < 0 || idx >= sprites.length) {
+                return sprites[0];
+            }
+            return sprites[idx];
         }
     }
 
