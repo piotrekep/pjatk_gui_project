@@ -291,7 +291,10 @@ abstract public class Agent {
      */
 
     public double getMoveProgress() {
-        return Math.min(1.0, Math.max(0.0, moveProgress / (1.0 / this.speed)));
+        if(position.x != target.x || position.y !=target.y)
+            return Math.min(1.0, Math.max(0.0, moveProgress / (1.0 / this.speed)));
+        else
+            return 0;
     }
 
     /**

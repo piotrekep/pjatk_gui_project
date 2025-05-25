@@ -65,7 +65,7 @@ public class AnimatedTable extends JTable {
 
             if (agent instanceof Player) {
                 spriteType = SpriteCellType.Type.PLAYER;
-                img = spriteType.getSprite(0);
+                img = spriteType.getSprite(agent.getMoveProgress(),agent.getDirection());
             } else if (agent instanceof Npc) {
                 Personality personality = ((Npc) agent).getPersonality();
                 spriteType = SpriteCellType.Type.valueOf("NPC_" + personality.name());
