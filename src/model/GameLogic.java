@@ -91,9 +91,14 @@ public class GameLogic implements AgentListener,
         for (Agent agent : agentList.values()) {
             if (agent.id < 0)
                 agentList.remove(agent.id);
-            else
+            else{
                 agent.moveToSpawn();
+                if(agent instanceof Npc){
+                    ((Npc) agent).resetFreezeTimer();
+                }
+            }
         }
+
         powerupCooldown = System.nanoTime();
     }
 
@@ -215,6 +220,7 @@ public class GameLogic implements AgentListener,
             return null;
 
         Npc npc = new Npc(spawn.x, spawn.y, id, labirynt, personality);
+        npc.resetFreezeTimer();
         npc.setListener(this);
         return npc;
     }
@@ -224,7 +230,7 @@ public class GameLogic implements AgentListener,
         Point spawn = npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
         if (labirynt[spawn.x][spawn.y] != CellType.GHOSTFLOOR)
             return null;
-
+        npc.resetFreezeTimer();
         npc.setPosition(spawn.x, spawn.y);
         return npc;
     }

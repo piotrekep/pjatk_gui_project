@@ -34,6 +34,7 @@ public enum Personality {
     /**
      * Gracz pod wypoływem powerupa
      */
-    POWERUP
+    POWERUP   
+ 
 
 }
