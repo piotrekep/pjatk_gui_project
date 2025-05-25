@@ -141,7 +141,7 @@ public class GameLogic implements AgentListener,
         if (npc != null) {
             if (distanceField != null)
                 if (p.powered) {
-                    npc.setPersonality(Personality.COWARD);
+                    npc.setPersonality(Personality.POWERUP);
                     speedMul = 0.75;
                 } else {
                     npc.resetPersonality();
@@ -385,7 +385,7 @@ public class GameLogic implements AgentListener,
                     // jeżeli jest komórką do której nie można wejść skaczemy do następnej iteracji
                     if (labirynt[nx][ny] == CellType.WALL || labirynt[nx][ny] == CellType.GHOSTHOUSE)
                         continue;
-                    // jeżeli odległość dla komórki została luż obliczona skaczemy dalej
+                    // jeżeli odległość dla komórki została już obliczona skaczemy dalej
                     if (distanceField[nx][ny] <= nextDist)
                         continue;
                     // ustawiamy wartość pola jako wartość odległości
@@ -424,7 +424,9 @@ public class GameLogic implements AgentListener,
             case 4:
                 return Personality.HEADLESSCHICKEN;
             case 5:
-                return Personality.COWARD;
+                return Personality.COWARD; 
+            case 6:
+                return Personality.POWERUP;
         }
         return Personality.CHASER;
     }

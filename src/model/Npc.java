@@ -211,6 +211,7 @@ public class Npc extends Agent {
             case Personality.KEYBOARDWARRIOR -> moveKeyboardWarrior(speed, thresh, distField);
             case Personality.AGGRO -> moveAggro(speed, thresh, distField);
             case Personality.COWARD -> moveCoward(speed, distField);
+            case Personality.POWERUP -> moveCoward(speed, distField);
             default -> {
             }
         }

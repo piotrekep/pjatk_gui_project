@@ -16,6 +16,7 @@ public class CellTypeVisu {
         NPC_KEYBOARDWARRIOR(Color.MAGENTA),
         NPC_HEADLESSCHICKEN(Color.CYAN),
         NPC_COWARD(Color.ORANGE),
+        NPC_POWERUP(Color.ORANGE),
         GHOSTHOUSE(Color.GRAY),
         GHOSTFLOOR(Color.PINK),
         POINT(Color.LIGHT_GRAY),
