@@ -70,7 +70,7 @@ public class DifficultyView extends JFrame {
         intFieldX.setColumns(5);
         difficultyPanel.add(intFieldX);
 
-        JButton starButton = new BackgroundJbutton("","images/NEW_GAME_button.png");
+        JButton starButton = new BackgroundJbutton("","images/START_button.png");
         difficultyPanel.add(starButton);
 
         starButton.addActionListener(e -> {
