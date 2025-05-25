@@ -32,7 +32,7 @@ public class DifficultyView extends JFrame {
         });
         setSize(300, 300);
 
-        JPanel difficultyPanel = new JPanel(new GridLayout(3, 2, 10, 20));
+        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(3, 2, 10, 20),"images/pacman_rozmiar.png");
         difficultyPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         add(difficultyPanel);
 

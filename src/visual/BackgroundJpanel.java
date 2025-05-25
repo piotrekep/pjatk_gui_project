@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +13,20 @@ import javax.swing.JPanel;
 public class BackgroundJpanel extends JPanel {
     private BufferedImage backgroundImage;
     
+
     public BackgroundJpanel(String imagePath) {
+        try {
+            backgroundImage = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            System.err.println("Nie można załadować obrazu tła: " + imagePath);
+            e.printStackTrace();
+            // Można ustawić domyślny kolor tła jako fallback
+            setBackground(Color.DARK_GRAY);
+        }
+    }
+    
+    public BackgroundJpanel(GridLayout layout, String imagePath){
+        super(layout);
         try {
             backgroundImage = ImageIO.read(new File(imagePath));
         } catch (IOException e) {

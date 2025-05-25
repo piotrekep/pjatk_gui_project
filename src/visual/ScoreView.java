@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +30,10 @@ public class ScoreView extends JFrame{
         super("high scores");
         setSize(800, 600);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        JPanel highscorPanel = new BackgroundJpanel("images/pacman_staty.png");
+        highscorPanel.setBorder(BorderFactory.createEmptyBorder(230, 180, 60, 180));
+        add(highscorPanel);
 
         model = new DefaultListModel<>();
         
@@ -71,9 +76,10 @@ public class ScoreView extends JFrame{
         });
 
         JScrollPane scrollPane = new JScrollPane(lista);
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(scrollPane, BorderLayout.CENTER);
-        
+        //getContentPane().setLayout(new BorderLayout());
+        //getContentPane().add(scrollPane, BorderLayout.CENTER);
+        highscorPanel.setLayout(new BorderLayout());
+        highscorPanel.add(scrollPane, BorderLayout.CENTER);
 
         addWindowListener(new WindowAdapter() {
             @Override

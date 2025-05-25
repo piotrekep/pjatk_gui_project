@@ -45,8 +45,8 @@ public class MenuView extends JFrame{
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 400);
-        JPanel menuPanel =  new JPanel(new GridLayout(3, 1, 10, 20));
-        menuPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+        JPanel menuPanel =  new BackgroundJpanel(new GridLayout(3, 1, 10, 20),"images/menu_pacman.png");
+        menuPanel.setBorder(BorderFactory.createEmptyBorder(80, 60, 80, 60));
         add(menuPanel);
 
         JButton newGameButton = new JButton("New Game");
