@@ -67,7 +67,7 @@ public class SpriteCellType {
         POWERUP_LIFE(new String[] { "sprites/POWERUP_SERCE.png" }, Color.RED),
         POWERUP_PEARL(new String[] { "sprites/powerup_pearl.png" }, Color.RED),
         POWERUP_POINTS(new String[] { "sprites/POWERUP_+200.png" }, Color.RED),
-        POWERUP_SPEED(new String[] { "sprites/powerup_speed.png" }, Color.RED),
+        POWERUP_SPEED(new String[] { "sprites/POWERUP_SKRZYDLO.png" }, Color.RED),
         POWERUP_POOP(new String[] { "sprites/POWERUP_LOD.png" }, Color.RED),
         POWERUP(new String[] { "sprites/powerup.png" }, Color.RED);
 
