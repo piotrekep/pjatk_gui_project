@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class ScoreView extends JFrame{
+public class ScoreView extends BaseWindow{
     public interface ScoreListener { void onCloseScoreWindow();}
     private ScoreListener listener;
     private DefaultListModel<PlayerScore> model;

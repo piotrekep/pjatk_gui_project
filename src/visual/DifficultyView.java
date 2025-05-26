@@ -8,7 +8,7 @@ import java.text.ParseException;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
-public class DifficultyView extends JFrame {
+public class DifficultyView extends BaseWindow {
     public interface DifficultyListener {
         void onCloseDificultyWindow();
 

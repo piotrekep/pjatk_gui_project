@@ -13,7 +13,7 @@ import javax.swing.*;
  * Wykorzystuje listenera do obsługi kliknięć przycisków.
  */
 
-public class MenuView extends JFrame{
+public class MenuView extends BaseWindow{
         /**
      * Interfejs listenera menu.
      * Implementacje powinny definiować reakcje na kliknięcie przycisków.

@@ -13,17 +13,23 @@ public class BackgroundJbutton extends JButton {
     public BackgroundJbutton() {
         super();
         setContentAreaFilled(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
     }
 
     
     public BackgroundJbutton(String text) {
         super(text);
         setContentAreaFilled(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
     }   
     
     public BackgroundJbutton(String text, String imagePath) {
         super(text);
         setContentAreaFilled(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
         setBackgroundImage(imagePath);
     }
     

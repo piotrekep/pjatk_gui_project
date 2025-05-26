@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import model.AgentModel;
 
-public class GameView extends JFrame {
+public class GameView extends BaseWindow {
     public interface GameListener {
         void onCloseGameWindow();
     }
@@ -25,6 +25,7 @@ public class GameView extends JFrame {
         super("Pacman!");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color (0,0,0));
 
 
         scoreLabel = new JLabel("Score: 0");
@@ -158,17 +159,6 @@ public class GameView extends JFrame {
                 }
 
             
-            if(totalH - (cellH * rows) > 0 )
-                table.setRowHeight(cellH + 1 );
-            
-            for (int c = 0; c < cols; c++) {
-                if(c <  totalW - (cellW * cols)){
-                    int width = cellW + 1;
-                    table.getColumnModel().getColumn(c).setPreferredWidth(width);
-                }
-                else
-                    break;
-            }
                 table.revalidate();
             }
         });

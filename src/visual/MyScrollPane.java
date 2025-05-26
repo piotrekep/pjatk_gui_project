@@ -26,7 +26,7 @@ public class MyScrollPane extends JScrollPane {
         @Override
         protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
             try {
-                g.drawImage(ImageIO.read(new File("images/X_EXIT_button.png")), 
+                g.drawImage(ImageIO.read(new File("images/jajko.png")), 
                            thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, null);
             } catch (Exception e) {
                 g.setColor(Color.GRAY);

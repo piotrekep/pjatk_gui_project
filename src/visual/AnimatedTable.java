@@ -87,12 +87,6 @@ public class AnimatedTable extends JTable {
                 img = createPlaceholder(Color.MAGENTA, cellW, cellH);
             }
 
-            // g2.translate(dx + (cellW - 4)/2, dy + (cellH - 4)/2);
-            // a.getDir();
-            // g2.rotate(angle);
-            // g2.translate(dx + (cellW - 4)/2, dy + (cellH - 4)/2); 
-            
-            
                g2.drawImage(img,
                 dx + 2, (dy + 2)-yOffset,
                 cellW - 4, height- 4,
@@ -122,7 +116,7 @@ public class AnimatedTable extends JTable {
 
     /**
      * Uruchamia wątek animacji (~60 FPS),
-     * on tylko wywołuje repaint() – logikę ruchu robią agenty same
+     * ywołuje repaint() 
      */
     public synchronized void startAnimation() {
         if (running) return;
