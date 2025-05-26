@@ -69,7 +69,6 @@ public class ScoreView extends JFrame{
 
                 nameLabel.setText(value.getName());
                 scoreLabel.setText(String.valueOf(value.getScore()));
-                //panel.setBackground(list.getBackground());
                 panel.setOpaque(false);
             
                 return panel;
@@ -79,6 +78,7 @@ public class ScoreView extends JFrame{
         
 
         JScrollPane scrollPane = new MyScrollPane(lista);
+        scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
 
         highscorPanel.setLayout(new BorderLayout());

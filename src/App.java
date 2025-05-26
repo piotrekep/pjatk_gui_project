@@ -18,9 +18,9 @@ public class App {
     public static void main(String[] args) {
             ExitKeyHandler.setupExitKeys();
 
-            try {
-                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            } catch (Exception ignored) {}
+            // try {
+            //     UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            // } catch (Exception ignored) {}
  
             SwingUtilities.invokeLater(() -> {
                 MenuView menu = new MenuView();

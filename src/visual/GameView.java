@@ -48,7 +48,7 @@ public class GameView extends JFrame {
             }
         });
 
-        setSize(800, 600);
+        
 
     }
 
@@ -104,15 +104,16 @@ public class GameView extends JFrame {
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
+       
+        
         enableFullTableScaling(table, sp);
         add(sp, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
         
-        tableResize(21,21,table);
+        tableResize(28,28,table);
 
-
-        setSize(table.getColumnCount() * table.getColumnModel().getColumn(0).getPreferredWidth(),table.getRowCount() * table.getRowHeight());
+        setSize(table.getColumnCount() * (table.getColumnModel().getColumn(0).getPreferredWidth()),table.getRowCount() * table.getRowHeight());
     }
 
     private void tableResize(int cellW, int cellH, JTable table){
@@ -155,6 +156,19 @@ public class GameView extends JFrame {
                 for (int c = 0; c < cols; c++) {
                     table.getColumnModel().getColumn(c).setPreferredWidth(cellW);
                 }
+
+            
+            if(totalH - (cellH * rows) > 0 )
+                table.setRowHeight(cellH + 1 );
+            
+            for (int c = 0; c < cols; c++) {
+                if(c <  totalW - (cellW * cols)){
+                    int width = cellW + 1;
+                    table.getColumnModel().getColumn(c).setPreferredWidth(width);
+                }
+                else
+                    break;
+            }
                 table.revalidate();
             }
         });
