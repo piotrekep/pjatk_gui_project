@@ -5,7 +5,6 @@ import model.GameLogic;
 import model.GameLogic.GameLogicListener;
 
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -20,34 +19,56 @@ import visual.PlayerScore;
 import visual.ScoreView;
 import visual.CellTypeVisu;
 
+
+
+/**
+ * @class GameController
+ * @brief Implementuje Kontroler do modelu MVC
+ *
+ *       Klasa implementuje funkcjonalność kontrolera w modelu MVC.
+ *       Aplikacja jest na tyle prosta, że logikę działania można zawrzeć w jednej klasie
+ */
+
+
 public class GameController implements Runnable,
         MenuView.MenuListener,
         ScoreView.ScoreListener,
         DifficultyView.DifficultyListener,
         GameView.GameListener,
         GameLogicListener {
-
+/**Główny wątek gry*/
     private Thread gameLoopThread;
+    /** wstrzymanie */
     private volatile boolean paused = false;
+    /** obiekt synchronizujący wątki na potrzeby wstrzymania */
     private final Object pauseLock = new Object();
+    /** zmienna running do nieskończonej pętly w wątkach */
     private volatile boolean running;
+    /** obsługa przycisków */
     private KeyHandler keyhandler;
+    /** obsłyuga logiki gry */
     public GameLogic gamelogic;
-
+/** bariera do synchronizacji wątków */
     private final CyclicBarrier frameBarrier = new CyclicBarrier(2);
+    /** wątek obsługujący "AI" przeciwników */
     private Thread npcThread;
-
+/** menu główne */
     private MenuView menu;
+    /** lista wyników */
     private ScoreView score;
+    /** menu wyboru wielkości labiryntu */
     private DifficultyView difficulty;
+    /** okno planszy gry */
     private GameView game;
+    /** lista wyników */
     private SerializableList<PlayerScore> highScoreList;
-
+/** dolcelowa liczba klatek na sekunde "fizyki" */
     private final int TARGET_FPS = 30;
+    /** optymalny czas każdej klatki */
     private final long OPTIMAL_TIME;
             
     
-
+/** konstruktor */
     public GameController(KeyHandler keyhandler,
             MenuView menu,
             ScoreView score,
@@ -58,14 +79,14 @@ public class GameController implements Runnable,
         this.score = score;
         this.difficulty = difficulty;
         this.game = game;
-
+/** obliczenia optymalnego czasu klatki w nanosekundach */
         this.OPTIMAL_TIME = 1_000_000_000L / this.TARGET_FPS;
 
         this.menu.setListener(this);
         this.score.setListener(this);
         this.difficulty.setListener(this);
        
-
+/** ładowanie listy wyników zapisanej w pliku */
         try {
             highScoreList = SerializableList.loadFromFile("highscores.list");
         } catch (ClassNotFoundException e) {
@@ -75,24 +96,25 @@ public class GameController implements Runnable,
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+/** ładowanie listy wyników do listy roboczej */
         for (PlayerScore playerScore : highScoreList) {
             score.addHighScore(playerScore.getName(),playerScore.getScore());
         }
 
         this.game.setListener(this);
         this.game.setKeyListener(keyhandler);
-
+        /** pokazanie głównego menu gry */
         this.menu.setVisible(true);
     }
 
+    /**Watek logiki gry */
     @Override
     public void run() {
         running = true;
         long lastTime = System.nanoTime();
 
         while (running) {
-
+            /** synchronizacja pauzy wątków */
             synchronized (pauseLock) {
                 while (paused) {
                     try {
@@ -116,9 +138,10 @@ public class GameController implements Runnable,
                     5);
 
             try {
-                frameBarrier.await(); //obliczenia ruchu npc mogą się wykonać dopiero po zaktualizowaniu opołożenia gracza
+                /** bariera - ruch gracza został wykonany. oczekujemy na ruch AI */
+                frameBarrier.await(); 
 
-                
+                /** ruch AI wykonany, można wznowić wątek */
                 frameBarrier.await();
             } catch (InterruptedException | BrokenBarrierException ex) {
                 Thread.currentThread().interrupt();
@@ -128,7 +151,7 @@ public class GameController implements Runnable,
             game.setScore(gamelogic.getPlayerScore(0));
             game.setLives(gamelogic.getPlayer(0).getLives());
 
-
+            /** obliczenia na jak długo trzeba zatrzymać wątek, aby utrzymać 30fps */
             long frameTime = System.nanoTime() - now;
             long sleepTimeMs = (OPTIMAL_TIME - frameTime) / 1_000_000L;
 
@@ -143,12 +166,13 @@ public class GameController implements Runnable,
         }
     }
 
+/** wątek NPC */
     private Runnable npcLoop() {
         return () -> {
             try {
                 while (running) {
 
-                    //położenie gracza zaktualizowane można obliczać a-star
+                    
                     frameBarrier.await(); 
             
                     gamelogic.calcDistanceField();            
@@ -165,6 +189,10 @@ public class GameController implements Runnable,
         };
     }
 
+    /** konwerter typu pola z logicznego na graficzny
+    * @param board plansza gry w formie logiki
+    * @return odpowiednik planszy w formie wizualnej
+    */
     private CellTypeVisu[][] stateToVisu(CellType[][] board) {
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
         for (int i = 0; i < temp.length; i++)
@@ -192,11 +220,9 @@ public class GameController implements Runnable,
 
     }
 
-    public void stop_old() {
-        running = false;
-        resume();
-    }
-
+/**
+ * metoda zatrzymująca wątki gry
+ */
     public void stop() {
         running = false;
         resume(); 
@@ -210,10 +236,16 @@ public class GameController implements Runnable,
         }
     }
 
+    /**
+     *  pauzowanie wątków
+     */
     public void pause() {
         paused = true;
     }
 
+    /**
+     *  wznawianie wątków
+     */
     public void resume() {
         synchronized (pauseLock) {
             paused = false;
@@ -221,27 +253,41 @@ public class GameController implements Runnable,
         }
     }
 
+    /**
+     * metoda zwracająca listener przycisków
+     * @return
+     */
     public KeyListener getKeyListener() {
         return keyhandler.getKeyListener();
     }
 
+    /**
+     *  metoda wywoływana przez listenera przy kliknięciu przycisku nowa gra
+     */
     @Override
     public void onNewGame() {
         menu.setVisible(false);
         difficulty.setVisible(true);
     }
 
+    /**
+     *  metoda wywoływana przez listenera przy kliknięciu przycisku pokazania wyników
+     */
     @Override
     public void onShowScores() {
         score.setVisible(true);
         menu.setVisible(false);
     }
-
+    /**
+     *  metoda wywoływana przez listenera przy kliknięciu przycisku exit
+     */
     @Override
     public void onExit() {
         System.exit(0);
     }
-
+    /**
+     *  metoda wywoływana przez listenera przycisku zamknięcia okna wyników 
+     */
     @Override
     public void onCloseScoreWindow() {
         score.setVisible(false);

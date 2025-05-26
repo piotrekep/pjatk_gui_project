@@ -43,7 +43,13 @@ public class MenuView extends BaseWindow{
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 400);
-        JPanel menuPanel =  new BackgroundJpanel(new GridLayout(3, 1, 10, 20),"images/menu_pacman.png");
+        String img; 
+        if(Math.random()<=0.15)
+            img = "images/menu_pacan.png";
+        else
+            img = "images/menu_pacman.png";
+
+        JPanel menuPanel =  new BackgroundJpanel(new GridLayout(3, 1, 10, 20),img);
         menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/4, (int)(getWidth()/4.5), getHeight()/4, (int)(getWidth()/4.5)));
         add(menuPanel);
 
