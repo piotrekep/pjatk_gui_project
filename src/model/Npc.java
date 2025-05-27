@@ -24,6 +24,7 @@ public class Npc extends Agent {
     private Personality orignalPersonality;
     /** czas oczekiwania na wyjście */
     private long freezeTimeNanos=0;
+    
 
     /**
      * konstruktor npc.
@@ -51,7 +52,7 @@ public class Npc extends Agent {
 
     public void moveRandom(double speed) {
 
-        if (!moveInDirPossible(direction)) {
+        if (!moveInDirPossible(direction) ) {
             rndDir = (int) Math.round(rnd.nextDouble(1, 4));
             setDirection(rndDir);
         }

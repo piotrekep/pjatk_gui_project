@@ -47,9 +47,10 @@ abstract public class Agent {
     /** współrzędne punktu docelowego */
     private Point target;
     /** postęp ruchu. obliczany na podstawie wartości lastTime i prędkości */
-    private double moveProgress = 1.0;
+    protected double moveProgress = 1.0;
     /** prędkość poruszania się Agenta */
     private double speed = 0.0;
+    
 
     /**
      * konstruktor agenta.
@@ -100,11 +101,9 @@ abstract public class Agent {
         this.speed = speed; 
         long now = System.nanoTime();
         moveProgress = (now - lastTime) / 1_000_000_000.0;
-         //if (moveProgress < 0.1)
-        
-        if(target.x==position.x && target.y==position.y)
+       
+       if (moveProgress < 0.1)
             changeDirection();
-         
 
         if (speed != 0) {
             switch (direction) {
@@ -149,6 +148,7 @@ abstract public class Agent {
                 
                 if (listener != null)
                     listener.onChangePosition(this);
+
                 lastTime = now;
                 return true;
             }
