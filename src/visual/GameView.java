@@ -2,6 +2,7 @@ package visual;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 
@@ -153,15 +154,21 @@ public class GameView extends BaseWindow {
                 if (cellH < 8)
                     cellH = 8;
 
+                
                 table.setRowHeight(cellH);
-                for (int c = 0; c < cols; c++) {
-                    table.getColumnModel().getColumn(c).setPreferredWidth(cellW);
+                for (int column = 0; column < cols; column++) {
+                    table.getColumnModel().getColumn(column).setPreferredWidth(cellW);
                 }
 
+                for (SpriteCellType.Type type : SpriteCellType.Type.values())
+                    type.rescale(cellW, cellH);
             
                 table.revalidate();
+                table.repaint();;
             }
         });
     }
+
+
 
 }

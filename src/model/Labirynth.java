@@ -37,7 +37,7 @@ public class Labirynth {
         labirynt[x][y] = CellType.EMPTY;
         List<Point> unvisited = getUnvisited(x, y);
         Random rnd = new Random();
-
+        
         Collections.shuffle(unvisited, rnd);
 
         for (Point point : unvisited) {
@@ -120,7 +120,7 @@ public class Labirynth {
             if((labirynt[i][j]==CellType.WALL && 
                 (((labirynt[i+1][j]==CellType.WALL || labirynt[i+1][j]==CellType.GHOSTHOUSE) && (labirynt[i-1][j]==CellType.WALL || labirynt[i-1][j]==CellType.GHOSTHOUSE)) ^
                 ((labirynt[i][j+1]==CellType.WALL || labirynt[i][j+1]==CellType.GHOSTHOUSE) && (labirynt[i][j-1]==CellType.WALL || labirynt[i][j-1]==CellType.GHOSTHOUSE)))) && 
-                rnd<0.35 )
+                rnd<0.38 )
                 labirynt[i][j]=CellType.EMPTY;
          }
 

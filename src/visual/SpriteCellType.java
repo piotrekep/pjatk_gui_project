@@ -3,10 +3,12 @@ package visual;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class SpriteCellType {
     public enum Type {
@@ -74,11 +76,14 @@ public class SpriteCellType {
         private final String[] spritePaths;
         private final Color placeholderColor;
         private Image[] sprites;
+        private Image[] scaledSprites;
+
 
         Type(String[] paths, Color placeholderColor) {
             this.spritePaths = paths;
             this.placeholderColor = placeholderColor;
             this.sprites = loadSprites(paths, placeholderColor);
+            this.scaledSprites=this.sprites;
         }
 
         private static Image[] loadSprites(String[] paths, Color placeholderColor) {
@@ -131,10 +136,10 @@ public class SpriteCellType {
         public Image getSprite(int idx, int direction) {
             Image img;
 
-            if (idx < 0 || idx >= sprites.length) {
-                img = sprites[0];
+            if (idx < 0 || idx >= scaledSprites.length) {
+                img = scaledSprites[0];
             } else
-                img = sprites[idx];
+                img = scaledSprites[idx];
 
             BufferedImage buffImage = new BufferedImage(
                     img.getWidth(null),
@@ -161,12 +166,34 @@ public class SpriteCellType {
 
         public Image getSprite(int idx) {
             if (idx < 0 || idx >= sprites.length) {
-                return sprites[0];
+                return scaledSprites[0];
             }
-            return sprites[idx];
+            return scaledSprites[idx];
+        }
+
+        public Image[] getSprites(){
+            return sprites;
+        }
+        public void rescale(int w, int h){
+
+            Image[] tmp = new Image[sprites.length];
+            for (int i = 0; i < sprites.length; i++)
+                tmp[i] = scale(sprites[i], w, h);
+    
+            this.scaledSprites = tmp;
+        }
+        private static Image scale(Image src, int w, int h) {
+            BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = dst.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                               RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.drawImage(src, 0, 0, w, h, null);
+            g.dispose();
+            return dst;
         }
 
     }
+
 
     public final Type type;
     public final int val;

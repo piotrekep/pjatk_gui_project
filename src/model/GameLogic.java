@@ -12,26 +12,44 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import model.Agent.AgentListener;
 
+/**
+ * @class GameLogic
+ * @brief Klasa implementuje logikę gry
+ *
+ *        Klasa implementuje logikę gry. i wszystkie stany jakie może przyjąć
+ *        oblicza położenie gracza, kolizje, algorytm wybierania drogi itd.
+ */
+
 public class GameLogic implements AgentListener,
         AgentModel {
-
+/** tablica przechowująca ściany labiryntu */
     private CellType[][] labirynt;
+    /** mapa odległości z każdego pola do grazcza*/
     private int[][] distanceField;
+    /** lista punktów spawnu przeciwników */
     private List<Point> npcSpawnPoints = new ArrayList<>();
+    /** lista bytów na planszy */
     private final Map<Integer, Agent> agentList = new ConcurrentHashMap<>();
+    /** ilość punktów do zdobyćia na planszy */
     private int maxPoints;
+    /** wielkość planszy */
     private int x, y;
+    /** aktualny level */
     public int level = 0;
+    /** cooldown powerupów */
     private long powerupCooldown = System.nanoTime();
-
+/** listener zdarzeń gry */
     public interface GameLogicListener {
         void onVictory();
-
         void onDeath(int lives);
     }
 
     private GameLogicListener listener;
-
+/**
+ * Konstruktor klasy
+ * @param x wielość plnaszy x
+ * @param y wielkość planszy y
+ */
     public GameLogic(int x, int y) {
         this.x = x;
         this.y = y;
@@ -43,7 +61,7 @@ public class GameLogic implements AgentListener,
         if (agent != null)
             agentList.put(0, agent);
 
-        // for(int i=1; i<= 1; i++){
+        
         for (int i = 1; i <= npcSpawnPoints.size(); i++) {
             Npc npc = SpawnNpc(i, intToPersonality(((i - 1) % 5) + 1));
             if (npc != null) {
@@ -455,6 +473,7 @@ public class GameLogic implements AgentListener,
                     listener.onDeath(level);
                 else {
                     player.addBonusPoints(100);
+                    ((Npc)source).resetFreezeTimer();
                     source.moveToSpawn();
                 }
             else {

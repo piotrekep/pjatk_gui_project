@@ -2,7 +2,10 @@ package visual;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
@@ -20,7 +23,9 @@ class SpriteLevelRenderer extends DefaultTableCellRenderer {
 
         if (value instanceof SpriteCellType) {
             SpriteCellType cell = (SpriteCellType) value;
+            
             Image img = cell.type.getSprite(0);
+
             setIcon(new ImageIcon(img));
         } else {
             setBackground(Color.WHITE);
@@ -28,4 +33,6 @@ class SpriteLevelRenderer extends DefaultTableCellRenderer {
         setOpaque(true);
         return this;
     }
+
+
 }

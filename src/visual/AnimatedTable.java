@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class AnimatedTable extends JTable {
     private final AgentModel model;
-    //private final Map<SpriteCellType.Type, Image> spriteMap = new EnumMap<>(SpriteCellType.Type.class);
     private final Map<SpriteCellType.Type, SpriteCellType.Type> spriteMap = new EnumMap<>(SpriteCellType.Type.class);
     private Thread animationThread;
     private volatile boolean running = false;
@@ -57,7 +56,7 @@ public class AnimatedTable extends JTable {
             double progress = agent.getMoveProgress();
             int dx = sx + (int) Math.round((tx - sx) * progress);
             int dy = sy + (int) Math.round((ty - sy) * progress);
-            int direction;
+           
             Image img;
             int height=cellH;
             int yOffset=0;
@@ -83,13 +82,12 @@ public class AnimatedTable extends JTable {
             }
 
             if (img == null) {
-                // placeholder
                 img = createPlaceholder(Color.MAGENTA, cellW, cellH);
             }
 
                g2.drawImage(img,
-                dx + 2, (dy + 2)-yOffset,
-                cellW - 4, height- 4,
+                dx , (dy )-yOffset,
+                cellW , height,
                 null);
         }
         g2.dispose();

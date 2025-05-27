@@ -293,13 +293,20 @@ public class GameController implements Runnable,
         score.setVisible(false);
         menu.setVisible(true);
     }
-
+    /**
+     *  metoda wywoływana przez listenera przycisku zamknięcia okna wyboru rozmiaru planszy
+     */
     @Override
     public void onCloseDificultyWindow() {
         menu.setVisible(true);
         difficulty.setVisible(false);
     }
-
+    /**
+     *  metoda wywoływana przez listenera przycisku rozpoczęcia gry
+     * @param x rozmiar x
+     * @param y rozmiar y
+     * inicjuje gre i uruchamia wątki
+     */
     @Override
     public void onStartGame(int x, int y) {
         
@@ -323,7 +330,10 @@ public class GameController implements Runnable,
         gameLoopThread.start();
         npcThread.start();
     }
-
+    /**
+     *  metoda wywoływana przez listenera zamknięcia okna gry
+     * zatrzymuje wątki i animacje
+     */
     @Override
     public void onCloseGameWindow() {
         stop();
@@ -333,7 +343,10 @@ public class GameController implements Runnable,
             menu.setVisible(true);
           });
     }
-
+    /**
+     *  metoda wywoływana przez listenera wygranej poziomu
+     * wstrzymuje wątki i ponownie inicjalizuje level
+     */
     @Override
     public void onVictory() {
         pause();
@@ -345,7 +358,11 @@ public class GameController implements Runnable,
         resume();
 
     }
-
+    /**
+     *  metoda wywoływana przez listenera śmierci gracza
+     * resetuje pozycje gracza i npc. cusuwa powerupy. 
+     * jeśli zabrakło żyć, kończy gre uruchamiając zapis wyniku
+     */
     @Override
     public void onDeath(int lives) {
         pause();

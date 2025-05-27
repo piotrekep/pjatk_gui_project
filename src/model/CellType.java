@@ -1,5 +1,13 @@
 package model;
 
+/**
+ * @enum CellType
+ * @brief CellType definiuje typ pola na potrzeby logiki gry
+ *
+ *        Enum definiuje typ pola konieczny do obsługi logiki gry.
+ *        Przechowuje wszystkie możliwe stany jakie może przyjąć pole planszy
+ */
+
 public enum CellType {
 
     EMPTY ,   

@@ -3,6 +3,15 @@ package controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * @class KeyHandler
+ * @brief Klasa obsługująca klawiature
+ *
+ * Klasa implementuje KeyListener i udostępnia możliwość odczytania wejść
+ * przyciski WSAD są równoważne strzałkom
+ */
+
+
 public class KeyHandler implements KeyListener {
 
     private volatile boolean up, down, left, right, test;
@@ -35,7 +44,6 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_S, KeyEvent.VK_DOWN -> down = val;
             case KeyEvent.VK_A, KeyEvent.VK_LEFT -> left = val;
             case KeyEvent.VK_D, KeyEvent.VK_RIGHT -> right = val;
-            case KeyEvent.VK_Z -> test = val;
         }
     }
 
