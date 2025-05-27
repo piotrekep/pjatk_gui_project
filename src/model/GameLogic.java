@@ -500,8 +500,10 @@ public class GameLogic implements AgentListener,
         if (System.nanoTime() - powerupCooldown > 5_000_000_000l) {
             double rng = Math.random();
             if (rng < 0.25) {
-                powerupCooldown = System.nanoTime();
-                createPowerup(source.position.x, source.position.y, labirynt);
+                if(labirynt[source.position.x][source.position.y] != CellType.GHOSTFLOOR){
+                    powerupCooldown = System.nanoTime();
+                    createPowerup(source.position.x, source.position.y, labirynt);
+                }
 
             }
         }
