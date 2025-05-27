@@ -1,5 +1,6 @@
 package visual;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import java.text.NumberFormat;
@@ -30,23 +31,19 @@ public class DifficultyView extends BaseWindow {
             }
         });
         setSize(300, 400);
+        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 1, 10, 20),"images/pacman_rozmiar.png");
 
-        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 2, 10, 20),"images/pacman_rozmiar.png");
-        difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/4, (int)(getWidth()/7.5)));
+        //JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 2, 10, 20),"images/pacman_rozmiar.png");
+        difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/5, (int)(getWidth()/7.5)));
         add(difficultyPanel);
 
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {                
-                difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/4, (int)(getWidth()/7.5)));
+                difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/5, (int)(getWidth()/7.5)));
             }
         });
 
-
-        //JLabel labelY = new JLabel("Level size Y:");
-        //difficultyPanel.add(labelY);
-        //JLabel labelX = new JLabel("Level size X:");
-        //difficultyPanel.add(labelX);
 
         NumberFormat intFormat = NumberFormat.getIntegerInstance();
         NumberFormatter nf = new NumberFormatter(intFormat) {
@@ -61,17 +58,27 @@ public class DifficultyView extends BaseWindow {
 
         nf.setValueClass(Integer.class);
         nf.setAllowsInvalid(false);
-
+        JPanel textboxJPanel = new JPanel(new GridLayout(1, 2, 20, 10));
+        textboxJPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         JFormattedTextField intFieldY = new JFormattedTextField(nf);
-        intFieldY.setColumns(5);
-        difficultyPanel.add(intFieldY);
+        intFieldY.setColumns(4);
+        //difficultyPanel.add(intFieldY);
+        textboxJPanel.add(intFieldY);
 
         JFormattedTextField intFieldX = new JFormattedTextField(nf);
-        intFieldX.setColumns(5);
-        difficultyPanel.add(intFieldX);
+        intFieldX.setColumns(4);
+        //difficultyPanel.add(intFieldX);
+        textboxJPanel.add(intFieldX);
+        textboxJPanel.setOpaque(false);
+        difficultyPanel.add(textboxJPanel);
 
+        JPanel btnPanel = new JPanel(new BorderLayout());
+        btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        
         JButton starButton = new BackgroundJbutton("","images/START_button.png");
-        difficultyPanel.add(starButton);
+        btnPanel.setOpaque(false);
+        btnPanel.add(starButton);
+        difficultyPanel.add(btnPanel);
 
         starButton.addActionListener(e -> {
             int sizeY;
