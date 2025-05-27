@@ -59,7 +59,7 @@ public class DifficultyView extends BaseWindow {
         nf.setValueClass(Integer.class);
         nf.setAllowsInvalid(false);
         JPanel textboxJPanel = new JPanel(new GridLayout(1, 2, 20, 10));
-        textboxJPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        textboxJPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
         JFormattedTextField intFieldY = new JFormattedTextField(nf);
         intFieldY.setColumns(4);
         //difficultyPanel.add(intFieldY);
