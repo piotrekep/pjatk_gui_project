@@ -140,9 +140,6 @@ public class GameController implements Runnable,
             try {
                 /** bariera - ruch gracza został wykonany. oczekujemy na ruch AI */
                 frameBarrier.await(); 
-
-                /** ruch AI wykonany, można wznowić wątek */
-                frameBarrier.await();
             } catch (InterruptedException | BrokenBarrierException ex) {
                 Thread.currentThread().interrupt();
                 return;
@@ -172,11 +169,10 @@ public class GameController implements Runnable,
             try {
                 while (running) {
 
-                    
+                    //czekamy na ruch gracza
                     frameBarrier.await(); 
             
                     gamelogic.calcDistanceField();            
-                    frameBarrier.await();
                     gamelogic.updateAllNpcs(3, keyhandler.test());
                     gamelogic.updateAllPowerups();
                     CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
