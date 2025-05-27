@@ -102,8 +102,8 @@ abstract public class Agent {
         long now = System.nanoTime();
         moveProgress = (now - lastTime) / 1_000_000_000.0;
        
-    //    if (moveProgress < 0.1)
-    //         changeDirection();
+        if (moveProgress < 0.1)
+             changeDirection();
 
         if (speed != 0) {
             switch (direction) {
@@ -149,7 +149,7 @@ abstract public class Agent {
                 
                 if (listener != null)
                     listener.onChangePosition(this);
-                changeDirection();
+                
                 lastTime = now;
                 return true;
             }
