@@ -26,11 +26,12 @@ public class SerializableList<T extends Serializable>
     }
 
     public static <T extends Serializable>
-    SerializableList<T> loadFromFile(String filename)
-            throws IOException, ClassNotFoundException {
-        try (ObjectInputStream ois =
-                     new ObjectInputStream(new FileInputStream(filename))) {
-            return (SerializableList<T>) ois.readObject();
-        }
+    SerializableList<T> loadFromFile(String filename) {
+                try {
+                    ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+                    return (SerializableList<T>) ois.readObject();
+                } catch (Exception e) {
+                    return new SerializableList<T>();
+                }
     }
 }

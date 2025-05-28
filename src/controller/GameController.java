@@ -87,15 +87,8 @@ public class GameController implements Runnable,
         this.difficulty.setListener(this);
        
 /** ładowanie listy wyników zapisanej w pliku */
-        try {
             highScoreList = SerializableList.loadFromFile("highscores.list");
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+   
 /** ładowanie listy wyników do listy roboczej */
         for (PlayerScore playerScore : highScoreList) {
             score.addHighScore(playerScore.getName(),playerScore.getScore());
