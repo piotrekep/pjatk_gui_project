@@ -70,7 +70,10 @@ public class GameLogic implements AgentListener,
             }
         }
     }
-
+/** Metoda generująca labirynt na planszy,
+ *  oblicza liczbę spawn pointów dla danego rozmiaru,
+ * i spawnóje wszystkie byty
+ */
     public void generateLevel() {
         resetLevel();
         Labirynth lab = new Labirynth(x, y);
@@ -104,7 +107,9 @@ public class GameLogic implements AgentListener,
         }
         level++;
     }
-
+/**
+ * reset gry. wszyscy gracze zostają przesunięci na swoje spawny
+ */
     public void resetLevel() {
         for (Agent agent : agentList.values()) {
             if (agent.id < 0)
@@ -119,7 +124,14 @@ public class GameLogic implements AgentListener,
 
         powerupCooldown = System.nanoTime();
     }
-
+/**
+ * aktualizacja stanu gracza
+ * @param up stan przycisku kierującego gracza w górę
+ * @param down stan przycisku kierującego gracza w dół
+ * @param left stan przycisku kierującego gracza w lewo
+ * @param right stan przycisku kierującego gracza w prawo
+ * @param speed prędkość poruszania się gracza
+ */
     public void updatePlayer(boolean up, boolean down, boolean left, boolean right, double speed) {
         double speedMul = 1;
         Player player = (Player) agentList.get(0);
@@ -153,10 +165,14 @@ public class GameLogic implements AgentListener,
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
 
-        // if (listener != null && player.collisionCheck())
-        // listener.onDeath(player.getLives());
-    }
 
+    }
+/**
+ * aktualizacja NPC
+ * @param speed prędkość poruszania się npc
+ * @param id identyfikator npc
+ * @param powerup czy gracz jest pod wpływem powerupa. jeśli tak, zmienia osobowośc NPC
+ */
     public void updateNpc(double speed, int id, boolean powerup) {
         Npc npc = (Npc) agentList.get(id);
         Player p = (Player) agentList.get(0);
@@ -174,7 +190,10 @@ public class GameLogic implements AgentListener,
             npc.movePersonality(speed * speedMul, 10, distanceField);
         }
     }
-
+/**
+ * Aktualizcja stanu powerupów. sprawdza kolizje z powerupem
+ * @param id id powerupa
+ */
     public void updatePowerup(int id) {
         if (id < 0) {
             Powerup powerup = (Powerup) agentList.get(id);
@@ -183,7 +202,9 @@ public class GameLogic implements AgentListener,
                     powerup.checkCollision(distanceField);
         }
     }
-
+/**
+ * aktualizacja wszystkich powerupów
+ */
     public void updateAllPowerups() {
         for (int id : agentList.keySet()) {
             if (id < 0) {
@@ -191,14 +212,20 @@ public class GameLogic implements AgentListener,
             }
         }
     }
-
+/**
+ * aktualizacja wszystkich NPC
+ * @param speed prędkość NPC. wszystkie NPC poruszają się z tą samą prędkością
+ * @param powerup czy gracz jest pod wpływem powerupa. zmienia osobowość NPC
+ */
     public void updateAllNpcs(double speed, boolean powerup) {
         for (int i = 1; i <= npcSpawnPoints.size(); i++) {
             updateNpc(speed, i, powerup);
         }
 
     }
-
+/** 
+ * getter stanu gry. wykomentowany kod używany gdy nie używamy animacji
+ */
     public CellType[][] getGameState() {
 
         CellType[][] gameState = new CellType[labirynt.length][];
@@ -220,7 +247,13 @@ public class GameLogic implements AgentListener,
         return gameState;
 
     }
-
+/**
+ * spawn gracza
+ * @param x współrzędna x
+ * @param y współrzędna y
+ * @param id id gracza. w tej implementacji gracz powinien mieć id=0
+ * @return zwraca obiekt gracza
+ */
     private Player SpawnPlayer(int x, int y, int id) {
         if (labirynt[x][y] == CellType.EMPTY) {
             Player player = new Player(x, y, id, labirynt);
@@ -230,7 +263,12 @@ public class GameLogic implements AgentListener,
         } else
             return null;
     }
-
+/**
+ * spawn NPC
+ * @param id id npc. npc powinny mieć id>0
+ * @param personality osobowość npc
+ * @return
+ */
     private Npc SpawnNpc(int id, Personality personality) {
         Random rand = new Random();
         Point spawn = npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
@@ -242,7 +280,11 @@ public class GameLogic implements AgentListener,
         npc.setListener(this);
         return npc;
     }
-
+/**
+ * respawnuje npc
+ * @param npc npc którego chcemy respawnować
+ * @return
+ */
     private Npc reSpawnNpc(Npc npc) {
         Random rand = new Random();
         Point spawn = npcSpawnPoints.get(rand.nextInt(npcSpawnPoints.size()));
@@ -252,7 +294,12 @@ public class GameLogic implements AgentListener,
         npc.setPosition(spawn.x, spawn.y);
         return npc;
     }
-
+/**
+ * tworzenie, zrzucanie powerupa na ziemie
+ * @param x współrzedna x
+ * @param y współrzędna y
+ * @param level tablica przechowująca stan planszy
+ */
     private void createPowerup(int x, int y, CellType[][] level) {
         int id;
         int minKey = Collections.min(agentList.keySet());
@@ -261,7 +308,10 @@ public class GameLogic implements AgentListener,
         agentList.put(id, p);
         p.setListener(this);
     }
-
+/**
+ * losuj powerup
+ * @return wylosowany powerup
+ */
     private PowerupType getRandPowerup() {
         Random rand = new Random();
         double rng = rand.nextDouble(1);
@@ -274,7 +324,10 @@ public class GameLogic implements AgentListener,
         else
             return PowerupType.POINTS;
     }
-
+/**
+ * wypełnienie planszy punktami
+ * @param level plansza do wypełnienia
+ */
     private void fillWithPoints(CellType[][] level) {
         for (int i = 0; i < level.length; i++)
             for (int j = 0; j < level[0].length; j++)
@@ -283,7 +336,11 @@ public class GameLogic implements AgentListener,
                     maxPoints++;
                 }
     }
-
+/**
+ * getter ilości punktów
+ * @param id id gracza
+ * @return
+ */
     public int getPlayerScore(int id) {
         Player player = (Player) agentList.get(id);
         if (player != null) {
@@ -291,7 +348,9 @@ public class GameLogic implements AgentListener,
         } else
             return 0;
     }
-
+/** 
+ * getter liczby wszystkich punktów na planszy. do obliczania wygranej
+ */
     public int getLevelPoints() {
         return maxPoints;
     }
@@ -436,7 +495,11 @@ public class GameLogic implements AgentListener,
             e.printStackTrace();
         }
     }
-
+/**
+ * konwerter inta na osobowość
+ * @param p int odpowiadający osobowości
+ * @return osobowość odpowiadająca intowi
+ */
     Personality intToPersonality(int p) {
         switch (p) {
             case 1:
@@ -454,15 +517,24 @@ public class GameLogic implements AgentListener,
         }
         return Personality.CHASER;
     }
-
+/** 
+ * getter pola dystansu
+ */
     public int[][] getDistanceField() {
         return distanceField;
     }
-
+/**
+ * getter obiektu gracza 
+ * @param id id gracza
+ * @return obiekt Player
+ */
     public Player getPlayer(int id) {
         return (Player) agentList.get(id);
     }
 
+    /**
+     * obsługa kolizji z agentem
+     */
     @Override
     public void onCollision(Agent source) {
         Player player = (Player) agentList.get(0);
@@ -494,7 +566,9 @@ public class GameLogic implements AgentListener,
 
             }
     }
-
+/**
+ * obsługa zrzucania powerupów
+ */
     @Override
     public void onChangePosition(Agent source) {
         if (System.nanoTime() - powerupCooldown > 5_000_000_000l) {
@@ -508,7 +582,9 @@ public class GameLogic implements AgentListener,
             }
         }
     }
-
+/**
+ * pobiera kopię listy agentów tylko do odczytu konieczną do animacji
+ */
     @Override
     public Collection<Agent> getAgents() {
         return Collections.unmodifiableCollection(agentList.values());

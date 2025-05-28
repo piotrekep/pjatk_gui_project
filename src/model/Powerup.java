@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * @class Powerup
+ * @brief byt typu powerup
+ * klasa definiuje byty typu powerup
+ */
 public class Powerup extends Agent {
 
     private PowerupType powerup;

@@ -1,9 +1,12 @@
 package model;
-
+/**
+ * @enum PowerupType
+ * enum przechowuje rodzaje powerupów w raz z czasem ich trwania i wartością punktów
+ */
 public enum PowerupType {
     LIFE (0,0),
-    PEARL (0,10),
-    POINTS(100,0),
+    PEARL (100,10),
+    POINTS(200,0),
     SPEED (0,5),
     POOP (0,10);
 

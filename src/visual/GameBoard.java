@@ -2,7 +2,10 @@ package visual;
 
 import javax.swing.table.AbstractTableModel;
 
-
+/**
+ * @class GameBoard
+ * @brief roszerzenie klasy Abstract table model jako wymóg zadania
+ */
 
 public class GameBoard extends AbstractTableModel {
     CellTypeVisu[][] table;

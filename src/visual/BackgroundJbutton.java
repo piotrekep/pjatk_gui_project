@@ -7,6 +7,11 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @class BackgroundJbutton
+ * @brief Klasa tworząca przycisk z obrazem
+ */
+
 public class BackgroundJbutton extends JButton {
     private BufferedImage backgroundImage;
     

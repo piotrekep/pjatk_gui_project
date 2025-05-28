@@ -11,6 +11,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+/**
+ * @class SpriteLevelRenderer
+ * @brief klasa implementująca renderer tabeli obsługujący sprite'y
+ */
+
 class SpriteLevelRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(

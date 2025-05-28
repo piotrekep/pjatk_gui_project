@@ -10,6 +10,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+
+/**
+ * @class SpriteCellType
+ * @brief Klasa obsługująca sprite'y
+ */
 public class SpriteCellType {
     public enum Type {
         EMPTY(new String[] { null }, Color.BLACK),

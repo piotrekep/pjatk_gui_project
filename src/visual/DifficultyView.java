@@ -9,6 +9,11 @@ import java.text.ParseException;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 
+/**
+ * @class DifficultyView
+ * @brief oknow wyboru rozmiaru planszy
+ */
+
 public class DifficultyView extends BaseWindow {
     public interface DifficultyListener {
         void onCloseDificultyWindow();

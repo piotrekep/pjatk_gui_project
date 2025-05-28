@@ -8,6 +8,11 @@ import javax.swing.*;
 
 import model.AgentModel;
 
+
+/**
+ * @class GameView
+ * @brief Klasa obsługująca widok gry
+ */
 public class GameView extends BaseWindow {
     public interface GameListener {
         void onCloseGameWindow();

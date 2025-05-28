@@ -2,6 +2,10 @@ package visual;
 
 import java.io.*;
 
+/**
+ * @class PlayerScore
+ * @brief Klasa definiująca obiekt w tabeli punktacji
+ */
 public class PlayerScore implements Serializable { 
 
     private String name;

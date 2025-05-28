@@ -3,7 +3,11 @@ package visual;
 
 import java.awt.Color;
 
-
+/** 
+ * @class CellTypeVisu
+ * @brief Klasa wizualizacji używana przed wprowadzeniem spriteów
+ * 
+ */
 
 public class CellTypeVisu {
 

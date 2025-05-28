@@ -19,17 +19,17 @@ public class SerializableList<T extends Serializable>
     }
 
     public void saveToFile(String filename) throws IOException {
-        try (ObjectOutputStream oos =
+        try (ObjectOutputStream stream =
                      new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(this);
+            stream.writeObject(this);
         }
     }
 
     public static <T extends Serializable>
     SerializableList<T> loadFromFile(String filename) {
                 try {
-                    ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-                    return (SerializableList<T>) ois.readObject();
+                    ObjectInputStream stream = new ObjectInputStream(new FileInputStream(filename));
+                    return (SerializableList<T>) stream.readObject();
                 } catch (Exception e) {
                     return new SerializableList<T>();
                 }

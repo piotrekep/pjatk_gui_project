@@ -3,6 +3,10 @@ package visual;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @class BaseWindow
+ * @brief Klasa tworząca spójną kolorystykę wszystkich okien
+ */
 public class BaseWindow extends JFrame {
 
     protected static final Color BACKGROUND_COLOR = new Color(0x2D2D30);

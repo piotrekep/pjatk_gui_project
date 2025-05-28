@@ -9,6 +9,11 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @class ScoreView
+ * @brief obiekt widoku punktacji
+ */
+
 public class ScoreView extends BaseWindow{
     public interface ScoreListener { void onCloseScoreWindow();}
     private ScoreListener listener;
