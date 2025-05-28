@@ -31,10 +31,9 @@ public class DifficultyView extends BaseWindow {
             }
         });
         setSize(300, 400);
-        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 1, 10, 20),"images/pacman_rozmiar.png");
+        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 1, 0, 20),"images/pacman_rozmiar.png");
 
-        //JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 2, 10, 20),"images/pacman_rozmiar.png");
-        difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/5, (int)(getWidth()/7.5)));
+     
         add(difficultyPanel);
 
         addComponentListener(new ComponentAdapter() {
@@ -62,12 +61,12 @@ public class DifficultyView extends BaseWindow {
         textboxJPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
         JFormattedTextField intFieldY = new JFormattedTextField(nf);
         intFieldY.setColumns(4);
-        //difficultyPanel.add(intFieldY);
+        
         textboxJPanel.add(intFieldY);
 
         JFormattedTextField intFieldX = new JFormattedTextField(nf);
         intFieldX.setColumns(4);
-        //difficultyPanel.add(intFieldX);
+        
         textboxJPanel.add(intFieldX);
         textboxJPanel.setOpaque(false);
         difficultyPanel.add(textboxJPanel);
