@@ -32,14 +32,13 @@ public class GameBoard extends AbstractTableModel {
 
     public void setBoard(CellTypeVisu[][] board) {
         CellTypeVisu[][] newTable = new CellTypeVisu[board.length][];
-       
+
         for (int i = 0; i < board.length; i++) {
             newTable[i] = board[i].clone();
         }
         this.table = newTable;
         fireTableDataChanged();
     }
-
 
     @Override
     public int getRowCount() {
@@ -51,13 +50,11 @@ public class GameBoard extends AbstractTableModel {
         return this.table[0].length;
     }
 
-
-
-     @Override
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-    CellTypeVisu old = table[rowIndex][columnIndex];
-    visual.SpriteCellType.Type t = visual.SpriteCellType.Type.valueOf(old.type.name());
-    return new SpriteCellType(t, old.val);
-}
+        CellTypeVisu old = table[rowIndex][columnIndex];
+        visual.SpriteCellType.Type t = visual.SpriteCellType.Type.valueOf(old.type.name());
+        return new SpriteCellType(t, old.val);
+    }
 
 }

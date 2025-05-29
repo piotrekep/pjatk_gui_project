@@ -19,16 +19,14 @@ import visual.PlayerScore;
 import visual.ScoreView;
 import visual.CellTypeVisu;
 
-
-
 /**
  * @class GameController
  * @brief Implementuje Kontroler do modelu MVC
  *
- *       Klasa implementuje funkcjonalność kontrolera w modelu MVC.
- *       Aplikacja jest na tyle prosta, że logikę działania można zawrzeć w jednej klasie
+ *        Klasa implementuje funkcjonalność kontrolera w modelu MVC.
+ *        Aplikacja jest na tyle prosta, że logikę działania można zawrzeć w
+ *        jednej klasie
  */
-
 
 public class GameController implements Runnable,
         MenuView.MenuListener,
@@ -36,7 +34,7 @@ public class GameController implements Runnable,
         DifficultyView.DifficultyListener,
         GameView.GameListener,
         GameLogicListener {
-/**Główny wątek gry*/
+    /** Główny wątek gry */
     private Thread gameLoopThread;
     /** wstrzymanie */
     private volatile boolean paused = false;
@@ -48,11 +46,11 @@ public class GameController implements Runnable,
     private KeyHandler keyhandler;
     /** obsłyuga logiki gry */
     public GameLogic gamelogic;
-/** bariera do synchronizacji wątków */
+    /** bariera do synchronizacji wątków */
     private final CyclicBarrier frameBarrier = new CyclicBarrier(2);
     /** wątek obsługujący "AI" przeciwników */
     private Thread npcThread;
-/** menu główne */
+    /** menu główne */
     private MenuView menu;
     /** lista wyników */
     private ScoreView score;
@@ -62,13 +60,12 @@ public class GameController implements Runnable,
     private GameView game;
     /** lista wyników */
     private SerializableList<PlayerScore> highScoreList;
-/** dolcelowa liczba klatek na sekunde "fizyki" */
+    /** dolcelowa liczba klatek na sekunde "fizyki" */
     private final int TARGET_FPS = 30;
     /** optymalny czas każdej klatki */
     private final long OPTIMAL_TIME;
-            
-    
-/** konstruktor */
+
+    /** konstruktor */
     public GameController(KeyHandler keyhandler,
             MenuView menu,
             ScoreView score,
@@ -79,19 +76,19 @@ public class GameController implements Runnable,
         this.score = score;
         this.difficulty = difficulty;
         this.game = game;
-/** obliczenia optymalnego czasu klatki w nanosekundach */
+        /** obliczenia optymalnego czasu klatki w nanosekundach */
         this.OPTIMAL_TIME = 1_000_000_000L / this.TARGET_FPS;
 
         this.menu.setListener(this);
         this.score.setListener(this);
         this.difficulty.setListener(this);
-       
-/** ładowanie listy wyników zapisanej w pliku */
-            highScoreList = SerializableList.loadFromFile("highscores.list");
-   
-/** ładowanie listy wyników do listy roboczej */
+
+        /** ładowanie listy wyników zapisanej w pliku */
+        highScoreList = SerializableList.loadFromFile("highscores.list");
+
+        /** ładowanie listy wyników do listy roboczej */
         for (PlayerScore playerScore : highScoreList) {
-            score.addHighScore(playerScore.getName(),playerScore.getScore());
+            score.addHighScore(playerScore.getName(), playerScore.getScore());
         }
 
         this.game.setListener(this);
@@ -100,7 +97,7 @@ public class GameController implements Runnable,
         this.menu.setVisible(true);
     }
 
-    /**Watek logiki gry */
+    /** Watek logiki gry */
     @Override
     public void run() {
         running = true;
@@ -132,7 +129,7 @@ public class GameController implements Runnable,
 
             try {
                 /** bariera - ruch gracza został wykonany. oczekujemy na ruch AI */
-                frameBarrier.await(); 
+                frameBarrier.await();
             } catch (InterruptedException | BrokenBarrierException ex) {
                 Thread.currentThread().interrupt();
                 return;
@@ -156,16 +153,16 @@ public class GameController implements Runnable,
         }
     }
 
-/** wątek NPC */
+    /** wątek NPC */
     private Runnable npcLoop() {
         return () -> {
             try {
                 while (running) {
 
-                    //czekamy na ruch gracza
-                    frameBarrier.await(); 
-            
-                    gamelogic.calcDistanceField();            
+                    // czekamy na ruch gracza
+                    frameBarrier.await();
+
+                    gamelogic.calcDistanceField();
                     gamelogic.updateAllNpcs(3, keyhandler.test());
                     gamelogic.updateAllPowerups();
                     CellTypeVisu[][] frame = stateToVisu(gamelogic.getGameState());
@@ -178,10 +175,12 @@ public class GameController implements Runnable,
         };
     }
 
-    /** konwerter typu pola z logicznego na graficzny
-    * @param board plansza gry w formie logiki
-    * @return odpowiednik planszy w formie wizualnej
-    */
+    /**
+     * konwerter typu pola z logicznego na graficzny
+     * 
+     * @param board plansza gry w formie logiki
+     * @return odpowiednik planszy w formie wizualnej
+     */
     private CellTypeVisu[][] stateToVisu(CellType[][] board) {
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
         for (int i = 0; i < temp.length; i++)
@@ -192,8 +191,10 @@ public class GameController implements Runnable,
                     case CellType.PLAYER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.PLAYER);
                     case CellType.NPC_CHASER -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_CHASER);
                     case CellType.NPC_AGGRO -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_AGGRO);
-                    case CellType.NPC_KEYBOARDWARRIOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
-                    case CellType.NPC_HEADLESSCHICKEN -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
+                    case CellType.NPC_KEYBOARDWARRIOR ->
+                        temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_KEYBOARDWARRIOR);
+                    case CellType.NPC_HEADLESSCHICKEN ->
+                        temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_HEADLESSCHICKEN);
                     case CellType.NPC_COWARD -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_COWARD);
                     case CellType.NPC_POWERUP -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.NPC_POWERUP);
                     case CellType.GHOSTHOUSE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTHOUSE);
@@ -209,12 +210,12 @@ public class GameController implements Runnable,
 
     }
 
-/**
- * metoda zatrzymująca wątki gry
- */
+    /**
+     * metoda zatrzymująca wątki gry
+     */
     public void stop() {
         running = false;
-        resume(); 
+        resume();
         npcThread.interrupt();
         frameBarrier.reset();
         try {
@@ -226,14 +227,14 @@ public class GameController implements Runnable,
     }
 
     /**
-     *  pauzowanie wątków
+     * pauzowanie wątków
      */
     public void pause() {
         paused = true;
     }
 
     /**
-     *  wznawianie wątków
+     * wznawianie wątków
      */
     public void resume() {
         synchronized (pauseLock) {
@@ -244,6 +245,7 @@ public class GameController implements Runnable,
 
     /**
      * metoda zwracająca listener przycisków
+     * 
      * @return
      */
     public KeyListener getKeyListener() {
@@ -251,7 +253,7 @@ public class GameController implements Runnable,
     }
 
     /**
-     *  metoda wywoływana przez listenera przy kliknięciu przycisku nowa gra
+     * metoda wywoływana przez listenera przy kliknięciu przycisku nowa gra
      */
     @Override
     public void onNewGame() {
@@ -260,45 +262,50 @@ public class GameController implements Runnable,
     }
 
     /**
-     *  metoda wywoływana przez listenera przy kliknięciu przycisku pokazania wyników
+     * metoda wywoływana przez listenera przy kliknięciu przycisku pokazania wyników
      */
     @Override
     public void onShowScores() {
         score.setVisible(true);
         menu.setVisible(false);
     }
+
     /**
-     *  metoda wywoływana przez listenera przy kliknięciu przycisku exit
+     * metoda wywoływana przez listenera przy kliknięciu przycisku exit
      */
     @Override
     public void onExit() {
         System.exit(0);
     }
+
     /**
-     *  metoda wywoływana przez listenera przycisku zamknięcia okna wyników 
+     * metoda wywoływana przez listenera przycisku zamknięcia okna wyników
      */
     @Override
     public void onCloseScoreWindow() {
         score.setVisible(false);
         menu.setVisible(true);
     }
+
     /**
-     *  metoda wywoływana przez listenera przycisku zamknięcia okna wyboru rozmiaru planszy
+     * metoda wywoływana przez listenera przycisku zamknięcia okna wyboru rozmiaru
+     * planszy
      */
     @Override
     public void onCloseDificultyWindow() {
         menu.setVisible(true);
         difficulty.setVisible(false);
     }
+
     /**
-     *  metoda wywoływana przez listenera przycisku rozpoczęcia gry
+     * metoda wywoływana przez listenera przycisku rozpoczęcia gry
+     * 
      * @param x rozmiar x
      * @param y rozmiar y
-     * inicjuje gre i uruchamia wątki
+     *          inicjuje gre i uruchamia wątki
      */
     @Override
     public void onStartGame(int x, int y) {
-        
 
         gamelogic = new GameLogic(x, y);
         this.gamelogic.setListener(this);
@@ -308,8 +315,7 @@ public class GameController implements Runnable,
 
         game.setVisible(true);
         game.getAnimatedTable().startAnimation();
-        
-        
+
         difficulty.setVisible(false);
 
         running = true;
@@ -319,8 +325,9 @@ public class GameController implements Runnable,
         gameLoopThread.start();
         npcThread.start();
     }
+
     /**
-     *  metoda wywoływana przez listenera zamknięcia okna gry
+     * metoda wywoływana przez listenera zamknięcia okna gry
      * zatrzymuje wątki i animacje
      */
     @Override
@@ -330,48 +337,47 @@ public class GameController implements Runnable,
         SwingUtilities.invokeLater(() -> {
             game.setVisible(false);
             menu.setVisible(true);
-          });
+        });
     }
+
     /**
-     *  metoda wywoływana przez listenera wygranej poziomu
+     * metoda wywoływana przez listenera wygranej poziomu
      * wstrzymuje wątki i ponownie inicjalizuje level
      */
     @Override
     public void onVictory() {
         pause();
-        SwingUtilities.invokeLater(() -> 
-            JOptionPane.showMessageDialog(game, "Level: " + gamelogic.level + " compleated!", "Victory!", JOptionPane.INFORMATION_MESSAGE)
-        );
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(game,
+                "Level: " + gamelogic.level + " compleated!", "Victory!", JOptionPane.INFORMATION_MESSAGE));
         gamelogic.generateLevel();
         keyhandler.clear();
         resume();
 
     }
+
     /**
-     *  metoda wywoływana przez listenera śmierci gracza
-     * resetuje pozycje gracza i npc. cusuwa powerupy. 
+     * metoda wywoływana przez listenera śmierci gracza
+     * resetuje pozycje gracza i npc. cusuwa powerupy.
      * jeśli zabrakło żyć, kończy gre uruchamiając zapis wyniku
      */
     @Override
     public void onDeath(int lives) {
         pause();
         if (gamelogic.getPlayer(0).getLives() > 0) {
-            
-            gamelogic.getPlayer(0).setLives(gamelogic.getPlayer(0).getLives()-1);
 
-            
-            JOptionPane.showMessageDialog(game, "You Died","You Died", JOptionPane.INFORMATION_MESSAGE );
-            
+            gamelogic.getPlayer(0).setLives(gamelogic.getPlayer(0).getLives() - 1);
+
+            JOptionPane.showMessageDialog(game, "You Died", "You Died", JOptionPane.INFORMATION_MESSAGE);
 
             gamelogic.resetLevel();
             keyhandler.clear();
             resume();
-        }
-        else{
-            String newName = JOptionPane.showInputDialog(null,"Game Over! Score: "+gamelogic.getPlayerScore(0),"Player");
+        } else {
+            String newName = JOptionPane.showInputDialog(null, "Game Over! Score: " + gamelogic.getPlayerScore(0),
+                    "Player");
 
-            PlayerScore pscore= new PlayerScore(newName, gamelogic.getPlayerScore(0));
-            if(pscore!=null)
+            PlayerScore pscore = new PlayerScore(newName, gamelogic.getPlayerScore(0));
+            if (pscore != null)
                 highScoreList.add(pscore);
             score.addHighScore(pscore.getName(), pscore.getScore());
 
@@ -381,10 +387,10 @@ public class GameController implements Runnable,
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
-                // SwingUtilities.invokeLater(() ->
-                //      game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
-                //  );
+
+            // SwingUtilities.invokeLater(() ->
+            // game.dispatchEvent(new WindowEvent(game, WindowEvent.WINDOW_CLOSING))
+            // );
             keyhandler.clear();
             onCloseGameWindow();
 

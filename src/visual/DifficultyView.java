@@ -36,18 +36,17 @@ public class DifficultyView extends BaseWindow {
             }
         });
         setSize(300, 400);
-        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 1, 0, 20),"images/pacman_rozmiar.png");
+        JPanel difficultyPanel = new BackgroundJpanel(new GridLayout(2, 1, 0, 20), "images/pacman_rozmiar.png");
 
-     
         add(difficultyPanel);
 
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {                
-                difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.2), (int)(getWidth()/7.5), getHeight()/5, (int)(getWidth()/7.5)));
+            public void componentResized(ComponentEvent e) {
+                difficultyPanel.setBorder(BorderFactory.createEmptyBorder((int) (getHeight() / 2.2),
+                        (int) (getWidth() / 7.5), getHeight() / 5, (int) (getWidth() / 7.5)));
             }
         });
-
 
         NumberFormat intFormat = NumberFormat.getIntegerInstance();
         NumberFormatter nf = new NumberFormatter(intFormat) {
@@ -66,20 +65,20 @@ public class DifficultyView extends BaseWindow {
         textboxJPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
         JFormattedTextField intFieldY = new JFormattedTextField(nf);
         intFieldY.setColumns(4);
-        
+
         textboxJPanel.add(intFieldY);
 
         JFormattedTextField intFieldX = new JFormattedTextField(nf);
         intFieldX.setColumns(4);
-        
+
         textboxJPanel.add(intFieldX);
         textboxJPanel.setOpaque(false);
         difficultyPanel.add(textboxJPanel);
 
         JPanel btnPanel = new JPanel(new BorderLayout());
         btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
-        
-        JButton starButton = new BackgroundJbutton("","images/START_button.png");
+
+        JButton starButton = new BackgroundJbutton("", "images/START_button.png");
         btnPanel.setOpaque(false);
         btnPanel.add(starButton);
         difficultyPanel.add(btnPanel);

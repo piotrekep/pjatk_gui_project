@@ -10,8 +10,8 @@ package model;
 
 public enum CellType {
 
-    EMPTY ,   
-    WALL  ,
+    EMPTY,
+    WALL,
     PLAYER,
     NPC_CHASER,
     NPC_AGGRO,
@@ -28,7 +28,5 @@ public enum CellType {
     POWERUP_SPEED,
     POWERUP_POOP,
     POWERUP
-
-
 
 }

@@ -13,6 +13,7 @@ import java.io.File;
 public class MyScrollPane extends JScrollPane {
     /**
      * konstriktor
+     * 
      * @param view
      */
     public MyScrollPane(Component view) {
@@ -20,30 +21,32 @@ public class MyScrollPane extends JScrollPane {
         getVerticalScrollBar().setUI(new CustomScrollBarUI());
         getVerticalScrollBar().setOpaque(false);
         getHorizontalScrollBar().setOpaque(false);
-        //setBorder(null);
+        // setBorder(null);
     }
-    
+
     private static class CustomScrollBarUI extends BasicScrollBarUI {
-/**
- * @brief override metody rysującej scierzke
- */
+        /**
+         * @brief override metody rysującej scierzke
+         */
         @Override
         protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
-            
+
         }
- /**
-  * @brief override metody rysującej scroller
-  */
+
+        /**
+         * @brief override metody rysującej scroller
+         */
         @Override
         protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
             try {
-                g.drawImage(ImageIO.read(new File("images/jajko.png")), 
-                           thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, null);
+                g.drawImage(ImageIO.read(new File("images/jajko.png")),
+                        thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height, null);
             } catch (Exception e) {
                 g.setColor(Color.GRAY);
                 g.fillRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height);
             }
         }
+
         /**
          * @brief override metody rysującej strzałki w dół
          */
@@ -51,15 +54,18 @@ public class MyScrollPane extends JScrollPane {
         protected JButton createDecreaseButton(int orientation) {
             return createArrowButton("images/szczauka_przesuwnik_gora.png");
         }
+
         /**
          * @brief override metody rysującej strzałki w góre
-         */        
+         */
         @Override
         protected JButton createIncreaseButton(int orientation) {
             return createArrowButton("images/szczauka_przesuwnik_dol.png");
         }
+
         /**
          * metoda rysująca przycisk
+         * 
          * @param imagePath ścierzka do obrazów
          * @return obiekt jbutton
          */

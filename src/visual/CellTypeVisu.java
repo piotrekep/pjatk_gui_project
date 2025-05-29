@@ -1,9 +1,8 @@
 package visual;
 
-
 import java.awt.Color;
 
-/** 
+/**
  * @class CellTypeVisu
  * @brief Klasa wizualizacji używana przed wprowadzeniem spriteów
  * 
@@ -27,8 +26,8 @@ public class CellTypeVisu {
         POWERUP_LIFE(Color.RED),
         POWERUP_PEARL(Color.RED),
         POWERUP_POINTS(Color.RED),
-        POWERUP_SPEED( Color.RED),
-        POWERUP_POOP( Color.RED),
+        POWERUP_SPEED(Color.RED),
+        POWERUP_POOP(Color.RED),
         POWERUP(Color.RED);
 
         public final Color color;
@@ -45,11 +44,8 @@ public class CellTypeVisu {
         return type.color;
     }
 
- 
-
     public CellTypeVisu(Type type) {
         this.type = type;
         this.val = 0;
     }
 }
-

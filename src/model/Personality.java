@@ -30,11 +30,10 @@ public enum Personality {
      * Unika gracza. próbuje utrzymać maksymalny dystans
      */
     COWARD,
-    
+
     /**
      * Gracz pod wypoływem powerupa
      */
-    POWERUP   
- 
+    POWERUP
 
 }

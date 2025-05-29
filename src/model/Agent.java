@@ -50,7 +50,6 @@ abstract public class Agent {
     protected double moveProgress = 1.0;
     /** prędkość poruszania się Agenta */
     private double speed = 0.0;
-    
 
     /**
      * konstruktor agenta.
@@ -98,12 +97,12 @@ abstract public class Agent {
      */
 
     public boolean move(double speed) {
-        this.speed = speed; 
+        this.speed = speed;
         long now = System.nanoTime();
         moveProgress = (now - lastTime) / 1_000_000_000.0;
-       
+
         if (moveProgress < 0.1)
-             changeDirection();
+            changeDirection();
 
         if (speed != 0) {
             switch (direction) {
@@ -137,7 +136,7 @@ abstract public class Agent {
             }
 
             if (moveProgress > 1.0 / speed) {
-               
+
                 switch (direction) {
                     case 1 -> moveUp();
                     case 2 -> moveRight();
@@ -146,10 +145,10 @@ abstract public class Agent {
                     default -> {
                     }
                 }
-                
+
                 if (listener != null)
                     listener.onChangePosition(this);
-                
+
                 lastTime = now;
                 return true;
             }
@@ -295,7 +294,7 @@ abstract public class Agent {
      */
 
     public double getMoveProgress() {
-        if(position.x != target.x || position.y !=target.y)
+        if (position.x != target.x || position.y != target.y)
             return Math.min(1.0, Math.max(0.0, moveProgress / (1.0 / this.speed)));
         else
             return 0;

@@ -11,7 +11,7 @@ public class myFrame_old extends BaseWindow {
 
     public myFrame_old(String title, Runnable onExitAction) {
         super(title);
-        
+
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new WindowAdapter() {
@@ -19,10 +19,9 @@ public class myFrame_old extends BaseWindow {
             public void windowClosing(WindowEvent e) {
                 onExitAction.run();
                 dispose();
-               
+
             }
         });
-
 
     }
 

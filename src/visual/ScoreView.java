@@ -14,41 +14,45 @@ import javax.swing.border.EmptyBorder;
  * @brief obiekt widoku punktacji
  */
 
-public class ScoreView extends BaseWindow{
-    /**interface nasłuchujący sygnału zamykania okna */
-    public interface ScoreListener { void onCloseScoreWindow();}
-    /**obiekt listnera */
+public class ScoreView extends BaseWindow {
+    /** interface nasłuchujący sygnału zamykania okna */
+    public interface ScoreListener {
+        void onCloseScoreWindow();
+    }
+
+    /** obiekt listnera */
     private ScoreListener listener;
     /** lista wyników */
     private DefaultListModel<PlayerScore> model;
-    /**obiekt listy */
-    private JList<PlayerScore> lista; 
+    /** obiekt listy */
+    private JList<PlayerScore> lista;
 
-/** konstruktor okna */
+    /** konstruktor okna */
     public ScoreView() {
         super("high scores");
         setSize(300, 400);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         JPanel highscorPanel = new BackgroundJpanel("images/pacman_staty.png");
-        highscorPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.85), (int)(getWidth()/5.5), (int)(getHeight()/6.66), (int)(getWidth()/5.5)));
+        highscorPanel.setBorder(BorderFactory.createEmptyBorder((int) (getHeight() / 2.85), (int) (getWidth() / 5.5),
+                (int) (getHeight() / 6.66), (int) (getWidth() / 5.5)));
         add(highscorPanel);
 
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {                
-                highscorPanel.setBorder(BorderFactory.createEmptyBorder((int)(getHeight()/2.85), (int)(getWidth()/5.5), (int)(getHeight()/6.66), (int)(getWidth()/5.5)));
+            public void componentResized(ComponentEvent e) {
+                highscorPanel.setBorder(BorderFactory.createEmptyBorder((int) (getHeight() / 2.85),
+                        (int) (getWidth() / 5.5), (int) (getHeight() / 6.66), (int) (getWidth() / 5.5)));
             }
         });
 
         model = new DefaultListModel<>();
-        
+
         lista = new JList<>(model);
         lista.setVisibleRowCount(10);
         lista.setOpaque(false);
-        lista.setBackground(new Color(0, 0, 0, 0)); 
-        
-        
+        lista.setBackground(new Color(0, 0, 0, 0));
+
         lista.setCellRenderer(new ListCellRenderer<PlayerScore>() {
             private final JPanel panel = new JPanel(new BorderLayout(5, 0));
             private final JLabel nameLabel = new JLabel();
@@ -62,37 +66,37 @@ public class ScoreView extends BaseWindow{
                 scoreLabel.setOpaque(false);
                 panel.setOpaque(false);
             }
+
             /**
              * @brief override wyglądu liosty
-             * @param list obiekt listy
-             * @param value wartość pola
-             * @param index pozycja
-             * @param isSelected czy wybrany
+             * @param list         obiekt listy
+             * @param value        wartość pola
+             * @param index        pozycja
+             * @param isSelected   czy wybrany
              * @param cellHasFocus focus
              * @return
              */
             @Override
             public Component getListCellRendererComponent(JList<? extends PlayerScore> list,
-                                                          PlayerScore value,
-                                                          int index,
-                                                          boolean isSelected,
-                                                          boolean cellHasFocus) {
+                    PlayerScore value,
+                    int index,
+                    boolean isSelected,
+                    boolean cellHasFocus) {
 
-                Font labelFont = new Font("Arial", Font.BOLD, 22); 
+                Font labelFont = new Font("Arial", Font.BOLD, 22);
                 nameLabel.setFont(labelFont);
                 scoreLabel.setFont(labelFont);
-                nameLabel.setForeground(new Color(255, 207, 38)); 
-                scoreLabel.setForeground(new Color(255, 207, 38)); 
+                nameLabel.setForeground(new Color(255, 207, 38));
+                scoreLabel.setForeground(new Color(255, 207, 38));
 
                 nameLabel.setText(value.getName());
                 scoreLabel.setText(String.valueOf(value.getScore()));
                 panel.setOpaque(false);
-            
+
                 return panel;
             }
 
         });
-        
 
         JScrollPane scrollPane = new MyScrollPane(lista);
         scrollPane.setOpaque(false);
@@ -104,22 +108,24 @@ public class ScoreView extends BaseWindow{
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (listener != null) listener.onCloseScoreWindow();
-                
-            } 
+                if (listener != null)
+                    listener.onCloseScoreWindow();
+
+            }
         });
     }
 
     public void setListener(ScoreListener l) {
         this.listener = l;
     }
+
     /**
      * @brief dodaje wynik do listy
      * @param name
      * @param score
      */
-    public void addHighScore(String name, int score){
-        
+    public void addHighScore(String name, int score) {
+
         model.addElement(new PlayerScore(name, score));
         List<PlayerScore> temp = Collections.list(model.elements());
         Comparator<PlayerScore> cmp = Comparator.comparingInt(PlayerScore::getScore);
@@ -129,6 +135,5 @@ public class ScoreView extends BaseWindow{
         temp.forEach(model::addElement);
 
     }
-
 
 }

@@ -6,21 +6,24 @@ import java.io.*;
  * @class PlayerScore
  * @brief Klasa definiująca obiekt w tabeli punktacji
  */
-public class PlayerScore implements Serializable { 
+public class PlayerScore implements Serializable {
 
     private String name;
-    private int score;  
+    private int score;
+
     public PlayerScore(String name, int score) {
         this.name = name;
         this.score = score;
     }
-/**
- * @brief getter nazwy gracz
- * @return nazwa gracz
- */
+
+    /**
+     * @brief getter nazwy gracz
+     * @return nazwa gracz
+     */
     public String getName() {
         return name;
     }
+
     /**
      * @brief getter punktów
      * @return punktacja
@@ -28,8 +31,9 @@ public class PlayerScore implements Serializable {
     public int getScore() {
         return score;
     }
+
     /**
-     * @brief overide toString 
+     * @brief overide toString
      */
     @Override
     public String toString() {

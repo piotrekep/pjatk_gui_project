@@ -7,10 +7,9 @@ import java.awt.event.KeyListener;
  * @class KeyHandler
  * @brief Klasa obsługująca klawiature
  *
- * Klasa implementuje KeyListener i udostępnia możliwość odczytania wejść
- * przyciski WSAD są równoważne strzałkom
+ *        Klasa implementuje KeyListener i udostępnia możliwość odczytania wejść
+ *        przyciski WSAD są równoważne strzałkom
  */
-
 
 public class KeyHandler implements KeyListener {
 
@@ -30,12 +29,12 @@ public class KeyHandler implements KeyListener {
         set(e, false);
     }
 
-    public void clear(){
-        up=false;
-        down=false;
-        left=false;
-        right=false;
-        test=false;
+    public void clear() {
+        up = false;
+        down = false;
+        left = false;
+        right = false;
+        test = false;
     }
 
     private void set(KeyEvent e, boolean val) {
@@ -49,7 +48,7 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     public KeyListener getKeyListener() {
@@ -71,7 +70,7 @@ public class KeyHandler implements KeyListener {
     public boolean right() {
         return right;
     }
-    
+
     public boolean test() {
         return test;
     }

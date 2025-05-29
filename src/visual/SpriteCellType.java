@@ -19,54 +19,54 @@ public class SpriteCellType {
      * @enum Type
      * @brief Enum definiujący wszystkie dostępne typy sprite'ów w grze
      * 
-     * Każdy typ zawiera ścieżki do plików graficznych, kolor placeholdera
-     * oraz logikę obsługi sprite'ów
+     *        Każdy typ zawiera ścieżki do plików graficznych, kolor placeholdera
+     *        oraz logikę obsługi sprite'ów
      */
     public enum Type {
         /** pusta komórka */
         EMPTY(new String[] { null }, Color.BLACK),
         /** komórka ściany */
         WALL(new String[] { "sprites/klocek.png" }, Color.DARK_GRAY),
-        /**komórka gracza z trzema klatkami animacji */
+        /** komórka gracza z trzema klatkami animacji */
         PLAYER(new String[] { "sprites/pacan_1.png",
                 "sprites/pacan_2.png",
                 "sprites/pacan_3.png", }, Color.BLUE),
-        /**komórka przeciwnika o osobowści "chaser" z animacją */
+        /** komórka przeciwnika o osobowści "chaser" z animacją */
         NPC_CHASER(new String[] {
                 "sprites/czerwony_duch_1.png",
                 "sprites/czerwony_duch_2.png",
                 "sprites/czerwony_duch_3.png",
                 "sprites/czerwony_duch_4.png"
         }, Color.GREEN),
-        /**komórka przeciwnika o osobowści "aggro" z animacją */
+        /** komórka przeciwnika o osobowści "aggro" z animacją */
         NPC_AGGRO(new String[] {
                 "sprites/fioletowy_duch_1.png",
                 "sprites/fioletowy_duch_2.png",
                 "sprites/fioletowy_duch_3.png",
                 "sprites/fioletowy_duch_4.png"
         }, Color.YELLOW),
-        /**komórka przeciwnika o osobowści "keyboardwarrior" z animacją */
+        /** komórka przeciwnika o osobowści "keyboardwarrior" z animacją */
         NPC_KEYBOARDWARRIOR(new String[] {
                 "sprites/niebieski_duch_1.png",
                 "sprites/niebieski_duch_2.png",
                 "sprites/niebieski_duch_3.png",
                 "sprites/niebieski_duch_4.png"
         }, Color.MAGENTA),
-        /**komórka przeciwnika o osobowści "headlesschicken" z animacją */
+        /** komórka przeciwnika o osobowści "headlesschicken" z animacją */
         NPC_HEADLESSCHICKEN(new String[] {
                 "sprites/pomaranczowy_duch_1.png",
                 "sprites/pomaranczowy_duch_2.png",
                 "sprites/pomaranczowy_duch_3.png",
                 "sprites/pomaranczowy_duch_4.png"
         }, Color.CYAN),
-        /**komórka przeciwnika o osobowści "coward" z animacją */
+        /** komórka przeciwnika o osobowści "coward" z animacją */
         NPC_COWARD(new String[] {
                 "sprites/zielony_duch_1.png",
                 "sprites/zielony_duch_2.png",
                 "sprites/zielony_duch_3.png",
                 "sprites/zielony_duch_4.png"
         }, Color.ORANGE),
-        /**komórka przeciwnika pod wpływem gracza z powerupem z animacją */
+        /** komórka przeciwnika pod wpływem gracza z powerupem z animacją */
         NPC_POWERUP(new String[] {
                 "sprites/spowolniony_duch_1.png",
                 "sprites/spowolniony_duch_2.png",
@@ -75,9 +75,9 @@ public class SpriteCellType {
         }, Color.ORANGE),
         /** komórka domu duchów */
         GHOSTHOUSE(new String[] { "sprites/klocek.png" }, Color.GRAY),
-        /**komórka podłogi domu dhcoów */
+        /** komórka podłogi domu dhcoów */
         GHOSTFLOOR(new String[] { "sprites/ghostfloor.png" }, Color.PINK),
-        /**komórka z punktem */
+        /** komórka z punktem */
         POINT(new String[] { "sprites/kulka.png" }, Color.LIGHT_GRAY),
         /** powerup dodatkowe życie */
         POWERUP_LIFE(new String[] { "sprites/POWERUP_SERCE.png" }, Color.RED),
@@ -91,9 +91,10 @@ public class SpriteCellType {
         POWERUP_POOP(new String[] { "sprites/POWERUP_LOD.png" }, Color.RED),
         /** placeholder domyslnego powerupa */
         POWERUP(new String[] { "sprites/powerup.png" }, Color.RED);
+
         /** scieżki do plików */
         private final String[] spritePaths;
-        /**kolor placeholdera */
+        /** kolor placeholdera */
         private final Color placeholderColor;
         /** tablica spriteów */
         private Image[] sprites;
@@ -102,18 +103,19 @@ public class SpriteCellType {
 
         /**
          * @brief Konstruktor typu sprite'a
-         * @param paths Tablica ścieżek do plików graficznych
+         * @param paths            Tablica ścieżek do plików graficznych
          * @param placeholderColor Kolor zastępczy
          */
         Type(String[] paths, Color placeholderColor) {
             this.spritePaths = paths;
             this.placeholderColor = placeholderColor;
             this.sprites = loadSprites(paths, placeholderColor);
-            this.scaledSprites=this.sprites;
+            this.scaledSprites = this.sprites;
         }
+
         /**
          * @brief Ładuje sprite'y z podanych ścieżek
-         * @param paths Tablica ścieżek do plików
+         * @param paths            Tablica ścieżek do plików
          * @param placeholderColor Kolor zastępczy dla nieudanych załadowań
          * @return Tablica załadowanych obrazów
          */
@@ -128,9 +130,10 @@ public class SpriteCellType {
             }
             return images;
         }
+
         /**
          * @brief Ładuje pojedynczy sprite z pliku
-         * @param path Ścieżka do pliku graficznego
+         * @param path             Ścieżka do pliku graficznego
          * @param placeholderColor Kolor zastępczy w przypadku błędu
          * @return Załadowany obraz lub placeholder
          */
@@ -146,6 +149,7 @@ public class SpriteCellType {
             System.err.println("Nie znaleziono zasobu na classpath: " + path);
             return createPlaceholder(placeholderColor);
         }
+
         /**
          * @brief Tworzy placeholder w przypadku braku sprite'a
          * @param color Kolor placeholdera zastępczego
@@ -162,15 +166,16 @@ public class SpriteCellType {
             g2.dispose();
             return img;
         }
+
         /**
          * @brief Pobiera sprite na podstawie postępu animacji
          * @param animProgress Postęp animacji (0.0 - 1.0)
-         * @param direction Kierunek (1-4) dla rotacji sprite'a
+         * @param direction    Kierunek (1-4) dla rotacji sprite'a
          * @return Sprite odpowiadający postępowi animacji z rotacją
          * @details Mapuje postęp animacji na indeksy klatek:
-         * - 0.0-0.3: klatka 0
-         * - 0.3-0.6: klatka 1  
-         * - 0.6-1.0: klatka 2
+         *          - 0.0-0.3: klatka 0
+         *          - 0.3-0.6: klatka 1
+         *          - 0.6-1.0: klatka 2
          */
         public Image getSprite(double animProgress, int direction) {
             if (animProgress < 0.3)
@@ -181,16 +186,17 @@ public class SpriteCellType {
                 return getSprite(2, direction);
 
         }
+
         /**
          * @brief Pobiera sprite z rotacją
-         * @param idx Indeks sprite'a w tablicy
+         * @param idx       Indeks sprite'a w tablicy
          * @param direction Kierunek rotacji (1=90°, 2=180°, 3=270°, 4=0°)
          * @return Obrócony sprite
          * @details Tworzy nowy obraz z rotacją zgodnie z kierunkiem:
-         * - 1: obrót o 90° (w prawo)
-         * - 2: obrót o 180° (w dół)
-         * - 3: obrót o 270° (w lewo)
-         * - 4: bez rotacji (w górę)
+         *          - 1: obrót o 90° (w prawo)
+         *          - 2: obrót o 180° (w dół)
+         *          - 3: obrót o 270° (w lewo)
+         *          - 4: bez rotacji (w górę)
          */
         public Image getSprite(int idx, int direction) {
             Image img;
@@ -222,7 +228,8 @@ public class SpriteCellType {
             g.dispose();
             return (Image) buffImage;
         }
-         /**
+
+        /**
          * @brief Pobiera sprite o podanym indeksie
          * @param idx Indeks sprite'a w tablicy
          * @return Sprite bez rotacji
@@ -233,11 +240,12 @@ public class SpriteCellType {
             }
             return scaledSprites[idx];
         }
+
         /**
          * @brief Pobiera tablicę wszystkich sprite'ów
          * @return Tablica oryginalnych sprite'ów
          */
-        public Image[] getSprites(){
+        public Image[] getSprites() {
             return sprites;
         }
 
@@ -246,21 +254,22 @@ public class SpriteCellType {
          * @param w Szerokość
          * @param h Wysokość
          * @details Tworzy nową tablicę przeskalowanych sprite'ów używając
-         * interpolacji bilinearnej dla lepszej jakości
+         *          interpolacji bilinearnej dla lepszej jakości
          */
-        public void rescale(int w, int h){
+        public void rescale(int w, int h) {
 
             Image[] tmp = new Image[sprites.length];
             for (int i = 0; i < sprites.length; i++)
                 tmp[i] = scale(sprites[i], w, h);
-    
+
             this.scaledSprites = tmp;
         }
+
         /**
          * @brief Skaluje pojedynczy obraz
          * @param src Obraz źródłowy
-         * @param w Docelowa szerokość
-         * @param h Docelowa wysokość
+         * @param w   Docelowa szerokość
+         * @param h   Docelowa wysokość
          * @return Przeskalowany obraz
          * @details Używa interpolacji bilinearnej dla lepszej jakości skalowania
          */
@@ -268,7 +277,7 @@ public class SpriteCellType {
             BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = dst.createGraphics();
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                               RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(src, 0, 0, w, h, null);
             g.dispose();
             return dst;
@@ -276,10 +285,11 @@ public class SpriteCellType {
 
     }
 
-    /**Typ sprite'a */
+    /** Typ sprite'a */
     public final Type type;
     /** Dodatkowa wartość liczbowa powiązana z komórką */
     public final int val;
+
     /**
      * @brief Konstruktor tworzący SpriteCellType z domyślną wartością 0
      * @param type Typ sprite'a
@@ -287,10 +297,11 @@ public class SpriteCellType {
     public SpriteCellType(Type type) {
         this(type, 0);
     }
+
     /**
      * @brief Konstruktor tworzący SpriteCellType z określoną wartością
      * @param type Typ sprite'a
-     * @param val Wartość liczbowa powiązana z komórką
+     * @param val  Wartość liczbowa powiązana z komórką
      */
     public SpriteCellType(Type type, int val) {
         this.type = type;

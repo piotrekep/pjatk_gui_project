@@ -7,14 +7,15 @@ import javax.swing.*;
 
 /**
  * @class MenuView
- * @brief Główne menu aplikacji z trzema przyciskami: Nowa gra, Wyniki oraz Wyjście.
+ * @brief Główne menu aplikacji z trzema przyciskami: Nowa gra, Wyniki oraz
+ *        Wyjście.
  *
- * Klasa dziedziczy po JFrame i wyświetla prosty interfejs menu.
- * Wykorzystuje listenera do obsługi kliknięć przycisków.
+ *        Klasa dziedziczy po JFrame i wyświetla prosty interfejs menu.
+ *        Wykorzystuje listenera do obsługi kliknięć przycisków.
  */
 
-public class MenuView extends BaseWindow{
-        /**
+public class MenuView extends BaseWindow {
+    /**
      * Interfejs listenera menu.
      * Implementacje powinny definiować reakcje na kliknięcie przycisków.
      */
@@ -35,35 +36,36 @@ public class MenuView extends BaseWindow{
     /**
      * @brief Konstruktor MenuView.
      *
-     * Tworzy okno menu z trzema przyciskami i ustawia odpowiednie akcje.
+     *        Tworzy okno menu z trzema przyciskami i ustawia odpowiednie akcje.
      */
 
-      public MenuView(){
+    public MenuView() {
         super("Menu");
-        
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 400);
-        String img; 
-        if(Math.random()<=0.15)
+        String img;
+        if (Math.random() <= 0.15)
             img = "images/menu_pacan.png";
         else
             img = "images/menu_pacman.png";
 
-        JPanel menuPanel =  new BackgroundJpanel(new GridLayout(3, 1, 10, 20),img);
-        menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/4, (int)(getWidth()/4.5), getHeight()/4, (int)(getWidth()/4.5)));
+        JPanel menuPanel = new BackgroundJpanel(new GridLayout(3, 1, 10, 20), img);
+        menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight() / 4, (int) (getWidth() / 4.5), getHeight() / 4,
+                (int) (getWidth() / 4.5)));
         add(menuPanel);
 
         addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {                
-                 menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight()/4, (int)(getWidth()/4.5), getHeight()/4, (int)(getWidth()/4.5)));
+            public void componentResized(ComponentEvent e) {
+                menuPanel.setBorder(BorderFactory.createEmptyBorder(getHeight() / 4, (int) (getWidth() / 4.5),
+                        getHeight() / 4, (int) (getWidth() / 4.5)));
             }
         });
-        
-        
-        JButton newGameButton = new BackgroundJbutton("","images/NEW_GAME_button.png");
-        JButton highScoreButton = new BackgroundJbutton("","images/HIGH_SCORES_button.png");
-        JButton exitButton = new BackgroundJbutton("","images/EXIT_button.png");
+
+        JButton newGameButton = new BackgroundJbutton("", "images/NEW_GAME_button.png");
+        JButton highScoreButton = new BackgroundJbutton("", "images/HIGH_SCORES_button.png");
+        JButton exitButton = new BackgroundJbutton("", "images/EXIT_button.png");
         menuPanel.add(newGameButton);
         menuPanel.add(highScoreButton);
         menuPanel.add(exitButton);
@@ -81,8 +83,6 @@ public class MenuView extends BaseWindow{
         });
 
     }
-
-    
 
     /**
      * @brief Ustawia listenera zdarzeń menu.

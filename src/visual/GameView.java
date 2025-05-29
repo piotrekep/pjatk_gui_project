@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import model.AgentModel;
 
-
 /**
  * @class GameView
  * @brief Klasa obsługująca widok gry
@@ -19,8 +18,8 @@ public class GameView extends BaseWindow {
     }
 
     private GameListener listener;
-    private JLabel scoreLabel;  
-    private JLabel livesLabel; 
+    private JLabel scoreLabel;
+    private JLabel livesLabel;
     private GameBoard level;
     private JPanel topPanel;
     private AgentModel model;
@@ -31,8 +30,7 @@ public class GameView extends BaseWindow {
         super("Pacman!");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(new Color (0,0,0));
-
+        topPanel.setBackground(new Color(0, 0, 0));
 
         scoreLabel = new JLabel("Score: 0");
         scoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -51,16 +49,14 @@ public class GameView extends BaseWindow {
             public void windowClosing(WindowEvent e) {
                 if (listener != null)
                     listener.onCloseGameWindow();
-               // dispose();
+                // dispose();
             }
         });
 
-        
-
     }
 
-    public void setAgentModel(AgentModel model){
-        this.model=model;
+    public void setAgentModel(AgentModel model) {
+        this.model = model;
     }
 
     public void setScore(int score) {
@@ -95,7 +91,7 @@ public class GameView extends BaseWindow {
     }
 
     private void initMap(GameBoard level) {
-        table = new AnimatedTable(level,model);
+        table = new AnimatedTable(level, model);
 
         JScrollPane sp = new JScrollPane(
                 table,
@@ -107,23 +103,23 @@ public class GameView extends BaseWindow {
         add(topPanel, BorderLayout.NORTH);
 
         SpriteLevelRenderer renderer = new SpriteLevelRenderer();
-        
+
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
-       
-        
+
         enableFullTableScaling(table, sp);
         add(sp, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
-        
-        tableResize(28,28,table);
 
-        setSize(table.getColumnCount() * (table.getColumnModel().getColumn(0).getPreferredWidth()),table.getRowCount() * table.getRowHeight());
+        tableResize(28, 28, table);
+
+        setSize(table.getColumnCount() * (table.getColumnModel().getColumn(0).getPreferredWidth()),
+                table.getRowCount() * table.getRowHeight());
     }
 
-    private void tableResize(int cellW, int cellH, JTable table){
+    private void tableResize(int cellW, int cellH, JTable table) {
         table.setRowHeight(cellH);
         int cols = table.getColumnCount();
         for (int c = 0; c < cols; c++) {
@@ -133,7 +129,7 @@ public class GameView extends BaseWindow {
     }
 
     public AnimatedTable getAnimatedTable() {
-        return this.table;  
+        return this.table;
     }
 
     private void enableFullTableScaling(JTable table, JScrollPane sp) {
@@ -159,7 +155,6 @@ public class GameView extends BaseWindow {
                 if (cellH < 8)
                     cellH = 8;
 
-                
                 table.setRowHeight(cellH);
                 for (int column = 0; column < cols; column++) {
                     table.getColumnModel().getColumn(column).setPreferredWidth(cellW);
@@ -167,13 +162,12 @@ public class GameView extends BaseWindow {
 
                 for (SpriteCellType.Type type : SpriteCellType.Type.values())
                     type.rescale(cellW, cellH);
-            
+
                 table.revalidate();
-                table.repaint();;
+                table.repaint();
+                ;
             }
         });
     }
-
-
 
 }

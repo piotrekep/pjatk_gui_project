@@ -23,8 +23,7 @@ public class Npc extends Agent {
     /** początkowa osobowość */
     private Personality orignalPersonality;
     /** czas oczekiwania na wyjście */
-    private long freezeTimeNanos=0;
-    
+    private long freezeTimeNanos = 0;
 
     /**
      * konstruktor npc.
@@ -52,7 +51,7 @@ public class Npc extends Agent {
 
     public void moveRandom(double speed) {
 
-        if (!moveInDirPossible(direction) ) {
+        if (!moveInDirPossible(direction)) {
             rndDir = (int) Math.round(rnd.nextDouble(1, 4));
             setDirection(rndDir);
         }
@@ -208,17 +207,17 @@ public class Npc extends Agent {
             p = Personality.CHASER;
         else
             p = personality;
-        if((freezeTimeNanos - System.nanoTime())<=0)
-        switch (p) {
-            case Personality.CHASER -> moveChaser(speed, distField);
-            case Personality.HEADLESSCHICKEN -> moveChicken(speed);
-            case Personality.KEYBOARDWARRIOR -> moveKeyboardWarrior(speed, thresh, distField);
-            case Personality.AGGRO -> moveAggro(speed, thresh, distField);
-            case Personality.COWARD -> moveCoward(speed, distField);
-            case Personality.POWERUP -> moveCoward(speed, distField);
-            default -> {
+        if ((freezeTimeNanos - System.nanoTime()) <= 0)
+            switch (p) {
+                case Personality.CHASER -> moveChaser(speed, distField);
+                case Personality.HEADLESSCHICKEN -> moveChicken(speed);
+                case Personality.KEYBOARDWARRIOR -> moveKeyboardWarrior(speed, thresh, distField);
+                case Personality.AGGRO -> moveAggro(speed, thresh, distField);
+                case Personality.COWARD -> moveCoward(speed, distField);
+                case Personality.POWERUP -> moveCoward(speed, distField);
+                default -> {
+                }
             }
-        }
 
         if (distField[position.x][position.y] == 0)
             if (listener != null)
@@ -341,10 +340,11 @@ public class Npc extends Agent {
             }
         }
     }
-/** reset timera startu npc */
-    public void resetFreezeTimer(){
-        freezeTimeNanos=(int)(Math.round(Math.random()*4)+1);
-        freezeTimeNanos=freezeTimeNanos*1_000_000_000l + System.nanoTime();
+
+    /** reset timera startu npc */
+    public void resetFreezeTimer() {
+        freezeTimeNanos = (int) (Math.round(Math.random() * 4) + 1);
+        freezeTimeNanos = freezeTimeNanos * 1_000_000_000l + System.nanoTime();
     }
 
 }

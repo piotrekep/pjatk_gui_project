@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class BackgroundJbutton extends JButton {
     private BufferedImage backgroundImage;
-    
+
     public BackgroundJbutton() {
         super();
         setContentAreaFilled(false);
@@ -22,14 +22,13 @@ public class BackgroundJbutton extends JButton {
         setFocusPainted(false);
     }
 
-    
     public BackgroundJbutton(String text) {
         super(text);
         setContentAreaFilled(false);
         setBorderPainted(false);
         setFocusPainted(false);
-    }   
-    
+    }
+
     public BackgroundJbutton(String text, String imagePath) {
         super(text);
         setContentAreaFilled(false);
@@ -37,16 +36,16 @@ public class BackgroundJbutton extends JButton {
         setFocusPainted(false);
         setBackgroundImage(imagePath);
     }
-    
+
     private void setBackgroundImage(String imagePath) {
         try {
             backgroundImage = ImageIO.read(new File(imagePath));
             repaint();
         } catch (IOException e) {
-            
+
         }
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         if (backgroundImage != null) {
