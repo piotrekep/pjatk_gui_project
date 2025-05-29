@@ -14,13 +14,23 @@ public class PlayerScore implements Serializable {
         this.name = name;
         this.score = score;
     }
-
+/**
+ * @brief getter nazwy gracz
+ * @return nazwa gracz
+ */
     public String getName() {
         return name;
     }
+    /**
+     * @brief getter punktów
+     * @return punktacja
+     */
     public int getScore() {
         return score;
     }
+    /**
+     * @brief overide toString 
+     */
     @Override
     public String toString() {
         return "Person{name='" + name + "', age=" + score + "}";

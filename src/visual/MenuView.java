@@ -33,7 +33,7 @@ public class MenuView extends BaseWindow{
     private MenuListener listener;
 
     /**
-     * Konstruktor MenuView.
+     * @brief Konstruktor MenuView.
      *
      * Tworzy okno menu z trzema przyciskami i ustawia odpowiednie akcje.
      */
@@ -84,8 +84,8 @@ public class MenuView extends BaseWindow{
 
     
 
-       /**
-     * Ustawia listenera zdarzeń menu.
+    /**
+     * @brief Ustawia listenera zdarzeń menu.
      *
      * @param l obiekt implementujący MenuListener
      */

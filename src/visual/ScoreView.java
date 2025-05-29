@@ -15,12 +15,16 @@ import javax.swing.border.EmptyBorder;
  */
 
 public class ScoreView extends BaseWindow{
+    /**interface nasłuchujący sygnału zamykania okna */
     public interface ScoreListener { void onCloseScoreWindow();}
+    /**obiekt listnera */
     private ScoreListener listener;
+    /** lista wyników */
     private DefaultListModel<PlayerScore> model;
+    /**obiekt listy */
     private JList<PlayerScore> lista; 
 
-
+/** konstruktor okna */
     public ScoreView() {
         super("high scores");
         setSize(300, 400);
@@ -42,7 +46,7 @@ public class ScoreView extends BaseWindow{
         lista = new JList<>(model);
         lista.setVisibleRowCount(10);
         lista.setOpaque(false);
-        lista.setBackground(new Color(0, 0, 0, 0)); // całkowicie przezroczyste
+        lista.setBackground(new Color(0, 0, 0, 0)); 
         
         
         lista.setCellRenderer(new ListCellRenderer<PlayerScore>() {
@@ -58,7 +62,15 @@ public class ScoreView extends BaseWindow{
                 scoreLabel.setOpaque(false);
                 panel.setOpaque(false);
             }
-
+            /**
+             * @brief override wyglądu liosty
+             * @param list obiekt listy
+             * @param value wartość pola
+             * @param index pozycja
+             * @param isSelected czy wybrany
+             * @param cellHasFocus focus
+             * @return
+             */
             @Override
             public Component getListCellRendererComponent(JList<? extends PlayerScore> list,
                                                           PlayerScore value,
@@ -93,7 +105,7 @@ public class ScoreView extends BaseWindow{
             @Override
             public void windowClosing(WindowEvent e) {
                 if (listener != null) listener.onCloseScoreWindow();
-                dispose();
+                
             } 
         });
     }
@@ -101,7 +113,11 @@ public class ScoreView extends BaseWindow{
     public void setListener(ScoreListener l) {
         this.listener = l;
     }
-
+    /**
+     * @brief dodaje wynik do listy
+     * @param name
+     * @param score
+     */
     public void addHighScore(String name, int score){
         
         model.addElement(new PlayerScore(name, score));
