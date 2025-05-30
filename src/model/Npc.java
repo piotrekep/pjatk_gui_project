@@ -60,12 +60,12 @@ public class Npc extends Agent {
     }
 
     /**
-     * implementacja A-Star dla przeciwników
+     * implementacja ruchu gradientem w dół dla przeciwników
      * 
      * @param speed     prędkość poruszania się
      * @param distField pole wektorów odległości od celu.
      */
-    public void moveAstar(double speed, int[][] distField) {
+    public void moveGradientDown(double speed, int[][] distField) {
         // inicjacja wyboru kierunku i odległości
         int bestDir = 0;
         int bestDist = Integer.MAX_VALUE;
@@ -127,14 +127,14 @@ public class Npc extends Agent {
     }
 
     /**
-     * implementacja odwróconego A-Star dla przeciwników
+     * implementacja ruchu gradientem w góre dla przeciwników
      * zamiast dążyć do minimum, dąży do maksimum uciekając od gracza
      * 
      * @param speed     prędkość poruszania się
      * @param distField pole wektorów odległości od celu.
      */
 
-    public void moveAstarInv(double speed, int[][] distField) {
+    public void moveGradientUp(double speed, int[][] distField) {
 
         int bestDir = 0;
         int bestDist = -1;
@@ -232,7 +232,7 @@ public class Npc extends Agent {
      * @param distField pole odległości
      */
     void moveChaser(double speed, int[][] distField) {
-        moveAstar(speed, distField);
+        moveGradientDown(speed, distField);
 
     }
 
@@ -243,7 +243,7 @@ public class Npc extends Agent {
      * @param distField pole odległości
      */
     void moveCoward(double speed, int[][] distField) {
-        moveAstarInv(speed, distField);
+        moveGradientDown(speed, distField);
 
     }
 
@@ -267,7 +267,7 @@ public class Npc extends Agent {
 
     void moveAggro(double speed, int thresh, int[][] distField) {
         if (distField[position.x][position.y] < thresh)
-            moveAstar(speed, distField);
+        moveGradientDown(speed, distField);
         else
             moveRandom(speed);
     }
@@ -283,7 +283,7 @@ public class Npc extends Agent {
 
     void moveKeyboardWarrior(double speed, int thresh, int[][] distField) {
         if (distField[position.x][position.y] > thresh)
-            moveAstar(speed, distField);
+        moveGradientDown(speed, distField);
         else
             moveRandom(speed);
     }
