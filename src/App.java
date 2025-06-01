@@ -4,11 +4,8 @@ import controller.GameController;
 import controller.KeyHandler;
 
 import visual.GameView;
-
 import controller.ExitKeyHandler;
-
 import visual.DifficultyView;
-
 import visual.MenuView;
 import visual.ScoreView;
 

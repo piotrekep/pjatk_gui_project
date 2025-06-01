@@ -27,7 +27,7 @@ public class CellTypeVisu {
         POWERUP_PEARL(Color.RED),
         POWERUP_POINTS(Color.RED),
         POWERUP_SPEED(Color.RED),
-        POWERUP_POOP(Color.RED),
+        POWERUP_ICE(Color.RED),
         POWERUP(Color.RED);
 
         public final Color color;

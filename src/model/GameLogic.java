@@ -170,6 +170,12 @@ public class GameLogic implements AgentListener,
 
         player.move(speed * speedMul);
 
+        if (System.nanoTime() < player.iceTime) {
+            player.iced=true;
+        } else {
+            player.iced=false;
+        }
+
         if (listener != null && player.getPoints() >= maxPoints)
             listener.onVictory();
 
@@ -187,8 +193,9 @@ public class GameLogic implements AgentListener,
         Npc npc = (Npc) agentList.get(id);
         Player p = (Player) agentList.get(0);
         double speedMul = 1;
+        double frozenSpeedMul = 1;
         if (npc != null) {
-            if (distanceField != null)
+            if (distanceField != null){
                 if (p.powered) {
                     npc.setPersonality(Personality.POWERUP);
                     speedMul = 0.75;
@@ -196,8 +203,14 @@ public class GameLogic implements AgentListener,
                     npc.resetPersonality();
                     speedMul = 1;
                 }
-
-            npc.movePersonality(speed * speedMul, 10, distanceField);
+            if(p.iced){
+                frozenSpeedMul = 0.25;
+            }
+            else{
+                frozenSpeedMul = 1;
+            }
+            }
+            npc.movePersonality(speed * speedMul * frozenSpeedMul, 10, distanceField);
         }
     }
 
@@ -347,6 +360,8 @@ public class GameLogic implements AgentListener,
             return PowerupType.PEARL;
         else if (rng < 0.6)
             return PowerupType.SPEED;
+        else if (rng < 0.8)
+            return PowerupType.ICE;
         else
             return PowerupType.POINTS;
     }
@@ -595,6 +610,8 @@ public class GameLogic implements AgentListener,
                         player.pearlTime = System.nanoTime() + (player.getPowerup().getDuration() * 1_000_000_000l);
                     case PowerupType.SPEED ->
                         player.speedTime = System.nanoTime() + (player.getPowerup().getDuration() * 1_000_000_000l);
+                     case PowerupType.ICE ->
+                         player.iceTime = System.nanoTime() + (player.getPowerup().getDuration() * 1_000_000_000l);
                     default -> {
                     }
                 }

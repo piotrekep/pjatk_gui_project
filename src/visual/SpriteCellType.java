@@ -88,7 +88,7 @@ public class SpriteCellType {
         /** powerup dodatkowa prędkość */
         POWERUP_SPEED(new String[] { "sprites/POWERUP_SKRZYDLO.png" }, Color.RED),
         /** powerup nioezaimplementowany */
-        POWERUP_POOP(new String[] { "sprites/POWERUP_LOD.png" }, Color.RED),
+        POWERUP_ICE(new String[] { "sprites/POWERUP_LOD.png" }, Color.RED),
         /** placeholder domyslnego powerupa */
         POWERUP(new String[] { "sprites/powerup.png" }, Color.RED);
 

@@ -25,6 +25,10 @@ public class Player extends Agent {
     public long pearlTime = 0;
     /** czas do końca przyspieszenia */
     public long speedTime = 0;
+    /** czas do końca zamrożenia */
+    public long iceTime = 0;
+    /** zamrozony */
+    public boolean iced = false;
     /** rodzaj zebranego powerupa */
     private PowerupType collected;
 

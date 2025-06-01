@@ -243,7 +243,7 @@ public class Npc extends Agent {
      * @param distField pole odległości
      */
     void moveCoward(double speed, int[][] distField) {
-        moveGradientDown(speed, distField);
+        moveGradientUp(speed, distField);
 
     }
 

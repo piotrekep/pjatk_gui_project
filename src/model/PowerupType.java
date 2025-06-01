@@ -10,7 +10,7 @@ public enum PowerupType {
     PEARL(100, 10),
     POINTS(200, 0),
     SPEED(0, 5),
-    POOP(0, 10);
+    ICE(0, 10);
 
     private final int extraPoints;
     private final int duration;
