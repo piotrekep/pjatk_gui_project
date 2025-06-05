@@ -1,6 +1,6 @@
 package model;
 
-import java.awt.Point;
+import model.Point;
 
 /**
  * @class Agent

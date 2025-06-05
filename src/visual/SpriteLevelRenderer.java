@@ -2,14 +2,17 @@ package visual;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import model.Personality;
+import model.Player;
+import model.Npc;
+import model.Powerup;
+import model.PowerupType;
 
 /**
  * @class SpriteLevelRenderer
@@ -17,6 +20,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 
 class SpriteLevelRenderer extends DefaultTableCellRenderer {
+
     @Override
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus,
@@ -28,10 +32,36 @@ class SpriteLevelRenderer extends DefaultTableCellRenderer {
 
         if (value instanceof SpriteCellType) {
             SpriteCellType cell = (SpriteCellType) value;
+            Image img;
+            SpriteCellType.Type spriteType = null;
+            if (cell.agent != null){
 
-            Image img = cell.type.getSprite(0);
+                if (cell.agent instanceof Player) {
+                    spriteType = SpriteCellType.Type.PLAYER;
+                    img = spriteType.getSprite(cell.agent.getMoveProgress(), cell.agent.getDirection());
+                } else if (cell.agent instanceof Npc) {
+                    Personality personality = ((Npc) cell.agent).getPersonality();
+                    spriteType = SpriteCellType.Type.valueOf("NPC_" + personality.name());
+                    img = spriteType.getSprite(cell.agent.getDirection());
 
-            setIcon(new ImageIcon(img));
+                } else if (cell.agent instanceof Powerup) {
+                    PowerupType powerType = ((Powerup) cell.agent).getPowerup();
+                    spriteType = SpriteCellType.Type.valueOf("POWERUP_" + powerType.name());
+                    img = spriteType.getSprite(0);
+                } else {
+                    img = SpriteCellType.Type.EMPTY.getSprite(0);
+                }
+
+                ImageIcon icon = new ImageIcon(img);
+                
+                setIcon(icon);
+            }
+            else {
+                img = cell.type.getSprite(0);
+                setIcon(new ImageIcon(img));
+            }
+
+            
         } else {
             setBackground(Color.WHITE);
         }

@@ -1,10 +1,12 @@
 package model;
 
-import java.awt.Point;
+//import java.awt.Point;
+import model.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -262,16 +264,19 @@ public class GameLogic implements AgentListener,
             gameState[i] = labirynt[i].clone();
         }
         // zmienianie tła tabeli, stary kod przed animacją
-        // for (Agent agent : agentList.values()) {
-        // switch (agent) {
-        // case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
-        // case Npc n -> gameState[n.position.x][n.position.y] = n.getCellType();
-        // case Powerup pw -> gameState[pw.position.x][pw.position.y] =
-        // CellType.POWERUP;
-        // default -> {
-        // }
-        // }
-        // }
+        for (Agent agent : agentList.values()) {
+        switch (agent) {
+        case Player p -> gameState[p.position.x][p.position.y] = CellType.PLAYER;
+        case Npc n -> gameState[n.position.x][n.position.y] = n.getCellType();
+        case Powerup pw -> {
+            //gameState[pw.position.x][pw.position.y] = CellType.POWERUP;
+            PowerupType powerType = ((Powerup) agent).getPowerup();
+            gameState[pw.position.x][pw.position.y]  = CellType.valueOf("POWERUP_" + powerType.name());
+        }
+        default -> {
+        }
+        }
+        }
 
         return gameState;
 
@@ -644,5 +649,15 @@ public class GameLogic implements AgentListener,
     public Collection<Agent> getAgents() {
         return Collections.unmodifiableCollection(agentList.values());
     }
+
+@Override
+public Map<Point, Agent> getAgentsByLocation() {
+    Map<Point, Agent> map = new HashMap<>();
+    for (Agent agent : agentList.values()) {
+        Point p = agent.position;
+        map.put(p, agent);
+    }
+    return Collections.unmodifiableMap(map);
+}
 
 }

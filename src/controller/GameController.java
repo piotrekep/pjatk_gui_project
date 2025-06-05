@@ -3,9 +3,13 @@ package controller;
 import model.CellType;
 import model.GameLogic;
 import model.GameLogic.GameLogicListener;
+import model.Agent;
+import model.AgentModel;
 
+import model.Point;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -64,6 +68,8 @@ public class GameController implements Runnable,
     private final int TARGET_FPS = 30;
     /** optymalny czas każdej klatki */
     private final long OPTIMAL_TIME;
+    /** stan agentów tylko do odczytu */
+    
 
     /** konstruktor */
     public GameController(KeyHandler keyhandler,
@@ -183,6 +189,11 @@ public class GameController implements Runnable,
      */
     private CellTypeVisu[][] stateToVisu(CellType[][] board) {
         CellTypeVisu[][] temp = new CellTypeVisu[board.length][board[0].length];
+        Map<Point,Agent> agentMap = null;
+        AgentModel model = gamelogic;
+        //if(model!=null)
+            agentMap = model.getAgentsByLocation();
+    
         for (int i = 0; i < temp.length; i++)
             for (int j = 0; j < temp[0].length; j++) {
                 switch (board[i][j]) {
@@ -201,8 +212,22 @@ public class GameController implements Runnable,
                     case CellType.GHOSTFLOOR -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.GHOSTFLOOR);
                     case CellType.POINT -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POINT);
                     case CellType.POWERUP -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP);
+                    case CellType.POWERUP_LIFE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP_LIFE);
+                    case CellType.POWERUP_PEARL -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP_PEARL);
+                    case CellType.POWERUP_POINTS -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP_POINTS);
+                    case CellType.POWERUP_SPEED -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP_SPEED);
+                    case CellType.POWERUP_ICE -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.POWERUP_ICE);
                     default -> temp[i][j] = new CellTypeVisu(CellTypeVisu.Type.EMPTY);
                 }
+
+                Point agentCoords = new Point(i, j);
+                Agent get =null;
+
+                if(agentMap!=null)
+                    get = agentMap.get(agentCoords);
+                if(get!=null)                    
+                    temp[i][j].agent = get;
+                
 
                 temp[i][j].val = gamelogic.getDistanceField()[i][j];
             }
@@ -310,7 +335,7 @@ public class GameController implements Runnable,
         gamelogic = new GameLogic(x, y);
         this.gamelogic.setListener(this);
 
-        game.setAgentModel(gamelogic);
+        //game.setAgentModel(gamelogic);
         game.createLevel(x, y);
 
         game.setVisible(true);

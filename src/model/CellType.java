@@ -26,7 +26,7 @@ public enum CellType {
     POWERUP_PEARL,
     POWERUP_POINTS,
     POWERUP_SPEED,
-    POWERUP_POOP,
+    POWERUP_ICE,
     POWERUP
 
 }

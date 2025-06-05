@@ -130,13 +130,11 @@ public class Labirynth {
      * @param Y2 współrzędna Y punktu 2
      */
     private void deleteWall(int X1, int Y1, int X2, int Y2) {
-        if (X1 == X2 && Math.abs(Y1 - Y2) == 2
-                || Y1 == Y2 && Math.abs(X1 - X2) == 2) {
             int midX = (X1 + X2) / 2;
             int midY = (Y1 + Y2) / 2;
             labirynt[midX][midY] = CellType.EMPTY;
             visited[midX][midY] = true;
-        }
+    
     }
 
     /**

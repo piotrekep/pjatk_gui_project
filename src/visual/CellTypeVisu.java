@@ -2,6 +2,8 @@ package visual;
 
 import java.awt.Color;
 
+import model.Agent;
+
 /**
  * @class CellTypeVisu
  * @brief Klasa wizualizacji używana przed wprowadzeniem spriteów
@@ -39,6 +41,7 @@ public class CellTypeVisu {
 
     public Type type;
     public int val;
+    public Agent agent;
 
     public Color getColor() {
         return type.color;

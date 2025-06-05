@@ -3,11 +3,12 @@ package visual;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import model.Agent;
 
 /**
  * @class SpriteCellType
@@ -158,6 +159,13 @@ public class SpriteCellType {
         private static Image createPlaceholder(Color color) {
             int size = 64;
             BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+            for (int x = 0; x < size; x++) {
+                for (int y = 0; y < size; y++) {
+                    img.setRGB(y, size - 1 - x, color.getRGB());
+                }
+            }
+
+
             Graphics2D g2 = img.createGraphics();
             g2.setColor(color);
             g2.fillRect(0, 0, size, size);
@@ -178,12 +186,16 @@ public class SpriteCellType {
          *          - 0.6-1.0: klatka 2
          */
         public Image getSprite(double animProgress, int direction) {
-            if (animProgress < 0.3)
+            if (animProgress < 0.25)
                 return getSprite(0, direction);
-            else if (animProgress < 0.6)
+            else if (animProgress < 0.50)
+                return getSprite(1, direction);
+            else if (animProgress < 0.75)
+                return getSprite(2, direction);
+            else if (animProgress < 1)
                 return getSprite(1, direction);
             else
-                return getSprite(2, direction);
+                return getSprite(0, direction);
 
         }
 
@@ -206,27 +218,77 @@ public class SpriteCellType {
             } else
                 img = scaledSprites[idx];
 
-            BufferedImage buffImage = new BufferedImage(
-                    img.getWidth(null),
-                    img.getHeight(null),
-                    BufferedImage.TYPE_INT_ARGB);
+            // BufferedImage buffImage = new BufferedImage(
+            //         img.getWidth(null),
+            //         img.getHeight(null),
+            //         BufferedImage.TYPE_INT_ARGB);
+                    //rotate(buffImage,direction);
+            // Graphics2D g = buffImage.createGraphics();
+            
+            // g.translate(img.getWidth(null) / 2, img.getHeight(null) / 2);
 
-            Graphics2D g = buffImage.createGraphics();
+            // switch (direction) {
+            //     case 1 -> g.rotate(Math.toRadians(90));
+            //     case 2 -> g.rotate(Math.toRadians(180));
+            //     case 3 -> g.rotate(Math.toRadians(270));
+            //     case 4 -> g.rotate(Math.toRadians(0));
+            //     default -> {
+            //     }
+            // }
 
-            g.translate(img.getWidth(null) / 2, img.getHeight(null) / 2);
+            // g.drawImage(img, -img.getWidth(null) / 2, -img.getHeight(null) / 2, null);
+            // g.dispose();
+            return (Image) rotate((BufferedImage) img,direction);
+        }
 
-            switch (direction) {
-                case 1 -> g.rotate(Math.toRadians(90));
-                case 2 -> g.rotate(Math.toRadians(180));
-                case 3 -> g.rotate(Math.toRadians(270));
-                case 4 -> g.rotate(Math.toRadians(0));
-                default -> {
+        public BufferedImage rotate(BufferedImage src, int kierunek) {
+            int w = src.getWidth();
+            int h = src.getHeight();
+           
+
+            if (kierunek != 1 && kierunek != 2 && kierunek != 3) {
+                BufferedImage copy = new BufferedImage(w, h, src.getType());
+                for (int x = 0; x < w; x++) {
+                    for (int y = 0; y < h; y++) {
+                        copy.setRGB(x, y, src.getRGB(x, y));
+                    }
                 }
+                return copy;
             }
-
-            g.drawImage(img, -img.getWidth(null) / 2, -img.getHeight(null) / 2, null);
-            g.dispose();
-            return (Image) buffImage;
+    
+            BufferedImage dst;
+            switch (kierunek) {
+                case 1: 
+                    dst = new BufferedImage(h, w, src.getType());
+                    for (int x = 0; x < w; x++) {
+                        for (int y = 0; y < h; y++) {
+                            dst.setRGB(h - 1 - y, x, src.getRGB(x, y));
+                        }
+                    }
+                    return dst;
+    
+                case 2: 
+                    dst = new BufferedImage(w, h, src.getType());
+                    for (int x = 0; x < w; x++) {
+                        for (int y = 0; y < h; y++) {
+                            dst.setRGB(w - 1 - x, h - 1 - y, src.getRGB(x, y));
+                        }
+                    }
+                    return dst;
+    
+                case 3: 
+                    dst = new BufferedImage(h, w, src.getType());
+                    for (int x = 0; x < w; x++) {
+                        for (int y = 0; y < h; y++) {
+                            dst.setRGB(y, w - 1 - x, src.getRGB(x, y));
+                        }
+                    }
+                    return dst;
+    
+                default:
+                    // teoretycznie nigdy tu nie wpadnie
+                    return src;
+            }
         }
 
         /**
@@ -273,38 +335,69 @@ public class SpriteCellType {
          * @return Przeskalowany obraz
          * @details Używa interpolacji bilinearnej dla lepszej jakości skalowania
          */
-        private static Image scale(Image src, int w, int h) {
-            BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = dst.createGraphics();
-            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g.drawImage(src, 0, 0, w, h, null);
-            g.dispose();
-            return dst;
+        // private static Image scale(Image src, int w, int h) {
+        //     BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        //     Graphics2D g = dst.createGraphics();
+        //     g.drawImage(src, 0, 0, w, h, null);
+        //     g.dispose();
+        //     return dst;
+        // }
+
+
+            /**
+     * Skalowanie najbliższego sąsiada (nearest‐neighbor) bez Graphics2D.
+     *
+     * @param src Wejściowy Image
+     * @param newW Docelowa szerokość
+     * @param newH Docelowa wysokość
+     * @return Nowy Image o rozmiarze newW×newH
+     */
+    public static Image scale(Image src, int newW, int newH) {
+        BufferedImage tmp = (BufferedImage) src;
+        int srcW = tmp.getWidth();
+        int srcH = tmp.getHeight();
+        BufferedImage dst = new BufferedImage(newW, newH, tmp.getType());
+
+        
+        double xRatio = (double) srcW  / newW;
+        double yRatio = (double) srcH  / newH;
+
+        for (int y = 0; y < newH; y++) {
+            int srcY = (int) (y * yRatio);
+            if (srcY >= srcH) srcY = srcH - 1;
+
+            for (int x = 0; x < newW; x++) {
+                int srcX = (int) (x * xRatio);
+                if (srcX >= srcW) srcX = srcW - 1;
+                int rgb = tmp.getRGB(srcX, srcY);
+                dst.setRGB(x, y, rgb);
+            }
         }
+        return (Image)dst;
+    }
 
     }
 
     /** Typ sprite'a */
-    public final Type type;
+    public Type type;
     /** Dodatkowa wartość liczbowa powiązana z komórką */
-    public final int val;
+    public Agent agent;
 
     /**
      * @brief Konstruktor tworzący SpriteCellType z domyślną wartością 0
      * @param type Typ sprite'a
      */
     public SpriteCellType(Type type) {
-        this(type, 0);
+        this(type, null);
     }
 
     /**
      * @brief Konstruktor tworzący SpriteCellType z określoną wartością
      * @param type Typ sprite'a
-     * @param val  Wartość liczbowa powiązana z komórką
      */
-    public SpriteCellType(Type type, int val) {
+    public SpriteCellType(Type type, Agent agent) {
         this.type = type;
-        this.val = val;
+        this.agent = agent;
     }
+    
 }

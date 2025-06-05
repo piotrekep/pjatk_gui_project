@@ -53,8 +53,12 @@ public class GameBoard extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         CellTypeVisu old = table[rowIndex][columnIndex];
-        visual.SpriteCellType.Type t = visual.SpriteCellType.Type.valueOf(old.type.name());
-        return new SpriteCellType(t, old.val);
+        visual.SpriteCellType t = new SpriteCellType(null, null);
+
+        t.type = visual.SpriteCellType.Type.valueOf(old.type.name());
+        t.agent=old.agent;
+        
+        return t;
     }
 
 }
