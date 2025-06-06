@@ -6,7 +6,8 @@ import model.GameLogic.GameLogicListener;
 import model.Agent;
 import model.AgentModel;
 
-import model.Point;
+//import model.Point;
+import java.awt.Point;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Map;
@@ -193,7 +194,7 @@ public class GameController implements Runnable,
         Map<Point,Agent> agentMap = null;
         AgentModel model = gamelogic;
         //if(model!=null)
-            agentMap = model.getAgentsByLocation();
+        agentMap = model.getAgentsByLocation();
     
         for (int i = 0; i < temp.length; i++)
             for (int j = 0; j < temp[0].length; j++) {
@@ -226,8 +227,8 @@ public class GameController implements Runnable,
 
                 if(agentMap!=null)
                     get = agentMap.get(agentCoords);
-                if(get!=null)                    
-                    temp[i][j].agent = get;
+                                  
+                temp[i][j].agent = get;
                 
 
                 temp[i][j].val = gamelogic.getDistanceField()[i][j];

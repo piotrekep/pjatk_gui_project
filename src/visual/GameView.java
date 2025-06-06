@@ -74,7 +74,7 @@ public class GameView extends BaseWindow {
 
     public void setTime(long timeNanos) {
         long seconds =timeNanos/1_000_000_000l;
-        if(seconds>59) seconds=0;
+        if(seconds>59) seconds=seconds%60;
         timeLabel.setText("Time: " + timeNanos/60_000_000_000l+":"+seconds);
     }
 

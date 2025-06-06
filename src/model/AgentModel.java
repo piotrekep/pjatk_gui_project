@@ -1,6 +1,8 @@
 package model;
 
-import model.Point;
+//import model.Point;
+
+import java.awt.Point;
 import java.util.Collection;
 import java.util.Map;
 

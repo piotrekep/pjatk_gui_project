@@ -1,7 +1,7 @@
 package model;
 
-//import java.awt.Point;
-import model.Point;
+import java.awt.Point;
+//import model.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
