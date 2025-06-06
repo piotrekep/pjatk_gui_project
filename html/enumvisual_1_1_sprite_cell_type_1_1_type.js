@@ -1,0 +1,28 @@
+var enumvisual_1_1_sprite_cell_type_1_1_type =
+[
+    [ "Type", "enumvisual_1_1_sprite_cell_type_1_1_type.html#aa6bc3671cfaa4327b79e45348cb82f99", null ],
+    [ "getSprite", "enumvisual_1_1_sprite_cell_type_1_1_type.html#ad223e88ff4c32b25aa6b94b18ffeaca5", null ],
+    [ "getSprite", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a8d3109ec35a1922af9ded097be3e5bcd", null ],
+    [ "getSprite", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a77d524217b6cecca7c8b96f6abe85b45", null ],
+    [ "getSprites", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a18da0dfdafa3a1392ec4f5b864f3fbd8", null ],
+    [ "rescale", "enumvisual_1_1_sprite_cell_type_1_1_type.html#aaeb728f8d4f9bbf3ca3fed574b43cddb", null ],
+    [ "rotate", "enumvisual_1_1_sprite_cell_type_1_1_type.html#afa0ca908af8edfc2fbd8709c8e19e69b", null ],
+    [ "EMPTY", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a53645c77ba0bfb787aa077dda7887ad5", null ],
+    [ "GHOSTFLOOR", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a0435f7ff615f00af7206d8c40181e5d4", null ],
+    [ "GHOSTHOUSE", "enumvisual_1_1_sprite_cell_type_1_1_type.html#acf4ee1c62b6c383a0623b706c825dda6", null ],
+    [ "NPC_AGGRO", "enumvisual_1_1_sprite_cell_type_1_1_type.html#aac6996e997e9f45e915560d4be413133", null ],
+    [ "NPC_CHASER", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a4c4c1a545041f281eb91b3353d8901b2", null ],
+    [ "NPC_COWARD", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a1787d6092f8edef0e2bb1f696467f192", null ],
+    [ "NPC_HEADLESSCHICKEN", "enumvisual_1_1_sprite_cell_type_1_1_type.html#ac1c381e26c2dd7615180c0173838e973", null ],
+    [ "NPC_KEYBOARDWARRIOR", "enumvisual_1_1_sprite_cell_type_1_1_type.html#aca67a715ab5343e7d2a284601de78030", null ],
+    [ "NPC_POWERUP", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a5a8ea2c801b94b542ec15de1004c4d26", null ],
+    [ "PLAYER", "enumvisual_1_1_sprite_cell_type_1_1_type.html#af2cd3c9d0b10590c772a880c173b6ce7", null ],
+    [ "POINT", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a9ccf3528b7638e439bf8d8d2dec73364", null ],
+    [ "POWERUP", "enumvisual_1_1_sprite_cell_type_1_1_type.html#ab016960999dbc256a1003d5011063117", null ],
+    [ "POWERUP_ICE", "enumvisual_1_1_sprite_cell_type_1_1_type.html#aa52a0e3061d735e8d1b9a8defa094600", null ],
+    [ "POWERUP_LIFE", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a56d4ed7a83f5a9bf0497f3baacaafc00", null ],
+    [ "POWERUP_PEARL", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a28823239a463ef34675ee250e89983fd", null ],
+    [ "POWERUP_POINTS", "enumvisual_1_1_sprite_cell_type_1_1_type.html#a39ed5888964282e4d8143d87953c5362", null ],
+    [ "POWERUP_SPEED", "enumvisual_1_1_sprite_cell_type_1_1_type.html#ab6534a25cd393d7a60ffa5f5d3bbc289", null ],
+    [ "WALL", "enumvisual_1_1_sprite_cell_type_1_1_type.html#ad5ddf16036cdcaec8c8e602e4daeeb2e", null ]
+];

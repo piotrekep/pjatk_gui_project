@@ -1,0 +1,5 @@
+<map id="model.Agent.moveInDirPossible" name="model.Agent.moveInDirPossible">
+<area shape="rect" id="Node000001" title=" " alt="" coords="219,5,423,33"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_npc.html#a41a640cde1337691eaa7c1dc91d6ed8a" title=" " alt="" coords="5,5,171,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,22,171,22,171,16,203,16"/>
+</map>

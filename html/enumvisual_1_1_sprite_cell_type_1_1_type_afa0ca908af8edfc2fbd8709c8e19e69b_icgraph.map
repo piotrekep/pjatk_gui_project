@@ -1,0 +1,5 @@
+<map id="visual.SpriteCellType.Type.rotate" name="visual.SpriteCellType.Type.rotate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="246,14,454,42"/>
+<area shape="rect" id="Node000002" href="$enumvisual_1_1_sprite_cell_type_1_1_type.html#a77d524217b6cecca7c8b96f6abe85b45" title="Pobiera sprite z rotacją" alt="" coords="5,5,198,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,30,198,30,198,25,230,25"/>
+</map>

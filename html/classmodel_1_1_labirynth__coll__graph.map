@@ -1,0 +1,7 @@
+<map id="model.Labirynth" name="model.Labirynth">
+<area shape="rect" id="Node000001" title="klasa generująca labirynt" alt="" coords="64,98,178,126"/>
+<area shape="rect" id="Node000002" href="$enummodel_1_1_cell_type.html" title=" " alt="" coords="5,5,114,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,44,114,96,110,99,74,47"/>
+<area shape="rect" id="Node000003" href="$classmodel_1_1_point.html" title=" " alt="" coords="138,5,226,33"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="168,48,150,76,133,99,128,96,145,72,164,45"/>
+</map>

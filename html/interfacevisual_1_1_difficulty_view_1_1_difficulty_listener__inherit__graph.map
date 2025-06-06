@@ -1,0 +1,5 @@
+<map id="visual.DifficultyView.DifficultyListener" name="visual.DifficultyView.DifficultyListener">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,196,50"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html" title="Implementuje Kontroler do modelu MVC." alt="" coords="17,98,184,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="103,66,103,97,98,97,98,66"/>
+</map>

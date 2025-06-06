@@ -1,0 +1,11 @@
+<map id="model.Powerup" name="model.Powerup">
+<area shape="rect" id="Node000001" title="byt typu powerup klasa definiuje byty typu powerup" alt="" coords="194,175,305,203"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_agent.html" title="Definicja &quot;bytu&quot; w grze." alt="" coords="203,98,296,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="252,141,252,175,247,175,247,141"/>
+<area shape="rect" id="Node000003" href="$interfacemodel_1_1_agent_1_1_agent_listener.html" title=" " alt="" coords="5,5,182,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="131,39,228,95,225,100,128,44"/>
+<area shape="rect" id="Node000004" href="$classmodel_1_1_point.html" title=" " alt="" coords="205,5,294,33"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="252,48,252,98,247,98,247,48"/>
+<area shape="rect" id="Node000005" href="$enummodel_1_1_cell_type.html" title=" " alt="" coords="318,5,426,33"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="345,45,304,76,270,100,267,95,301,72,342,41"/>
+</map>

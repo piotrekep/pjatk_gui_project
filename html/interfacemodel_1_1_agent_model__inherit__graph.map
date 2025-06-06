@@ -1,0 +1,5 @@
+<map id="model.AgentModel" name="model.AgentModel">
+<area shape="rect" id="Node000001" title="Klasa exponuje liste agentów dla visuala." alt="" coords="5,5,133,33"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_game_logic.html" title="Klasa implementuje logikę gry." alt="" coords="7,81,131,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,49,72,81,66,81,66,49"/>
+</map>

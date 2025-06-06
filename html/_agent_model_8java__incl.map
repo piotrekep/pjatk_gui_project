@@ -1,0 +1,9 @@
+<map id="G:/protondrive/My files/szkola/gui/project/pacman/src/model/AgentModel.java" name="G:/protondrive/My files/szkola/gui/project/pacman/src/model/AgentModel.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="102,5,286,67"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,108,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,70,90,109,87,104,147,65"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="131,115,256,143"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,67,196,99,191,99,191,67"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="280,115,374,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="240,65,297,104,294,108,237,70"/>
+</map>

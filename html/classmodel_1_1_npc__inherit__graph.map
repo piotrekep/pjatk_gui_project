@@ -1,0 +1,5 @@
+<map id="model.Npc" name="model.Npc">
+<area shape="rect" id="Node000001" title="Definicja npc w grze." alt="" coords="11,81,93,109"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_agent.html" title="Definicja &quot;bytu&quot; w grze." alt="" coords="5,5,99,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="55,49,55,81,49,81,49,49"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="model.Player.getLives" name="model.Player.getLives">
+<area shape="rect" id="Node000001" title=" " alt="" coords="243,5,389,33"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_game_logic.html#a9890090866ff1cffa8f115fe6fad7e35" title=" " alt="" coords="5,5,195,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="227,22,195,22,195,16,227,16"/>
+</map>

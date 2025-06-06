@@ -1,0 +1,5 @@
+<map id="visual.ScoreView.addHighScore" name="visual.ScoreView.addHighScore">
+<area shape="rect" id="Node000001" title="dodaje wynik do listy" alt="" coords="5,5,175,50"/>
+<area shape="rect" id="Node000002" href="$classvisual_1_1_player_score.html#abc076449b2bdf17e18ea03d3d7ecb360" title="getter punktów" alt="" coords="223,14,403,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,25,207,25,207,30,175,30"/>
+</map>

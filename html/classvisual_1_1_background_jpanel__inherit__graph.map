@@ -1,0 +1,5 @@
+<map id="visual.BackgroundJpanel" name="visual.BackgroundJpanel">
+<area shape="rect" id="Node000001" title="klasa tworząca JPanel z obrazem tła" alt="" coords="5,81,169,109"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="58,5,116,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,49,90,81,84,81,84,49"/>
+</map>

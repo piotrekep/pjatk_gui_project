@@ -1,0 +1,9 @@
+<map id="model.Agent" name="model.Agent">
+<area shape="rect" id="Node000001" title="Definicja &quot;bytu&quot; w grze." alt="" coords="113,5,206,33"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_npc.html" title="Definicja npc w grze." alt="" coords="5,81,88,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,44,68,83,65,78,125,39"/>
+<area shape="rect" id="Node000003" href="$classmodel_1_1_player.html" title="Definicja Gracza w grze." alt="" coords="112,81,208,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="162,49,162,81,157,81,157,49"/>
+<area shape="rect" id="Node000004" href="$classmodel_1_1_powerup.html" title="byt typu powerup klasa definiuje byty typu powerup" alt="" coords="233,81,343,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="197,39,266,78,264,83,194,43"/>
+</map>

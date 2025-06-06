@@ -1,0 +1,17 @@
+<map id="visual.GameBoard" name="visual.GameBoard">
+<area shape="rect" id="Node000001" title="roszerzenie klasy Abstract table model jako wymóg zadania" alt="" coords="30,283,156,311"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,191,138,218"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,233,92,282,87,284,75,234"/>
+<area shape="rect" id="Node000003" href="$classvisual_1_1_cell_type_visu.html" title="Klasa wizualizacji używana przed wprowadzeniem spriteów." alt="" coords="162,191,293,218"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,229,114,285,111,280,194,225"/>
+<area shape="rect" id="Node000004" href="$enumvisual_1_1_cell_type_visu_1_1_type.html" title=" " alt="" coords="94,98,255,126"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="192,138,222,189,218,192,187,140"/>
+<area shape="rect" id="Node000005" href="$classmodel_1_1_agent.html" title="Definicja &quot;bytu&quot; w grze." alt="" coords="280,98,373,126"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="303,138,243,192,240,188,299,134"/>
+<area shape="rect" id="Node000006" href="$interfacemodel_1_1_agent_1_1_agent_listener.html" title=" " alt="" coords="82,5,258,33"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="207,39,305,95,302,100,205,44"/>
+<area shape="rect" id="Node000007" href="$classmodel_1_1_point.html" title=" " alt="" coords="282,5,370,33"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="329,48,329,98,324,98,324,48"/>
+<area shape="rect" id="Node000008" href="$enummodel_1_1_cell_type.html" title=" " alt="" coords="395,5,503,33"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="422,45,381,76,347,100,344,95,378,72,419,41"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="model.GameLogic.updateNpc" name="model.GameLogic.updateNpc">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,195,60"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_npc.html#aed945415b15b69884cfd36732777fc0b" title=" " alt="" coords="243,5,421,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,32,227,29,228,34,196,38"/>
+<area shape="rect" id="Node000003" href="$classmodel_1_1_npc.html#a71601bc724496ab6a1bbdf270c228e3b" title=" " alt="" coords="249,57,415,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,54,233,58,233,63,195,59"/>
+</map>

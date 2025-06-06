@@ -1,0 +1,12 @@
+<map id="controller.GameController.resume" name="controller.GameController.resume">
+<area shape="rect" id="Node000001" title=" " alt="" coords="709,34,922,61"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html#ae2ded7d61691b4d05d85aa3317815b5f" title=" " alt="" coords="5,25,189,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="748,32,661,15,533,8,405,12,287,22,190,35,189,30,286,17,405,7,533,3,662,10,749,27"/>
+<area shape="rect" id="Node000003" href="$classcontroller_1_1_game_controller.html#ae6ba88eb24ab982ae3dbea843078477b" title=" " alt="" coords="473,25,656,70"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="694,50,657,50,657,45,694,45"/>
+<area shape="rect" id="Node000004" href="$classcontroller_1_1_game_controller.html#abc4ec89dc11731d65192051ac140119c" title=" " alt="" coords="468,94,661,121"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="741,68,626,96,625,90,739,63"/>
+<area shape="rect" id="Node000005" href="$classcontroller_1_1_game_controller.html#aaaa76093f36e72f242b4b9542fc831d3" title=" " alt="" coords="237,54,420,99"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="452,96,420,91,421,86,453,90"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="221,66,189,62,190,56,222,61"/>
+</map>

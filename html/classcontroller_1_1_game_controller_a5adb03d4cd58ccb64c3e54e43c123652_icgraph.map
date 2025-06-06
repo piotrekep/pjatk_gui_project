@@ -1,0 +1,7 @@
+<map id="controller.GameController.pause" name="controller.GameController.pause">
+<area shape="rect" id="Node000001" title=" " alt="" coords="237,48,440,76"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html#ae2ded7d61691b4d05d85aa3317815b5f" title=" " alt="" coords="5,5,189,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,48,189,44,190,38,223,43"/>
+<area shape="rect" id="Node000003" href="$classcontroller_1_1_game_controller.html#ae6ba88eb24ab982ae3dbea843078477b" title=" " alt="" coords="5,75,189,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="223,82,190,86,189,81,222,76"/>
+</map>

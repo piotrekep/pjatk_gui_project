@@ -1,0 +1,16 @@
+<map id="controller.GameController.onDeath" name="controller.GameController.onDeath">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,109,189,154"/>
+<area shape="rect" id="Node000002" href="$classvisual_1_1_player_score.html#ae996c748a9f327bf48e0d0c9914cf154" title="getter nazwy gracz" alt="" coords="247,5,430,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,106,177,74,236,43,256,36,258,41,238,48,180,79,131,111"/>
+<area shape="rect" id="Node000003" href="$classvisual_1_1_player_score.html#abc076449b2bdf17e18ea03d3d7ecb360" title="getter punktów" alt="" coords="248,57,428,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="189,106,264,87,265,92,190,111"/>
+<area shape="rect" id="Node000004" href="$classcontroller_1_1_game_controller.html#aaaa76093f36e72f242b4b9542fc831d3" title=" " alt="" coords="247,109,430,154"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,128,231,128,231,134,189,134"/>
+<area shape="rect" id="Node000006" href="$classcontroller_1_1_game_controller.html#aeb4189a5fe04a110064f8750c1826cfd" title=" " alt="" coords="729,152,942,180"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="176,151,237,163,364,174,492,178,714,172,714,177,492,183,363,179,236,168,175,157"/>
+<area shape="rect" id="Node000007" href="$classcontroller_1_1_game_controller.html#a5adb03d4cd58ccb64c3e54e43c123652" title=" " alt="" coords="237,228,440,256"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="135,152,183,180,238,207,271,220,269,225,236,212,180,185,132,156"/>
+<area shape="rect" id="Node000005" href="$classcontroller_1_1_game_controller.html#abc4ec89dc11731d65192051ac140119c" title=" " alt="" coords="488,123,681,150"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="430,130,473,131,472,137,430,136"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="682,145,714,149,714,154,682,150"/>
+</map>

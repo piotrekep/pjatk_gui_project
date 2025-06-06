@@ -1,0 +1,7 @@
+<map id="visual.ScoreView.ScoreView" name="visual.ScoreView.ScoreView">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,188,60"/>
+<area shape="rect" id="Node000002" href="$classvisual_1_1_player_score.html#ae996c748a9f327bf48e0d0c9914cf154" title="getter nazwy gracz" alt="" coords="236,5,418,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,33,220,29,220,34,188,38"/>
+<area shape="rect" id="Node000003" href="$classvisual_1_1_player_score.html#abc076449b2bdf17e18ea03d3d7ecb360" title="getter punktów" alt="" coords="237,57,417,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,53,221,57,221,62,188,58"/>
+</map>

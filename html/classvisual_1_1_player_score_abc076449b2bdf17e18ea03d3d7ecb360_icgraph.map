@@ -1,0 +1,9 @@
+<map id="visual.PlayerScore.getScore" name="visual.PlayerScore.getScore">
+<area shape="rect" id="Node000001" title="getter punktów" alt="" coords="237,83,417,111"/>
+<area shape="rect" id="Node000002" href="$classvisual_1_1_score_view.html#a100ab2bd61e338c15736e6ea07caf91c" title="dodaje wynik do listy" alt="" coords="12,5,182,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="263,81,173,53,174,48,265,76"/>
+<area shape="rect" id="Node000003" href="$classcontroller_1_1_game_controller.html#ae2ded7d61691b4d05d85aa3317815b5f" title=" " alt="" coords="5,75,189,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,100,189,100,189,94,221,94"/>
+<area shape="rect" id="Node000004" href="$classvisual_1_1_score_view.html#a6897aa76d06c4c9b322990b900c9b82c" title=" " alt="" coords="6,143,188,171"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="257,118,154,145,152,140,256,113"/>
+</map>

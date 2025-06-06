@@ -1,0 +1,7 @@
+<map id="model.Point.Point" name="model.Point.Point">
+<area shape="rect" id="Node000001" title=" " alt="" coords="212,32,332,60"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_point.html#affe3664faafb9edf58ce552205172a80" title=" " alt="" coords="5,5,164,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,38,164,33,164,28,196,32"/>
+<area shape="rect" id="Node000003" href="$classmodel_1_1_point.html#a658dba18d09b8162fd4ca2d6584e8222" title=" " alt="" coords="24,57,145,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,59,146,66,145,60,195,53"/>
+</map>

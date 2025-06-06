@@ -1,0 +1,19 @@
+<map id="G:/protondrive/My files/szkola/gui/project/pacman/src/visual/BackgroundJpanel.java" name="G:/protondrive/My files/szkola/gui/project/pacman/src/visual/BackgroundJpanel.java">
+<area shape="rect" id="Node000001" title=" " alt="" coords="516,5,735,67"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,115,110,143"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="516,56,126,117,125,112,515,51"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="134,115,258,143"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="516,63,274,114,273,109,515,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="282,115,420,143"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="534,70,406,112,404,107,533,65"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="443,115,642,143"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="600,69,567,105,563,102,596,66"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="666,115,750,143"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="655,66,688,102,684,105,651,69"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="774,115,906,143"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="698,65,796,106,794,111,696,70"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="930,115,1086,143"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="736,61,938,108,937,113,735,66"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1111,115,1241,143"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="736,53,1096,112,1096,117,735,58"/>
+</map>

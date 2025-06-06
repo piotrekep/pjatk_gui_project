@@ -1,0 +1,7 @@
+<map id="controller.GameController.onVictory" name="controller.GameController.onVictory">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,24,189,68"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html#a5adb03d4cd58ccb64c3e54e43c123652" title=" " alt="" coords="241,5,444,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,33,225,29,226,35,190,39"/>
+<area shape="rect" id="Node000003" href="$classcontroller_1_1_game_controller.html#aeb4189a5fe04a110064f8750c1826cfd" title=" " alt="" coords="237,57,449,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,53,221,56,221,61,189,58"/>
+</map>

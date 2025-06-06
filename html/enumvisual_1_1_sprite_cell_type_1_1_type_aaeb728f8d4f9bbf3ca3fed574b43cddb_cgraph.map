@@ -1,0 +1,5 @@
+<map id="visual.SpriteCellType.Type.rescale" name="visual.SpriteCellType.Type.rescale">
+<area shape="rect" id="Node000001" title="Przeskalowuje wszystkie sprite&#39;y do nowego rozmiaru." alt="" coords="5,5,221,33"/>
+<area shape="rect" id="Node000002" href="$enumvisual_1_1_sprite_cell_type_1_1_type.html#ad2cf934cff3ca2e5e037555ca8f001aa" title="Skaluje pojedynczy obraz." alt="" coords="269,5,472,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,16,253,16,253,22,221,22"/>
+</map>

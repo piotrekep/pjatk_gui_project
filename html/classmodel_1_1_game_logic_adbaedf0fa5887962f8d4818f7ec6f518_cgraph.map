@@ -1,0 +1,15 @@
+<map id="model.GameLogic.generateLevel" name="model.GameLogic.generateLevel">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,144,185,189"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_game_logic.html#a66e857100eb1554e1121f89c448e20a1" title=" " alt="" coords="233,5,432,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,141,169,101,231,60,243,54,245,59,234,65,173,105,123,145"/>
+<area shape="rect" id="Node000003" href="$classmodel_1_1_labirynth.html#a828120e9b258debf0440b21b816e181e" title=" " alt="" coords="248,74,417,102"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,141,232,112,259,104,261,109,234,117,153,146"/>
+<area shape="rect" id="Node000004" href="$classmodel_1_1_game_logic.html#ae9266f2a27ec64a141523ec2622422c6" title=" " alt="" coords="238,126,426,154"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="185,154,222,149,223,155,185,159"/>
+<area shape="rect" id="Node000005" href="$classmodel_1_1_agent.html#a729aff6a425087aa0d9ac9f70e959466" title=" " alt="" coords="253,178,412,206"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="185,173,238,179,237,184,185,179"/>
+<area shape="rect" id="Node000006" href="$classmodel_1_1_player.html#a5c34f00c39c80eb8c69863335ca6e23d" title=" " alt="" coords="253,230,412,258"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="156,187,233,214,261,223,259,228,232,220,154,192"/>
+<area shape="rect" id="Node000007" href="$classmodel_1_1_agent.html#ae2cdddabd9648dd0680e632d85a770b6" title=" " alt="" coords="249,282,416,310"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="122,187,172,228,234,267,251,274,249,279,231,271,169,232,119,191"/>
+</map>

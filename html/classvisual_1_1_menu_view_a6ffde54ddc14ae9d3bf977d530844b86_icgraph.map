@@ -1,0 +1,5 @@
+<map id="visual.MenuView.setListener" name="visual.MenuView.setListener">
+<area shape="rect" id="Node000001" title="Ustawia listenera zdarzeń menu." alt="" coords="223,14,407,42"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html#a4f74ce66a4b102acff9d228a36bf3003" title=" " alt="" coords="5,5,175,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,30,175,30,175,25,207,25"/>
+</map>

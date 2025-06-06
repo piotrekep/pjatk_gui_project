@@ -1,0 +1,5 @@
+<map id="visual.GameView.GameListener" name="visual.GameView.GameListener">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,210,33"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html" title="Implementuje Kontroler do modelu MVC." alt="" coords="24,81,191,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,49,110,81,105,81,105,49"/>
+</map>

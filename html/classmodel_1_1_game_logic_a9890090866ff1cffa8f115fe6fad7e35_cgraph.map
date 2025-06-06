@@ -1,0 +1,19 @@
+<map id="model.GameLogic.onCollision" name="model.GameLogic.onCollision">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,204,195,232"/>
+<area shape="rect" id="Node000002" href="$classmodel_1_1_player.html#a899f252fe3f966b9620ce2ad0339c2a5" title=" " alt="" coords="243,5,432,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,202,126,169,156,126,195,81,241,42,249,38,252,42,244,47,198,85,160,129,130,172,111,205"/>
+<area shape="rect" id="Node000003" href="$enummodel_1_1_powerup_type.html#a0536e180fcd2b74d90078e3780118238" title=" " alt="" coords="243,57,432,102"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="116,201,170,158,241,112,253,106,255,111,244,116,173,162,119,205"/>
+<area shape="rect" id="Node000004" href="$classmodel_1_1_player.html#a6acd235f7d6deda31ca390566e3a0614" title=" " alt="" coords="264,125,410,153"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="137,201,242,163,268,155,269,160,244,168,139,206"/>
+<area shape="rect" id="Node000005" href="$classmodel_1_1_player.html#afa1f839f5dc5780718c2d4f86812821b" title=" " alt="" coords="254,177,420,205"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="195,205,239,200,239,205,195,210"/>
+<area shape="rect" id="Node000006" href="$classmodel_1_1_powerup.html#a498b6c71cb2fb340c4eb904da6f6f495" title=" " alt="" coords="246,229,428,257"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="195,225,231,229,231,234,195,231"/>
+<area shape="rect" id="Node000007" href="$classmodel_1_1_agent.html#af8f7cee7cbc914fee2cc77d7e4c8d374" title=" " alt="" coords="247,281,428,309"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="140,230,244,266,269,274,268,279,242,271,139,235"/>
+<area shape="rect" id="Node000008" href="$classmodel_1_1_player.html#a87f4349c2447ea47744631bced13e6ea" title=" " alt="" coords="265,333,410,361"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="119,230,172,273,207,297,244,318,261,325,259,330,241,323,204,302,169,278,115,234"/>
+<area shape="rect" id="Node000009" href="$classmodel_1_1_player.html#aa5eb5450c054d55a94494dc3d7b04a0a" title=" " alt="" coords="255,385,420,413"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="113,231,163,298,201,337,244,370,256,376,253,381,241,375,197,341,159,301,108,234"/>
+</map>

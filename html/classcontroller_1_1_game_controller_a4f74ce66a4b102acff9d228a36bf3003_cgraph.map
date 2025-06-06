@@ -1,0 +1,17 @@
+<map id="controller.GameController.GameController" name="controller.GameController.GameController">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,156,175,201"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_serializable_list.html#a242887012b63b3ce61970de6f627041a" title=" " alt="" coords="232,5,422,50"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,154,158,107,188,82,221,60,232,55,234,59,224,65,192,86,161,111,113,158"/>
+<area shape="rect" id="Node000004" href="$classvisual_1_1_game_view.html#a1665a14df2bfc92290fb421a1489df3d" title=" " alt="" coords="223,74,432,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="130,153,173,131,222,111,243,104,244,109,224,115,176,136,132,158"/>
+<area shape="rect" id="Node000005" href="$classvisual_1_1_difficulty_view.html#a8fe87b23dfeb19341a588a5e9e46d3b1" title=" " alt="" coords="249,125,406,170"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="174,165,233,157,234,162,175,170"/>
+<area shape="rect" id="Node000006" href="$classvisual_1_1_game_view.html#abc3d3e41a3a1216a44c49ba84997d91f" title=" " alt="" coords="234,194,421,222"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="175,186,219,192,218,197,174,191"/>
+<area shape="rect" id="Node000007" href="$classvisual_1_1_menu_view.html#a6ffde54ddc14ae9d3bf977d530844b86" title="Ustawia listenera zdarzeń menu." alt="" coords="235,246,420,274"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="143,199,224,230,251,239,249,244,222,236,141,204"/>
+<area shape="rect" id="Node000008" href="$classvisual_1_1_score_view.html#a750eadc15dac4eb659cd3a30a9672e46" title=" " alt="" coords="235,298,420,326"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="115,199,162,242,192,264,224,283,240,290,238,295,221,287,189,268,159,246,111,203"/>
+<area shape="rect" id="Node000003" href="$classcontroller_1_1_serializable_list.html#ac72ec1697ba2dd9388e70ad0f5d38163" title=" " alt="" coords="480,5,646,50"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="423,25,464,25,464,30,423,30"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="model.GameLogic.GameLogicListener" name="model.GameLogic.GameLogicListener">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,198,50"/>
+<area shape="rect" id="Node000002" href="$classcontroller_1_1_game_controller.html" title="Implementuje Kontroler do modelu MVC." alt="" coords="18,98,185,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,66,104,97,99,97,99,66"/>
+</map>

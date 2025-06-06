@@ -1,0 +1,38 @@
+<map id="App" name="App">
+<area shape="rect" id="Node000001" title=" " alt="" coords="819,109,862,137"/>
+<area shape="rect" id="Node000002" href="$classvisual_1_1_menu_view.html" title="Główne menu aplikacji z trzema przyciskami: Nowa gra, Wyniki oraz Wyjście." alt="" coords="570,5,688,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="704,27,751,41,796,64,818,85,834,107,829,110,814,88,793,68,749,46,702,32"/>
+<area shape="rect" id="Node000003" href="$classvisual_1_1_base_window.html" title="Klasa tworząca spójną kolorystykę wszystkich okien." alt="" coords="267,73,399,101"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="411,67,569,30,571,35,412,72"/>
+<area shape="rect" id="Node000005" href="$classvisual_1_1_score_view.html" title="obiekt widoku punktacji" alt="" coords="570,57,688,85"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="415,80,569,72,570,77,415,85"/>
+<area shape="rect" id="Node000006" href="$classvisual_1_1_difficulty_view.html" title="oknow wyboru rozmiaru planszy" alt="" coords="561,109,697,137"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="415,94,561,112,560,118,415,100"/>
+<area shape="rect" id="Node000007" href="$classvisual_1_1_game_view.html" title="Klasa obsługująca widok gry." alt="" coords="569,161,689,189"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="397,103,580,158,579,163,396,108"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="61,73,126,101"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="142,84,267,84,267,90,142,90"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="704,79,795,101,819,110,817,115,794,106,703,84"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="713,120,818,120,818,126,713,126"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="704,164,749,155,794,143,817,133,819,138,796,148,750,160,705,169"/>
+<area shape="rect" id="Node000008" href="$classcontroller_1_1_game_controller.html" title="Implementuje Kontroler do modelu MVC." alt="" coords="545,273,713,301"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="672,263,732,228,793,181,813,158,828,136,833,139,817,162,796,185,735,232,674,268"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="296,140,370,168"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="386,162,436,178,533,226,607,271,605,275,531,230,434,183,385,167"/>
+<area shape="rect" id="Node000010" href="$interfacevisual_1_1_menu_view_1_1_menu_listener.html" title=" " alt="" coords="234,192,432,220"/>
+<area shape="poly" id="edge12_Node000008_Node000010" title=" " alt="" coords="406,221,522,253,582,270,580,275,521,258,405,227"/>
+<area shape="rect" id="Node000011" href="$interfacevisual_1_1_score_view_1_1_score_listener.html" title=" " alt="" coords="233,244,433,272"/>
+<area shape="poly" id="edge13_Node000008_Node000011" title=" " alt="" coords="449,267,545,276,545,282,449,272"/>
+<area shape="rect" id="Node000012" href="$interfacevisual_1_1_difficulty_view_1_1_difficulty_listener.html" title=" " alt="" coords="238,296,428,340"/>
+<area shape="poly" id="edge14_Node000008_Node000012" title=" " alt="" coords="444,304,545,293,545,298,444,309"/>
+<area shape="rect" id="Node000013" href="$interfacevisual_1_1_game_view_1_1_game_listener.html" title=" " alt="" coords="231,364,435,392"/>
+<area shape="poly" id="edge15_Node000008_Node000013" title=" " alt="" coords="409,357,435,350,587,299,589,304,436,355,411,362"/>
+<area shape="rect" id="Node000014" href="$interfacemodel_1_1_game_logic_1_1_game_logic_listener.html" title=" " alt="" coords="237,416,429,460"/>
+<area shape="poly" id="edge16_Node000008_Node000014" title=" " alt="" coords="421,407,434,401,532,347,606,299,609,304,534,352,437,406,423,412"/>
+<area shape="rect" id="Node000015" href="$classmodel_1_1_game_logic.html" title="Klasa implementuje logikę gry." alt="" coords="271,484,395,512"/>
+<area shape="poly" id="edge17_Node000008_Node000015" title=" " alt="" coords="409,479,434,470,466,453,495,432,548,384,589,336,616,300,620,303,593,340,552,388,499,436,468,458,436,475,411,484"/>
+<area shape="rect" id="Node000016" href="$interfacemodel_1_1_agent_1_1_agent_listener.html" title=" " alt="" coords="5,457,182,485"/>
+<area shape="poly" id="edge18_Node000015_Node000016" title=" " alt="" coords="197,480,271,488,270,494,197,485"/>
+<area shape="rect" id="Node000017" href="$interfacemodel_1_1_agent_model.html" title="Klasa exponuje liste agentów dla visuala." alt="" coords="30,509,157,537"/>
+<area shape="poly" id="edge19_Node000015_Node000017" title=" " alt="" coords="173,512,270,502,271,507,173,517"/>
+</map>
