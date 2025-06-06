@@ -40,6 +40,8 @@ public class GameLogic implements AgentListener,
     public int level = 0;
     /** cooldown powerupów */
     private long powerupCooldown = System.nanoTime();
+    /** start rozgrywki */
+    public long gameStartTime;
 
     /** listener zdarzeń gry */
     public interface GameLogicListener {
@@ -61,7 +63,7 @@ public class GameLogic implements AgentListener,
         this.y = y;
         maxPoints = 0;
         generateLevel();
-
+        gameStartTime = System.nanoTime();
         this.labirynt[3][3] = CellType.EMPTY;
         Player agent = SpawnPlayer(3, 3, 0);
         if (agent != null)

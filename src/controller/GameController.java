@@ -143,6 +143,7 @@ public class GameController implements Runnable,
 
             game.setScore(gamelogic.getPlayerScore(0));
             game.setLives(gamelogic.getPlayer(0).getLives());
+            game.setTime( System.nanoTime()-gamelogic.gameStartTime);
 
             /** obliczenia na jak długo trzeba zatrzymać wątek, aby utrzymać 30fps */
             long frameTime = System.nanoTime() - now;

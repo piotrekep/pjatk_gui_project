@@ -19,6 +19,7 @@ public class GameView extends BaseWindow {
     private GameListener listener;
     private JLabel scoreLabel;
     private JLabel livesLabel;
+    private JLabel timeLabel;
     private GameBoard level;
     private JPanel topPanel;
     private AgentModel model;
@@ -40,6 +41,11 @@ public class GameView extends BaseWindow {
         livesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         livesLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         topPanel.add(livesLabel, BorderLayout.WEST);
+
+        timeLabel = new JLabel("Time: 00:00");
+        timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        timeLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        topPanel.add(timeLabel, BorderLayout.CENTER);
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -64,6 +70,12 @@ public class GameView extends BaseWindow {
 
     public void setLives(int lives) {
         livesLabel.setText("Lives: " + lives);
+    }
+
+    public void setTime(long timeNanos) {
+        long seconds =timeNanos/1_000_000_000l;
+        if(seconds>59) seconds=0;
+        timeLabel.setText("Time: " + timeNanos/60_000_000_000l+":"+seconds);
     }
 
     public void createLevel(int x, int y) {
